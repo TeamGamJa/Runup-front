@@ -16,6 +16,8 @@ Vue.use(vuetify);
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 Vue.prototype.moment = moment;
+Vue.prototype._baseUrl = "http://localhost:8080/runup/";
+window.Kakao.init("06f7105ea41620c32847d4b04c882f9b")
 
 new Vue({
   router,
