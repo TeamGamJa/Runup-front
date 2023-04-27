@@ -34,7 +34,7 @@ import FoundRunning from '../views/Running/FoundRunning'
 import DetailRunning from '../views/Running/DetailRunning'
 
 // 도움 닫기 
-import CreateRunView from '../views/Running/CreateRun/CreateRunView'
+import CreateRunning from '../views/Running/CreateRun/CreateRunning'
 
 
 const routes = [
@@ -53,7 +53,7 @@ const routes = [
         path: "/FoundRunning",
         name: "FoundRunning",
         component: FoundRunning,
-        beforeEnter: beforeAuth(false)
+       
     },
     {
         path: "/SignIn",
@@ -69,12 +69,12 @@ const routes = [
         path: "/DetailRunning/:id",
         name: "DetailRunning",
         component: DetailRunning,
-        props: true
     },
     {
-        path: "/CreateRunView",
-        name: "CreateRunView",
-        component: CreateRunView,
+        path: "/CreateRunning",
+        name: "CreateRunning",
+        component: CreateRunning,
+        beforeEnter: beforeAuth(false)
     },
 ]
 

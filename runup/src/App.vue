@@ -1,12 +1,12 @@
 <template>
   <v-app>
-    <v-main>
+    <v-main style="overflow-y: auto;">
       <RunHeader/>
       <div>
       <router-view />
     </div>
   </v-main>
-  <v-footer style="height: 60px;" color="rgba(249, 243, 223, 100%)" fluid>
+  <v-footer style="height: 60px;" color="rgba(249, 243, 223, 100%)">
     <!-- <v-container fluid> -->
       <RunFooter/>
     <!-- </v-container> -->
@@ -26,9 +26,5 @@ export default {
     RunFooter
 
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>
