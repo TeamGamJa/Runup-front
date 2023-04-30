@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex align-center justify-center" style="height: 600px;">
+  <div class="d-flex align-center justify-center" style="height: 680px;">
     <v-container> <!-- fluid:화면전체를 채우도록 하는 코드 , fill-height: 높이를 최대한 활용하도록 설정-->
       <v-layout align-center justify-center style="height: 600px;">
         <!-- align-center: 화면의 수직방향의 중앙에 위치 ,justify-content: 수평방향 중앙에 설정 -->
@@ -48,7 +48,7 @@ export default {
     isLoading: false,
     password: undefined,
     rules: {
-      email: v => !!(v || '').match(/@/) || 'Please enter a valid email',
+      email: v => !!(v || '').match(/@/) || '이메일 형식이 아닙니다',
       required: v => !!v || 'This field is required',
     },
     userId: '',
@@ -57,31 +57,31 @@ export default {
   methods: {
     login() {
       let tmp = this;
-      axios.get(tmp._baseUrl + "jwt/login", {
-        params: {
-          userId: tmp.userId,
-          userPw: tmp.userPw
-        }
-      })
+      axios
+        .get(tmp._baseUrl + "jwt/login", {
+          params: {
+            userId: tmp.userId,
+            userPw: tmp.userPw,
+          },
+        })
         .then((result) => {
-          console.log("axios 성공");
-          console.log(result)
+          // console.log("axios 성공");
+          // console.log(result);
           if (result.data == "") {
-            alert("로그인 실패")
+            alert("로그인 실패");
           } else {
-            alert("로그인 성공")
-            alert(result.data)
-            jwt.saveToken(result.data.accessToken); // 토큰 저장
-            store.commit("login", {accessToken: result.data.accessToken}); // store의 login mutation 호출
-            store.dispatch("setVuexId", result.data.userId); // store의 setVuexId action 호출
-            store.dispatch("setVuexNickName", result.data.userNickName); // store의 setVuexNickName action 호출
-            this.$router.push("/")
+            // alert("로그인 성공");
+            jwt.saveToken(result.data);
+            store.commit("login", { accessToken: result.data });
+            store.dispatch("setVuexId", result.data.userId);
+            store.dispatch("setVuexNickName", result.data.userNickName);
+            this.$router.go(-1);
           }
         })
         .catch((error) => {
-          console.log("오류발생")
+          console.log("오류발생");
           console.log(error);
-        })
+        });
     },
     logout() {
       this.$store.dispatch("logout"); // store의 logout action 호출

@@ -1,96 +1,85 @@
 <template>
-    <div class="SingupPage-container">
-        <div class="SignupPage-outer-box">
-            <div class="SignupPage-middle-box">
-                <div class="SignupPage-inner-box">
-                    <div class="SignupPage-box">
-                        <div class="SignupPage-name">
-                            <span class="SignupPage-Input-name">아이디</span>
-                        </div>
-                        <div class="SignupPage-text">
-                            <input type="text" id="email" class="SignupPage-Input-Text" v-model="userId">
-                        </div>
-                        <div class="SignupPage-Id-Btn">
-                            <button type="button" @click="confirmId()" class="ID-Confirm-Btn">중복확인</button>
-                        </div>
-                        <span v-if="count === 2"></span>
-                        <span v-else-if="count === 1"> 가입된 아이디가 존재합니다</span>
-                        <span v-else-if="count === 0"> 사용 가능한 아이디입니다</span>
-                    </div>
-                    <div class="SignupPage-box">
-                        <div class="SignupPage-name">
-                            <span class="SignupPage-Input-name">비밀번호</span>
-                        </div>
-                        <div class="SignupPage-text">
-                            <input type="password" id="password" class="SignupPage-Input-Text" v-model="userPw">
-                        </div>
-                    </div>
-                    <div class="SignupPage-box">
-                        <div class="SignupPage-name">
-                            <span class="SignupPage-Input-name">비밀번호확인</span>
-                        </div>
-                        <div class="SignupPage-text">
-                            <input type="password" class="SignupPage-Input-Text" v-model="userPwCheck">
-                        </div>
-                    </div>
-                    <div class="SignupPage-box">
-                        <div class="SignupPage-name">
-                            <span class="SignupPage-Input-name">이름</span>
-                        </div>
-                        <div class="SignupPage-text">
-                            <input type="text" rules="" class="SignupPage-Input-Text" v-model="userName">
-                        </div>
-                    </div>
-                    <div class="SignupPage-box">
-                        <div class="SignupPage-name">
-                            <span class="SignupPage-Input-name">닉네임</span>
-                        </div>
-                        <div class="SignupPage-text">
-                            <input type="text" class="SignupPage-Input-Text" v-model="userNickname">
-                        </div>
-                    </div>
-                    <div class="SignupPage-box">
-                        <div class="SignupPage-name">
-                            <span class="SignupPage-Input-name">전화번호</span>
-                        </div>
-                        <div class="SignupPage-text">
-                            <input type="text" class="SignupPage-Input-Text" v-model="userphoneNumber">
-                        </div>
-                    </div>
-                    <div class="SignupPage-box">
-                        <div class="SignupPage-name">
-                            <span class="SignupPage-Input-name">주소</span>
-                        </div>
-                        <div class="SignupPage-text">
-                            <input type="text" class="SignupPage-Input-Text" v-model="userAdress">
-                        </div>
-                    </div>
-                    <div class="SignupPage-Ability-box">
-                        <div class="SignupPage-Ability-name">
-                            <span class="SignupPage-Input-name">특기</span>
-                        </div>
-                        <div class="SignupPage-Ability-textbox">
-                            <input type="text" class="SignupPage-Ability-Text" v-model="userAbility">
-                        </div>
-                    </div>
-                    <div class="SignupPage-Ability-box">
-                        <div class="SignupPage-Ability-name">
-                            <span class="SignupPage-Input-name">숙련도</span>
-                        </div>
-                        <div class="SignupPage-skill-radio">
-                            <input type="radio" id="first-skill" name="skill" v-model="userSkill">
-                            <label for="first-skill">중수</label>
-                            <input type="radio" id="second-skill" name="skill" v-model="userSkill">
-                            <label for="second-skill">초보</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="SignupPage-Signup-Btn">
-                    <button type="submit" class="SignUp-Btn">회원가입</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <v-container>
+        <v-form @submit.prevent="submitForm">
+            <v-card>
+                <v-card-title>회원가입</v-card-title>
+                <v-card-text>
+                    <v-row>
+                        <v-col cols="6">
+                            <v-text-field v-model="userId" :rules="[rules.email]" label="아이디" outlined
+                                required></v-text-field>
+                            <v-alert v-if="count === 2" type="warning" transition="scale-transition" outlined>
+                                중복확인을 해주세요.
+                            </v-alert>
+                            <v-alert v-if="count === 1" type="error" transition="scale-transition" outlined>
+                                가입된 아이디가 존재합니다.
+                            </v-alert>
+                            <v-alert v-if="count === 0" type="success" transition="scale-transition" outlined>
+                                사용 가능한 아이디입니다.
+                            </v-alert>
+                        </v-col>
+                        <v-btn @click="confirmId">중복확인</v-btn>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <v-text-field v-model="userPw" label="비밀번호" type="password" outlined required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="6">
+                            <v-text-field v-model="userPwCheck" :rules="[rules.pwcheck]" label="비밀번호 확인" type="password" outlined
+                                required></v-text-field>
+                        </v-col>
+                    </v-row>
+                    <v-row>
+                        <v-col cols="6">
+                            <v-text-field v-model="userName" label="이름" outlined required></v-text-field>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <v-text-field v-model="userNickname" label="닉네임" outlined required></v-text-field>
+                        </v-col>
+                        <v-btn @click="confirmNickname">중복확인</v-btn>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <v-text-field v-model="userPhoneNumber" label="전화번호" outlined required></v-text-field>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="6">
+                            <v-text-field v-model="userAddress" label="주소" outlined required></v-text-field>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="3">
+                            <v-select v-model="choice" label="대분류" :items="categories" @change="fetchcategoryMedium"></v-select>
+                        </v-col>
+                        <v-col cols="3">
+                            <v-select v-model="RunningMcategory" id="Running-Mcategory" label="중분류" :items="categorymMedium"
+                                @change="inputSelectVal"></v-select>
+                        </v-col>
+                    </v-row>
+
+                    <v-row>
+                        <v-col cols="12">
+                            <v-radio-group v-model="userSkill" row>
+                                <v-radio value="중수" label="중수"></v-radio>
+                                <v-radio value="초보" label="초보"></v-radio>
+                            </v-radio-group>
+                        </v-col>
+                    </v-row>
+                    <v-btn @click="confirmNickname">회원가입</v-btn>
+                </v-card-text>
+            </v-card>
+        </v-form>
+    </v-container>
 </template>
 
 <script>
@@ -99,6 +88,10 @@ export default {
     components: {},
     data() {
         return {
+            rules: {
+                email: v => !!(v || '').match(/@/) || '이메일 형식으로 입력해주세요',
+                pwcheck: v=> v === this.userPw || '입력하신 비밀번호와 다릅니다'
+            },
             userId: "",
             userPw: "",
             userPwCheck: "",
@@ -120,7 +113,7 @@ export default {
             this.$axios({
                 url: `http://${serverIP}:${serverPort}/${pageUrl}`,
                 method: 'GET',
-                params: {
+                data: {
                     userId: this.userId
                 },
 
@@ -129,42 +122,23 @@ export default {
                 this.count = parseInt(result.data);
 
             })
-
-
         },
-        async formSubmit() {
-            const refUserId = await this.$refs.refUserId.validate()
-            if (!refUserId.validate) {
-                alert(refUserId.error[0])
-                return false
-            }
-            const refPassword = await this.$refs.refPassword.validate()
-            if (!refPassword.validate) {
-                alert(refPassword.error[0])
-                return false
-            }
-            const refPasswordChk = await this.$refs.refPasswordChk.validate()
-            if (!refPasswordChk.validate) {
-                alert(refPasswordChk.error[0])
-                return false
-            }
+        confirmNickname() {
+            var serverIP = '127.0.0.1',
+                serverPort = 8080,
+                pageUrl = 'runup/user/Nickname'
+            this.$axios({
+                url: `http://${serverIP}:${serverPort}/${pageUrl}`,
+                method: 'GET',
+                data: {
+                    userNickname: this.userNickName
+                },
 
-            this.$store
-                .dispatch("signup", {
-                    userId: this.userId,
-                    userPw: this.userPw,
-                    userPwCheck: this.userPwCheck,
-                })
-                .then(response => {
-                    if (response.status == 200) {
-                        this.$router.push({
-                            name: "HelpTouch",
-                        })
-                    }
-                })
-                .catch(({ message }) => alert(message))
+            }).then((result) => {
+                console.log(result)
+                this.count = parseInt(result.data);
 
-            return true
+            })
         }
     }
 }
@@ -311,5 +285,6 @@ export default {
     width: 100px;
     height: 25px;
     font-size: large;
-}</style>
+}
+</style>
 

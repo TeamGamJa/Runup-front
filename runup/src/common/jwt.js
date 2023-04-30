@@ -1,19 +1,16 @@
-const ID_TOKEN_KEY = "id_token"
+// jwt.js
 
-export const getToken = () => {
-  return window.localStorage.getItem(ID_TOKEN_KEY)
-}
-
-export const saveToken = token => {
-  window.localStorage.setItem(ID_TOKEN_KEY, token)
-}
-
-export const destroyToken = () => {
-  window.localStorage.removeItem(ID_TOKEN_KEY)
-}
+const ACCESS_TOKEN_KEY = "accessToken"; // "id-token"에서 "accessToken"으로 변경
 
 export default {
-  getToken,
-  saveToken,
-  destroyToken,
+  getToken() {        // localstorage에서 액세스 토큰을 검색
+    return localStorage.getItem(ACCESS_TOKEN_KEY); // 
+  },
+  saveToken(token) {  // localStorage에서 액세스 토큰을 저장
+    console.log('토큰호출'+token)
+    localStorage.setItem(ACCESS_TOKEN_KEY, token); // "id-token"에서 "ACCESS_TOKEN_KEY"로 변경
+  },
+  destroyToken() {    // localStorage에서 액세스 토큰을 삭제
+    localStorage.removeItem(ACCESS_TOKEN_KEY); // "id-token"에서 "ACCESS_TOKEN_KEY"로 변경
+  },
 }

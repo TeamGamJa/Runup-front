@@ -167,7 +167,6 @@ export default {
     selectedOpen: false,
     events: [],
     colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-    names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
     eventTitle: '',
     eventDetails: '',
     eventStartTime: '',
@@ -186,9 +185,7 @@ export default {
     runningEndTime: '',
     // 테스트용
     runningStartBig: 1,
-
     runningEndBig: 1,
-
     runningKeep: false,
     userNum: 2,
   }),

@@ -5,12 +5,18 @@ Vue.use(Router)
 
 import store from "../store/store"
 
+// Vue Router의 Navigation Guards 중 하나인 beforeEach 함수를 사용해 인증 여부를 체크하는 함수를 정의하는 코드
+// isAuth는 함수의 인자로 Boolean 값을 받는다.
+// 이 함수는 store.getters["isAuthenticated"]를 사용하여 현재 사용자가 인증되어 있는지 여부를 가져온다. 가져온 것을 isAuthenticated 변수에 저장
+// isAuth와 isAuthenticated의 값을 비교해서 값이 일치하면 next() 틀리면 next("/SignIn")를 호출하여 로그인으로 이동
 const beforeAuth = isAuth => (to, from, next) => {
-    const isAuthenticated = store.getters["isAuthenticated"]
-    if((isAuthenticated && isAuth) || (!isAuthenticated && !isAuth)) {
+    const isAuthenticated = store.state.isAuthenticated
+    console.log(isAuthenticated);
+    console.log(isAuth);
+    if((isAuthenticated == isAuth)) {
         return next()
     } else {
-        next("/")  // 홈 화면으로 이동
+        next("/SignIn")  // 홈 화면으로 이동
     }
 }
 
@@ -35,6 +41,7 @@ import DetailRunning from '../views/Running/DetailRunning'
 
 // 도움 닫기 
 import CreateRunning from '../views/Running/CreateRun/CreateRunning'
+
 
 
 const routes = [
@@ -74,7 +81,7 @@ const routes = [
         path: "/CreateRunning",
         name: "CreateRunning",
         component: CreateRunning,
-        beforeEnter: beforeAuth(false)
+        beforeEnter: beforeAuth(1)
     },
 ]
 

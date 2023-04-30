@@ -1,48 +1,47 @@
 <template>
-    <div class="Running-container">
-        <div class="Running-header">
-            <v-row class="Running-category">
-                <v-col cols="3">
-                    <v-select v-model="choice" label="대분류" :items="categories" @change="fetchcategoryMedium"></v-select>
-                </v-col>
-                <v-col cols="3">
-                    <v-select v-model="RunningMcategory" id="Running-Mcategory" label="중분류" :items="categorymMedium"
-                        @change="inputSelectVal"></v-select>
-                </v-col>
-                <v-col cols="3">
-                    <v-btn color="primary" dark @click.prevent="categorySearch()">검색</v-btn>
-                </v-col>
-            </v-row>
+    <v-container>
+        <div class="Running-container">
+            <v-card>
+                <div class="Running-header">
+                    <v-row class="Running-category">
+                        <v-col cols="3">
+                            <v-select v-model="choice" label="대분류" :items="categories" @change="fetchcategoryMedium"></v-select>
+                        </v-col>
+                        <v-col cols="3">
+                            <v-select v-model="RunningMcategory" id="Running-Mcategory" label="중분류" :items="categorymMedium"
+                                @change="inputSelectVal"></v-select>
+                        </v-col>
+                        <v-col cols="3">
+                            <v-btn color="primary" dark @click.prevent="categorySearch()">검색</v-btn>
+                        </v-col>
+                    </v-row>
+                </div>
+                <v-card-title>
+                    <!-- 공백을 남겨놓아야 검색란의 크기가 전체적으로 퍼지지 않는다 -->
+                    <v-spacer></v-spacer>
+                    <v-text-field v-model="search" label="검색" single-line hide-details></v-text-field>
+                </v-card-title>
+                <v-data-table :headers="headers" :items="runningList" :items-per-page="8"
+                    :options="{ itemsPerPageOptions: [] }" class="elevation=1">
+                    <template v-slot:items="props">
+                        <tr @mouseclick="goToDetailPage(props.item)">
+                            <td>{{ props.item.RunningNum }}</td>
+                            <td class="text-xs-center">{{ props.item.RunningTitle }} </td>
+                            <td class="text-xs-center">{{ props.item.userNickname }}</td>
+                            <td class="text-xs-center">{{ props.item.runningCategoryMedium }}</td>
+                            <td class="text-xs-center">{{ props.item.userLuxColor }}</td>
+                            <td class="text-xs-center">{{ props.item.userMentorCnt }}</td>
+                            <td class="text-xs-center">{{ props.item.RunningDate }}</td>
+                            <td class="text-xs-center">{{ props.item.RunningAble }}</td>
+                        </tr>
+                    </template>
+                </v-data-table>
+                <v-sheet id="scroll-threshold-example" class="overflow-y-auto pb-16" max-height="600">
+                    <v-responsive height="auto"></v-responsive>
+                </v-sheet>
+            </v-card>
         </div>
-        <v-card>
-            <v-card-title>
-                <!-- 공백을 남겨놓아야 검색란의 크기가 전체적으로 퍼지지 않는다 -->
-                <v-spacer></v-spacer>
-                <v-text-field v-model="search" label="검색" single-line hide-details></v-text-field>
-            </v-card-title>
-            <v-data-table :headers="headers" :items="runningList" :items-per-page="8" :options="{ itemsPerPageOptions: [] }"
-                class="elevation=1">
-                <template v-slot:items="props">
-                    <tr @mouseclick="goToDetailPage(props.item)">
-                        <td>{{ props.item.RunningNum }}</td>
-                        <td class="text-xs-center">{{ props.item.RunningTitle }} </td>
-                        <td class="text-xs-center">{{ props.item.userNickname }}</td>
-                        <td class="text-xs-center">{{ props.item.runningCategoryMedium }}</td>
-                        <td class="text-xs-center">{{ props.item.userLuxColor }}</td>
-                        <td class="text-xs-center">{{ props.item.userMentorCnt }}</td>
-                        <td class="text-xs-center">{{ props.item.RunningDate }}</td>
-                        <td class="text-xs-center">{{ props.item.RunningAble }}</td>
-                    </tr>
-                </template>
-            </v-data-table>
-            <v-bottom-navigation absolute color="white" hide-on-scroll horizontal scroll-target="#scroll-threshold-example"
-                scroll-threshold="500">
-            </v-bottom-navigation>
-            <v-sheet id="scroll-threshold-example" class="overflow-y-auto pb-16" max-height="600">
-                <v-responsive height="auto"></v-responsive>
-            </v-sheet>
-        </v-card>
-    </div>
+    </v-container>
 </template>
 
 <script>
@@ -79,7 +78,7 @@ export default {
         // this.fetchrunninglistall()
         this.fetchcategoryBig()
         // this.fetchcategoryMedium()
-        this.fetchrunningList()
+        // this.fetchrunningList()
     },
     mounted() {
         this.fetchrunningList()
@@ -101,7 +100,7 @@ export default {
             }
         },
         updateRunningList(list) {
-            console.log(list);
+            // console.log(list);
             this.runningList = list;
         },
         categorySearch() {
@@ -184,9 +183,9 @@ export default {
                 url: `http://${serverIP}:${serverPort}/${pageUrl}`,
                 method: "GET",
             }).then(response => {
-                console.log(response)
+                // console.log(response)
                 this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
-               
+
             }).catch(error => {
                 console.log(error)
             })
@@ -200,13 +199,14 @@ export default {
     display: flex;
     background-color: white;
     flex-direction: column;
-    height: 580px;
+    height: 660px;
 }
 
 .Running-header {
     display: inline-flex;
     width: 100%;
     height: 50px;
+    margin-left: 10px;
 }
 
 .Running-body {
