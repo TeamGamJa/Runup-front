@@ -9,7 +9,7 @@
                     <v-row>
                         <v-col cols="10" >
                             <v-text-field v-model="userId" :rules="[rules.email]" label="아이디" outlined
-                                required class="text-field"></v-text-field>
+                                required class="text-field" background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                             <v-alert v-if="count === 2" type="warning" transition="scale-transition" outlined>
                                 중복확인을 해주세요.
                             </v-alert>
@@ -27,38 +27,38 @@
                         <v-col cols="10">
                             <v-text-field v-model="userPw" label="비밀번호" outlined required
                             :type="show1 ? 'text' : 'password'" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                             @click:append="show1 = !show1" class="text-field"></v-text-field>
+                             @click:append="show1 = !show1" class="text-field" background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="10">
                             <v-text-field v-model="userPwCheck" :rules="[rules.pwcheck]" label="비밀번호 확인" 
-                            :type="show1 ? 'text' : 'password'" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                            @click:append="show1 = !show1" outlined required class="text-field"></v-text-field>
+                            :type="show2 ? 'text' : 'password'" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                            @click:append="show2 = !show2" outlined required class="text-field" background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field v-model="userName" label="이름" outlined required></v-text-field>
+                            <v-text-field v-model="userName" label="이름" outlined required background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                     </v-row>
 
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field v-model="userNickname" label="닉네임" outlined required></v-text-field>
+                            <v-text-field v-model="userNickname" label="닉네임" outlined required background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                         <v-btn @click="confirmNickname" class="confirmBtn" :rounded="true">중복확인</v-btn>
                     </v-row>
 
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field v-model="userPhoneNumber" label="전화번호" outlined required></v-text-field>
+                            <v-text-field v-model="userPhoneNumber" label="전화번호" outlined required background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                     </v-row>
 
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field v-model="userAddress" label="주소" outlined required></v-text-field>
+                            <v-text-field v-model="userAddress" label="주소" outlined required background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                     </v-row>
 
@@ -71,17 +71,17 @@
                             <v-select v-model="RunningMcategory" id="Running-Mcategory" label="중분류" :items="categoryMedium"
                                 @change="inputSelectVal"></v-select>
                         </v-col>
-                    </v-row>
-
-                    <v-row>
-                        <v-col cols="12">
+                        <v-col cols="5">
                             <v-radio-group v-model="userSkill" row>
                                 <v-radio value="중수" label="중수"></v-radio>
                                 <v-radio value="초보" label="초보"></v-radio>
                             </v-radio-group>
                         </v-col>
                     </v-row>
-                    <v-btn @click="SignUp()">회원가입</v-btn>
+
+                    <v-row>
+                    </v-row>
+                    <v-btn @click="SignUp()" class="SignupBtn" :rounded="true">회원가입</v-btn>
                 </v-card-text>
             </v-card>
         </v-form>
@@ -113,6 +113,7 @@ export default {
             categoryMedium: [''],
             RunningMcategory: '',
             show1: false,
+            show2: false,
         }
     },
     computed: {},
@@ -214,6 +215,15 @@ export default {
     border-radius: 200px;
     margin-top: 20px;
     
+}
+.SignupBtn {
+    color: black !important;
+    background-color: rgba(244, 209, 155, 1) !important;
+    justify-content: flex-end;
+    border-radius: 200px;
+    margin-top: 20px;
+    width: 300px;
+    margin-left: 140px;
 }
 </style>
 

@@ -149,6 +149,8 @@
 </template>
 
 <script>
+import store from '@/store/store'
+
 export default {
   data: () => ({
     focus: '',
@@ -183,7 +185,7 @@ export default {
     // 테스트용
     runningStartBig: 1,
     runningEndBig: 1,
-    runningKeep: false,
+    runningKeep: false, 
     userNum: 2,
   }),
   // mounted() {
@@ -291,7 +293,7 @@ export default {
           runningStartBig: 1,
           runningEndBig: 1,
           runningKeep: false,
-          userNum: 2,
+          userNum: store.getters.userNum
         }
       }).then(response => {
         console.log(response)

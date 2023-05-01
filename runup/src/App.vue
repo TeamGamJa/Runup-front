@@ -118,10 +118,10 @@ export default {
       }
     },
     goToMyPage() {
-      this.$router.push('/Mypage')
+      this.$router.push('/MyPage')
     },
     goToMessageBox() {
-      this.$router.push('/MessageBox')
+      this.$router.push('/MainMessage')
     },
     logout() {
       store.dispatch('logout').then(() => {
