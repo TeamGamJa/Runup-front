@@ -66,15 +66,16 @@ export default {
         })
         .then((result) => {
           // console.log("axios 성공");
-          // console.log(result);
+          console.log(result);
           if (result.data == "") {
             alert("로그인 실패");
           } else {
             // alert("로그인 성공");
             jwt.saveToken(result.data);
-            store.commit("login", { accessToken: result.data });
+            store.commit("login", { accessToken: result.data.token });
             store.dispatch("setVuexId", result.data.userId);
-            store.dispatch("setVuexNickName", result.data.userNickName);
+            store.dispatch("setVuexNickname", result.data.userNickname);
+            store.dispatch("setVuexNum", result.data.userNum)
             this.$router.go(-1);
           }
         })
