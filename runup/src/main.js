@@ -5,11 +5,13 @@ import store from './store/store'
 import axios from 'axios'
 import moment from 'moment' // 날짜와 시간을 더욱 효과적으로 쓰기 위한 라이브러리
 import { format } from 'date-fns';
+// import VueNativeSock from 'vue-native-websocket'
 
 //vuetify
 // import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import vuetify from './plugins/vuetify'
+// import { VueNativeSock } from 'vue-native-websocket'
 
 Vue.use(vuetify);
 
@@ -24,7 +26,6 @@ new Vue({
   router,
   store,
   format,
-  // vuetify: new Vuetify(),
   vuetify,
   render: h => h(App)
 }).$mount('#app')

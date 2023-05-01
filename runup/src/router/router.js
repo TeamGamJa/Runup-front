@@ -42,6 +42,9 @@ import DetailRunning from '../views/Running/DetailRunning'
 // 도움 닫기 
 import CreateRunning from '../views/Running/CreateRun/CreateRunning'
 
+// 채팅
+import ChatView from '../views/chatting/ChatView.vue'
+
 
 
 const routes = [
@@ -82,6 +85,11 @@ const routes = [
         name: "CreateRunning",
         component: CreateRunning,
         beforeEnter: beforeAuth(1)
+    },
+    {
+        path: "/Chat",
+        name: "Chat",
+        component: ChatView,
     },
 ]
 

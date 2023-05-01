@@ -139,6 +139,26 @@ export default {
                 this.count = parseInt(result.data);
 
             })
+        },
+        regist() {
+            var serverIP = '127.0.0.1',
+                serverPort = 8080,
+                pageUrl = 'runup/user/Nickname'
+            this.$axios({
+                url: `http://${serverIP}:${serverPort}/${pageUrl}`,
+                method: 'GET',
+                data: {
+                    userId: this.userId,
+                    userPw: this.userPw,
+                    userName: this.userName,
+                    userNickname: this.userNickname,
+                    userPhoneNumber: this.userPhoneNumber,
+                    userAdress: this.userAdress,
+                    userAbility: this.userAbility,
+                    userSkill: this.userSkill,
+                    count: this.count,
+                    },
+            })
         }
     }
 }
