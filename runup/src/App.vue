@@ -10,7 +10,7 @@
         </v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn text to="/FoundRunning" class="menuBtn" :rounded="true">도움받기</v-btn>
-        <v-btn text to="/CreateRunning" class="menuBtn" :rounded="true">도움주기</v-btn>
+        <v-btn text to="/CreateRunning" class="menuBtn" :rounded="true">도움관리</v-btn>
         <v-btn text to="/QA" class="menuBtn" :rounded="true">묻고 답하기</v-btn>
         <v-btn text to="/pool" class="menuBtn" :rounded="true">옹달셈</v-btn>
         <!-- 로그인 여부에 따라 다르게 화면을 나타내야된다 -->
@@ -86,32 +86,32 @@ export default {
      
     };
   },
-  created() {
-  if (store.getters.isAuthenticated) {
-    // 토큰이 있을 경우 처리
-    this.$options.methods.handleButtonClick = () => {
-      this.drawer = !this.drawer;
-    }
-  } else {
-    // 토큰이 없을 경우 처리
-    this.$options.methods.handleButtonClick = () => {
-      this.$router.push('/SignIn');
-    }
-  }
-},
-mounted() {
-  if (store.getters.isAuthenticated) {
-    // 토큰이 있을 경우 처리
-    this.$options.methods.handleButtonClick = () => {
-      this.drawer = !this.drawer;
-    }
-  } else {
-    // 토큰이 없을 경우 처리
-    this.$options.methods.handleButtonClick = () => {
-      this.$router.push('/SignIn');
-    }
-  }
-},
+//   created() {
+//   if (store.getters.isAuthenticated) {
+//     // 토큰이 있을 경우 처리
+//     this.$options.methods.handleButtonClick = () => {
+//       this.drawer = !this.drawer;
+//     }
+//   } else {
+//     // 토큰이 없을 경우 처리
+//     this.$options.methods.handleButtonClick = () => {
+//       this.$router.push('/SignIn');
+//     }
+//   }
+// },
+// mounted() {
+//   if (store.getters.isAuthenticated) {
+//     // 토큰이 있을 경우 처리
+//     this.$options.methods.handleButtonClick = () => {
+//       this.drawer = !this.drawer;
+//     }
+//   } else {
+//     // 토큰이 없을 경우 처리
+//     this.$options.methods.handleButtonClick = () => {
+//       this.$router.push('/SignIn');
+//     }
+//   }
+// },
   computed: {
       isAuthenticated() {
         return store.getters.isAuthenticated;
@@ -119,7 +119,7 @@ mounted() {
     },
   methods: {
       handleButtonClick() {
-    if (store.getters.isAuthenticated) {
+    if (this.isAuthenticated) {
       // drawer 이벤트 발생
       this.drawer = !this.drawer;
     } else {

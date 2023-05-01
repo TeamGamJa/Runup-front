@@ -10,10 +10,10 @@ const state = {
   VuexId: "",
   VuexNickname: "",
   count: 0,
-  token: {
+  token: { // 사용자 인증을 위한 데이터 구조체로 사용자를 구분하는 고유한 식별자나 사용자의 권한 정보 등을 포함
     accessToken: jwt.getToken(),
   },
-  isAuthenticated: !!jwt.getToken(),
+  isAuthenticated: !!jwt.getToken(), // 사용자가 인증되었는지 여부를 나타내는 Vuex의 상태변수
 }
 
 const getters = {
