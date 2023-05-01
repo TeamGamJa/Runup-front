@@ -4,6 +4,7 @@ const ACCESS_TOKEN_KEY = "accessToken"; // "id-token"에서 "accessToken"으로 
 
 export default {
   getToken() {        // localstorage에서 액세스 토큰을 검색
+    console.log('getToken 불림당했다')
     return localStorage.getItem(ACCESS_TOKEN_KEY); // 
   },
   saveToken(token) {  // localStorage에서 액세스 토큰을 저장
