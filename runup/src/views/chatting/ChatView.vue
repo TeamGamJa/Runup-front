@@ -48,7 +48,6 @@ export default {
 		onConnect: (frame) => {
 		console.log("Connected to server:", frame)
 		this.stompClient.subscribe(`/topic/${this.roomId}`, (message) => {
-			// console.log("Received message:", message);
 			this.messages.push(JSON.parse(message.body));
 		});
 		},
@@ -56,13 +55,6 @@ export default {
 			console.log("Stomp error:", error)
 		}
       })
-
-    //   this.stompClient.onConnect = () => {
-	// 	this.stompClient.subscribe(`/topic/${this.roomId}`, (message) => {
-	// 		console.log(message)
-	// 		this.messages.push(JSON.parse(message.body))
-	// 	})
-	// 	}
 
       this.stompClient.activate()
     },
@@ -72,16 +64,14 @@ export default {
       }
     },
     sendMessage() {
-		console.log(this.messageContent);
 		if (this.stompClient.connected) {
 			this.stompClient.publish({
-			destination: `/app/chat/${this.roomId}/sendMessage`,
+			destinationㅞ: `/app/chat/${this.roomId}/sendMessage`,
 			body: JSON.stringify({
 				content: this.messageContent,
 				sender: 'USERNAME',
 			}),
 			})
-			console.log("test"),
 			this.messageContent = ''
 		}
     },
