@@ -84,7 +84,7 @@ const routes = [
         path: "/CreateRunning",
         name: "CreateRunning",
         component: CreateRunning,
-        beforeEnter: beforeAuth(1)
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/Chat",

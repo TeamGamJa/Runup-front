@@ -76,7 +76,9 @@ export default {
             store.dispatch("setVuexId", result.data.userId);
             store.dispatch("setVuexNickname", result.data.userNickname);
             store.dispatch("setVuexNum", result.data.userNum)
-            this.$router.go(-1);
+            this.$router.push('/')
+            // this.$router.go(-1)
+            // location.reload()
           }
         })
         .catch((error) => {
