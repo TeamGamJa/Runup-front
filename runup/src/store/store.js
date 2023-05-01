@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate';
 
 import jwt from "../common/jwt"
 import http from "../http/index"
@@ -9,6 +10,7 @@ Vue.use(Vuex)
 const state = {
   VuexId: "",
   VuexNickname: "",
+  VuexNum: "",
   count: 0,
   token: { // 사용자 인증을 위한 데이터 구조체로 사용자를 구분하는 고유한 식별자나 사용자의 권한 정보 등을 포함
     accessToken: jwt.getToken(),
@@ -17,10 +19,10 @@ const state = {
 }
 
 const getters = {
-  getuserId: (state) => {
+  getUserId: (state) => {
     return state.VuexId;
   },
-  getuserNickname: (state) => {
+  getUserNickname: (state) => {
     return state.VuexNickname;
   },
 
@@ -34,6 +36,9 @@ const getters = {
       return 1;
     }
   },
+  getUserNum(state) {
+    return state.VuexNum;
+  }
 }
 
 const mutations = {
@@ -43,7 +48,9 @@ const mutations = {
   mutSetVuexNickname: (state, userNickname) => {
     state.VuexNickname = userNickname;
   },
-
+  mutSetVuexNum: (state, userNum) => {
+    state.VuexNum = userNum;
+  },
   logout: function (state = {}) {
     state.token.accessToken = "";
     state.isAuthenticated = false;
@@ -66,7 +73,9 @@ const actions = {
   setVuexNickname: (context, userNickname) => {
     context.commit("mutSetVuexNickname", userNickname);
   },
-
+  setVuexNum: (context, userNum) => {
+    context.commit("mutSetVuexNum", userNum);
+  },
   logout: function (context, payload) {
     return new Promise((resolve) => {
       setTimeout(function () {
@@ -129,5 +138,10 @@ export default new Vuex.Store({
   getters,
   mutations,
   actions,
+  plugins: [
+    createPersistedState({
+      getters
+    })
+  ],
   modules: {},
 });
