@@ -149,6 +149,8 @@
 </template>
 
 <script>
+import store from '@/store/store'
+
 export default {
   data: () => ({
     focus: '',
@@ -183,16 +185,16 @@ export default {
     // 테스트용
     runningStartBig: 1,
     runningEndBig: 1,
-    runningKeep: false,
+    runningKeep: false, 
     userNum: 2,
   }),
-  mounted() {
-    this.$refs.calendar.checkChange(),
-      this.$nextTick(() => {
-        this.$refs.calendar.update();
-      });
-    this.fetchUpdateSchedule()
-  },
+  // mounted() {
+  //   this.$refs.calendar.checkChange(),
+  //     this.$nextTick(() => {
+  //       this.$refs.calendar.update();
+  //     });
+  //   this.fetchUpdateSchedule()
+  // },
   methods: {
     inputSelectVal(value) {
       this.RunningMcategory = value;
@@ -261,7 +263,7 @@ export default {
         const second = new Date(timestamp + (60 * 60 * 1000)); // 두 번째 이벤트 시작 시간 (1시간 이후)
 
         events.push({
-          name: this.names[this.rnd(0, this.names.length - 1)],
+          // name: this.names[this.rnd(0, this.names.length - 1)],
           start: first,
           end: second,
           color: this.colors[this.rnd(0, this.colors.length - 1)],
@@ -273,32 +275,6 @@ export default {
 
       return events;
     },
-
-    // updateRange({ start, end }) { // 새로운 이벤트를 생성하는 메소드 (현재 랜덤으로 이벤트를 생성 중에 있다.)
-    //   const events = []  // 빈 배열 events를 만든다. 여기에 생성된 이벤트를 추가할 예정
-
-    //   // start와 end 객체에서 날짜 정보를 추출
-    //   const min = new Date(`${start.date}T00:00:00`)  // 시작시간 00:00:00 으로 설정
-    //   const max = new Date(`${end.date}T23:59:59`)    // 종료시간 23:59:59 로 설정
-
-    //   const allDay = false; // 하루 종일 발생하는 이벤트는 true , 특정시간 이벤트는 false
-    //   const firstTimestamp = Math.round(this.rnd(min.getTime(), max.getTime()) / (60 * 60 * 1000)) * (60 * 60 * 1000); // 60분 간격으로 반올림
-    //   const first = new Date(firstTimestamp);
-    //   const secondTimestamp = this.rnd(2, allDay ? 24 : 8) * (60 * 60 * 1000); // 2-24시간 또는 2-8시간 사이의 무작위 값 생성
-    //   const second = new Date(first.getTime() + secondTimestamp);
-
-
-    //   events.push({
-    //     name: this.names[this.rnd(0, this.names.length - 1)],
-    //     start: first,
-    //     end: second,
-    //     color: this.colors[this.rnd(0, this.colors.length - 1)],
-    //     timed: !allDay,
-    //   })
-
-
-    //   this.events = events
-    // },
     ceateRunning() {
       var serverIP = '127.0.0.1',
         serverPort = 8080,
@@ -317,7 +293,7 @@ export default {
           runningStartBig: 1,
           runningEndBig: 1,
           runningKeep: false,
-          userNum: 2,
+          userNum: store.getters.userNum
         }
       }).then(response => {
         console.log(response)

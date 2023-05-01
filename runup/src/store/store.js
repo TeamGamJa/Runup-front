@@ -29,12 +29,13 @@ const getters = {
   getAccessToken(state) {
     return state.token.accessToken;
   },
-  isAuthenticated() {
-    if (localStorage.getItem('accessToken') == null) {
-      return 0;
-    } else {
-      return 1;
-    }
+  isAuthenticated(state) {
+    // if (localStorage.getItem('accessToken') == null) {
+    //   return 0;
+    // } else {
+    //   return 1;
+    // }
+    return state.isAuthenticated;
   },
   getUserNum(state) {
     return state.VuexNum;
@@ -57,6 +58,7 @@ const mutations = {
     jwt.destroyToken();
   },
   login: function (state, payload = {}) {
+    console.log('asdfasdf');
     state.token.accessToken = payload.accessToken;
     state.isAuthenticated = true;
     jwt.saveToken(payload.accessToken);
@@ -139,7 +141,7 @@ export default new Vuex.Store({
   mutations,
   actions,
   plugins: [
-    createPersistedState({
+    createPersistedState({ // 여기안에 쓸 모듈들을 저장해라.
       getters
     })
   ],

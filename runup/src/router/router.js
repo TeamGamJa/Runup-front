@@ -45,7 +45,11 @@ import CreateRunning from '../views/Running/CreateRun/CreateRunning'
 // 채팅
 import ChatView from '../views/chatting/ChatView.vue'
 
+// 내 정보
+import MyPage from '../views/MyInfo/MyPage'
 
+// 쪽지함
+import MainMessage from '../views/MessageBox/MainMessage'
 
 const routes = [
     {
@@ -84,12 +88,22 @@ const routes = [
         path: "/CreateRunning",
         name: "CreateRunning",
         component: CreateRunning,
-        beforeEnter: beforeAuth(1)
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/Chat",
         name: "Chat",
         component: ChatView,
+    },
+    {
+        path: "/MyPage", 
+        name: "MyPage",
+        component: MyPage,
+    },
+    {
+        path: "/MainMessage",
+        name: "MainMessage",
+        component: MainMessage,
     },
 ]
 

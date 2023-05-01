@@ -183,7 +183,7 @@ export default {
                 url: `http://${serverIP}:${serverPort}/${pageUrl}`,
                 method: "GET",
             }).then(response => {
-                // console.log(response)
+                console.log(response)
                 this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
 
             }).catch(error => {
