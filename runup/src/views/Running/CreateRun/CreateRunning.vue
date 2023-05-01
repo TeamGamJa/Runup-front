@@ -188,13 +188,13 @@ export default {
     runningKeep: false, 
     userNum: 2,
   }),
-  // mounted() {
-  //   this.$refs.calendar.checkChange(),
-  //     this.$nextTick(() => {
-  //       this.$refs.calendar.update();
-  //     });
-  //   this.fetchUpdateSchedule()
-  // },
+  mounted() {
+    this.$refs.calendar.checkChange(),
+      // this.$nextTick(() => {
+      //   this.$refs.calendar.update();
+      // });
+    this.fetchUpdateSchedule()
+  },
   methods: {
     inputSelectVal(value) {
       this.RunningMcategory = value;
@@ -283,7 +283,7 @@ export default {
         url: `http://${serverIP}:${serverPort}/${pageUrl}`,
         method: "POST",
         data: {
-          runningRegisterDate: this.selectDate,
+          runningDate: this.selectDate,
           runningTitle: this.runningTitle,
           runningContent: this.runningDetails,
           runningStartSmall: this.runningStartTime,
@@ -293,7 +293,7 @@ export default {
           runningStartBig: 1,
           runningEndBig: 1,
           runningKeep: false,
-          userNum: store.getters.userNum
+          userNum: store.getters.getUserNum,
         }
       }).then(response => {
         console.log(response)

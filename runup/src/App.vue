@@ -12,7 +12,7 @@
         <v-btn text to="/FoundRunning" class="menuBtn" :rounded="true">도움받기</v-btn>
         <v-btn text to="/CreateRunning" class="menuBtn" :rounded="true">도움관리</v-btn>
         <v-btn text to="/QA" class="menuBtn" :rounded="true">묻고 답하기</v-btn>
-        <v-btn text to="/pool" class="menuBtn" :rounded="true">옹달셈</v-btn>
+        <v-btn text to="/pool" class="menuBtn" :rounded="true">옹달샘</v-btn>
         <!-- 로그인 여부에 따라 다르게 화면을 나타내야된다 -->
         <v-btn text class="menuBtn-1" :rounded="true"
           @click="handleButtonClick"><v-icon>mdi-account-circle</v-icon></v-btn>

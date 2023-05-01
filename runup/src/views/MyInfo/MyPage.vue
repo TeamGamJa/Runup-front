@@ -18,14 +18,14 @@
                         </v-row>
 
                     </v-card-text>
-                    <span class="group pa-2">
-                        <v-icon small><v-img height="10" :rounded="true" src="https://ifh.cc/g/Awo9rH.png"></v-img> </v-icon>
-                    </span>
+                 
+                    
                     <v-progress-linear :rounded="true" v-model="UserLuxColor" color="rgba(244, 209, 155, 1)" height="25"
-                        style="max-width: 300px; margin: 35px;">
-                        <template v-slot:default="{ value }">
-                            <strong>{{ Math.ceil(value) }}</strong>
-                        </template>
+                    style="max-width: 300px; margin: 35px;" :clickable="false" striped>
+                   
+                        <v-img max-width="30px" max-height="30px" position="left" :rounded="true" src="https://ifh.cc/g/Awo9rH.png"></v-img>
+                            <!-- <strong>{{ Math.ceil(off) }}</strong> -->
+                        
                     </v-progress-linear>
 
                     <v-card-text>
@@ -78,7 +78,7 @@ export default {
     data: () => ({
         loading: false,
         selection: 1,
-        UserLuxColor: 20,
+        // UserLuxColor: 20,
     }),
 
     methods: {
@@ -121,4 +121,10 @@ export default {
     margin-top: 10px;
     margin-left: 50px;
     padding-left: 50px;
-}</style>
+}
+.group {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+}
+</style>
