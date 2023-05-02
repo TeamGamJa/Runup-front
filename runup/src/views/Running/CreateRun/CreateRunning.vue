@@ -2,10 +2,11 @@
   <v-container>
     <v-row class="fill-height">
       <v-col>
+
         <!-- 상단 달력 위에 설정 툴바 -->
         <v-sheet height="64">
           <v-toolbar flat>
-            <v-menu>
+            <!-- <v-menu>
               <template v-slot:activator="{ on, attrs }">
                 <v-btn outlined color="grey darken-2" v-bind="attrs" v-on="on">
                   <span>{{ typeToLabel[type] }}</span>
@@ -22,7 +23,7 @@
                   <v-list-item-title>일별</v-list-item-title>
                 </v-list-item>
               </v-list>
-            </v-menu>
+            </v-menu> -->
             <v-btn outlined class="mr-4" color="grey darken-2" @click="setToday">
               오늘
             </v-btn>
@@ -40,6 +41,7 @@
             <v-toolbar-title v-if="$refs.calendar">
               {{ $refs.calendar.title }}
             </v-toolbar-title>
+
             <!-- Runner 생성 -->
             <v-row justify="end">
               <v-dialog v-model="dialog" persistent max-width="600px">
@@ -65,10 +67,10 @@
                               <v-text-field label="날짜" v-model="selectDate" prepend-icon="mdi-calendar" readonly
                                 v-on="on"></v-text-field>
                             </template>
-                            <v-date-picker v-model="selectDate" no-title scrollable>
+                            <v-date-picker v-model="selectDate" no-title scrollable style="height: 420px;">
                               <v-spacer></v-spacer>
-                              <v-btn text color="primary" @click="DateMenu = false">Cancel</v-btn>
-                              <v-btn text color="primary" @click="$refs.DateMenu.save(selectDate)">OK</v-btn>
+                              <v-btn text color="primary" @click="$refs.DateMenu.save(selectDate)">저장</v-btn>
+                              <v-btn text color="primary" @click="DateMenu = false">취소</v-btn>
                             </v-date-picker>
                           </v-menu>
                         </v-col>
@@ -81,7 +83,7 @@
                             hint="시간단위로 설정됩니다." required></v-text-field>
                         </v-col>
                         <v-col cols="12">
-                          <v-text-field v-model="runningDetails" label="강의내용" hint="Learner에게 강의할 내용을 간략하게 적어주세요"
+                          <v-text-field v-model="runningContent" label="강의내용" hint="Learner에게 강의할 내용을 간략하게 적어주세요"
                             required></v-text-field>
                         </v-col>
                         <v-col cols="12" sm="6">
@@ -97,7 +99,7 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="ceateRunning">
+                    <v-btn color="blue darken-1" text @click="createRunning">
                       저장
                     </v-btn>
                     <v-btn color="blue darken-1" text @click="dialog = false">
@@ -109,36 +111,51 @@
             </v-row>
           </v-toolbar>
         </v-sheet>
+
         <!-- 달력 생성  -->
         <v-sheet height="600">
           <v-calendar ref="calendar" v-model="focus" color="primary" :events="events" :event-color="getEventColor"
-            :type="type" @click:event="showEvent" @click:more="viewDay" @click:date="viewDay"
-            @change="updateRange"></v-calendar>
+            :type="type" @click:event="showEvent" @change="updateRange"></v-calendar>
+          <!-- @click:more="viewDay" @click:date="viewDay" 일별로 날짜 보는 기능(지금은 안써서 주석) -->
+
           <!-- 달력안의 일정을 클릭 시 일정 상세-->
           <v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-x>
-            <v-card color="grey lighten-4" min-width="350px" flat>
-              <v-toolbar :color="selectedEvent.color" dark>
-                <v-btn icon>
-                  <v-icon>mdi-pencil</v-icon>
-                </v-btn>
-                <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
-                <v-spacer></v-spacer>
-              </v-toolbar>
+            <v-card :loading="loading" class="mx-auto my-12" max-width="374">
+              <template slot="progress">
+                <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
+              </template>
+
+              <v-img height="250" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+
+              <v-card-title>{{ runningTitle }}</v-card-title>
+
               <v-card-text>
-                <span v-html="selectedEvent.details"></span>
+                <v-row>
+                  {{ RunningMcategory }}
+                </v-row>
+                <v-row>
+                  {{ $store.getters.getUserNickname }}
+                </v-row>
+                <v-row>
+                  {{ runningStartTime }}
+                </v-row>
+                <v-row>
+                  {{ runningEndTime }}
+                </v-row>
+                <v-row>
+                  {{ runningContent }}
+                </v-row>
               </v-card-text>
+
+              <v-divider class="mx-4"></v-divider>
+
+              <v-card-text>
+             
+              </v-card-text>
+
               <v-card-actions>
-                <v-card-text>
-                  <v-text-field v-model="eventTitle" label="Title"></v-text-field>
-                  <v-text-field v-model="eventStartTime" label="Start Time"></v-text-field>
-                  <v-text-field v-model="eventEndTime" label="End Time"></v-text-field>
-                  <v-text-field v-model="eventDetails" label="Details"></v-text-field>
-                </v-card-text>
-                <v-spacer></v-spacer>
-                <v-card-actions>
-                  <v-btn color="primary" @click="saveEvent">Save</v-btn>
-                  <v-btn color="secondary" @click="dialog = false">Cancel</v-btn>
-                </v-card-actions>
+                <v-btn class="ChatBtn">수업시작 </v-btn>
+                <v-btn class="ChatBtn">수업취소 </v-btn>
               </v-card-actions>
             </v-card>
           </v-menu>
@@ -166,10 +183,6 @@ export default {
     selectedOpen: false,
     events: [],
     colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-    eventTitle: '',
-    eventDetails: '',
-    eventStartTime: '',
-    eventEndTime: '',
     event,
     dialog: false,
     categories: ['IT', '라이프스타일', '문제풀이', '기타'],
@@ -179,21 +192,34 @@ export default {
     DateMenu: '',
     selectDate: '',
     runningTitle: '',
-    runningDetails: '',
+    runningContent: '',
     runningStartTime: '',
     runningEndTime: '',
+    
+    // 도움관리 - 내가 만든 멘토
+    runningBlue: {},
+    runningBlue2: [],
+    
+    // 도움관리 - 내가 받을 멘토
+    runningGreen: {},
+    runningGreen2:[],
     // 테스트용
     runningStartBig: 1,
     runningEndBig: 1,
-    runningKeep: false, 
-    userNum: 2,
+    runningKeep: false,
+    userNum: '',
+    loading: false,
+    chatRoomId:'',
+    userNickname:'',
   }),
   mounted() {
     this.$refs.calendar.checkChange(),
-      // this.$nextTick(() => {
-      //   this.$refs.calendar.update();
-      // });
-    this.fetchUpdateSchedule()
+      // 캘린더를 계속 업데이트 하는거 
+      this.$nextTick(() => {
+        this.$refs.calendar.update;
+      });
+    this.fetchGiveSchedule()
+    this.fetchTakeSchedule()
   },
   methods: {
     inputSelectVal(value) {
@@ -218,10 +244,10 @@ export default {
         console.log(error)
       })
     },
-    viewDay({ date }) {
-      this.focus = date
-      this.type = 'day'
-    },
+    // viewDay({ date }) {
+    //   this.focus = date
+    //   this.type = 'day'
+    // },
     getEventColor(event) {
       return event.color
     },
@@ -234,11 +260,49 @@ export default {
     next() {
       this.$refs.calendar.next()
     },
-    showEvent({ nativeEvent, event }) {
+    showEvent({ nativeEvent, event }) { // nativeEvent : DOM 이벤트 객체를 나타내는 java script객체
       const open = () => {
         this.selectedEvent = event
         this.selectedElement = nativeEvent.target
         requestAnimationFrame(() => requestAnimationFrame(() => this.selectedOpen = true))
+        
+        // console.log(event);
+        // 클릭 시 날짜별 데이터 변경
+        const selectedDate = event.start;
+        const selectDateYear = selectedDate.getFullYear();
+        const selectDateMonth = String(selectedDate.getMonth() + 1).padStart(2, "0");
+        const selectDateDay = String(selectedDate.getDate()).padStart(2, "0");
+
+        const selectedDateStr = `${selectDateYear}-${selectDateMonth}-${selectDateDay}`;
+
+        console.log(selectedDateStr);
+
+        this.runningBlue2.forEach((item) => {
+          // console.log("Iterating: ");
+          // console.log(item);
+          if(item.runningDate === selectedDateStr) {
+            // console.log(item);
+            // console.log(item.runningTitle);
+            this.runningTitle = item.runningTitle;
+            this.runningContent = item.runningContent;
+            this.runningStartTime = item.runningStartSmall;
+            this.runningEndTime = item.runningEndSmall;
+            this.RunningMcategory = item.runningCategoryMedium;
+          }
+        });
+        this.runningGreen2.forEach((item) => {
+          // console.log("Iterating: ");
+          // console.log(item);
+          if(item.runningDate === selectedDateStr) {
+            // console.log(item);
+            // console.log(item.runningTitle);
+            this.runningTitle = item.runningTitle;
+            this.runningContent = item.runningContent;
+            this.runningStartTime = item.runningStartSmall;
+            this.runningEndTime = item.runningEndSmall;
+            this.RunningMcategory = item.runningCategoryMedium;
+          }
+        });
       }
 
       if (this.selectedOpen) {
@@ -275,7 +339,7 @@ export default {
 
       return events;
     },
-    ceateRunning() {
+    createRunning() {
       var serverIP = '127.0.0.1',
         serverPort = 8080,
         pageUrl = 'runup/running';
@@ -285,7 +349,7 @@ export default {
         data: {
           runningDate: this.selectDate,
           runningTitle: this.runningTitle,
-          runningContent: this.runningDetails,
+          runningContent: this.runningContent,
           runningStartSmall: this.runningStartTime,
           runningEndSmall: this.runningEndTime,
           runningCategoryMedium: this.RunningMcategory,
@@ -301,15 +365,16 @@ export default {
         // 새로운 이벤트를 생성하여 events 배열에 추가합니다.
         const newEvent = {
           name: this.runningTitle,
-          details: this.runningDetails,
+          details: this.runningContent,
           start: new Date(this.selectDate + ' ' + this.runningStartTime),
           end: new Date(this.selectDate + ' ' + this.runningEndTime),
-          color: 'red',
+          color: 'blue',
         };
         this.events.push(newEvent);
+     
         // 변경 사항이 반영되도록 v-model을 이용하여 달력을 업데이트합니다.
-        this.$refs.calendar.update();
-
+        this.$refs.calendar.update;
+        this.dialog = false;
       }).catch(error => {
         console.log(error)
       })
@@ -326,18 +391,94 @@ export default {
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a
     },
-    fetchUpdateSchedule() {
-      var serverIP= '127.0.0.1',
-          serverPort= 8080,
-          pageUrl= '/runup/running';
+    fetchGiveSchedule() {
+      var serverIP = '127.0.0.1',
+        serverPort = 8080,
+        pageUrl = '/runup/running/allgive';
       this.$axios({
-        url: `http://${serverIP}${serverPort}/${pageUrl}`,
+        url: `http://${serverIP}:${serverPort}/${pageUrl}`,
         method: 'GET',
         params: {
-          
+          userNum: store.getters.getUserNum
         }
       })
-    }
-   },
+        .then((response) => {
+          this.runningBlue = response.data.runningBlue;
+          this.runningBlue2 = response.data.runningBlue;
+          console.log(this.runningBlue2);
+          // // 반복문을 통한 runningBlue 리스트 하나씩 꺼내기
+          for(let i=0; i<this.runningBlue.length; i++){
+          this.runningTitle = this.runningBlue[i].runningTitle;
+          this.runningCategoryMedium = this.runningBlue[i].runningCategoryMedium;
+          this.runningDate = this.runningBlue[i].runningDate;
+          this.runningStartTime = this.runningBlue[i].runningStartSmall;
+          this.runningEndTime = this.runningBlue[i].runningEndSmall;
+          this.runningContent = this.runningBlue[i].runningContent;
+          this.chatRoomId = this.runningBlue[i].chatRoomId;
+            const newEvent = {
+              name: this.runningTitle,
+              details: this.runningContent,
+              start: new Date(this.runningDate + ' ' + this.runningStartTime),
+              end: new Date(this.runningDate + ' ' + this.runningEndTime),
+              color: 'blue',
+            };
+            this.events.push(newEvent);
+          }
+          // 변경 사항이 반영되도록 v-model을 이용하여 달력을 업데이트합니다.
+          this.$refs.calendar.update;
+          this.dialog = false;
+        }).catch(error => {
+          console.log(error)
+        })
+    },
+    fetchTakeSchedule() {
+      var serverIP = '127.0.0.1',
+        serverPort = 8080,
+        pageUrl = '/runup/running/alltake';
+      this.$axios({
+        url: `http://${serverIP}:${serverPort}/${pageUrl}`,
+        method: 'GET',
+        params: {
+          participateNum: store.getters.getUserNum
+        }
+      })
+        .then((response) => {
+          console.log(response.data);
+          this.runningGreen = response.data;
+          this.runningGreen2 = this.runningGreen;
+          console.log(this.runningGreen2);
+          // // 반복문을 통한 runningBlue 리스트 하나씩 꺼내기
+          for(let i=0; i<this.runningGreen.length; i++){
+          this.runningTitle = this.runningGreen[i].runningTitle;
+          this.runningCategoryMedium = this.runningGreen[i].runningCategoryMedium;
+          this.runningDate = this.runningGreen[i].runningDate;
+          this.runningStartTime = this.runningGreen[i].runningStartSmall;
+          this.runningEndTime = this.runningGreen[i].runningEndSmall;
+          this.runningContent = this.runningGreen[i].runningContent;
+          this.userNickname = this.runningGreen[i].userNickname;
+          this.chatRoomId = this.runningGreen[i].chatRoomId;
+            const newEvent = {
+              name: this.runningTitle,
+              details: this.runningContent,
+              start: new Date(this.runningDate + ' ' + this.runningStartTime),
+              end: new Date(this.runningDate + ' ' + this.runningEndTime),
+              color: 'green',
+            };
+            this.events.push(newEvent);
+          }
+          // 변경 사항이 반영되도록 v-model을 이용하여 달력을 업데이트합니다.
+          this.$refs.calendar.update;
+          this.dialog = false;
+        }).catch(error => {
+          console.log(error)
+        })
+    },
+  },
 }
 </script>
+
+<style>
+.ChatBtn {
+margin-left: 100px;
+}
+</style>
