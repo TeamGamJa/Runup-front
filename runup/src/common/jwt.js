@@ -12,6 +12,7 @@ export default {
     localStorage.setItem(ACCESS_TOKEN_KEY, token); // "id-token"에서 "ACCESS_TOKEN_KEY"로 변경
   },
   destroyToken() {    // localStorage에서 액세스 토큰을 삭제
-    localStorage.removeItem(ACCESS_TOKEN_KEY); // "id-token"에서 "ACCESS_TOKEN_KEY"로 변경
+    localStorage.removeItem(ACCESS_TOKEN_KEY);
+    localStorage.removeItem("vuex") // "id-token"에서 "ACCESS_TOKEN_KEY"로 변경
   },
 }

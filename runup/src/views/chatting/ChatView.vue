@@ -1,7 +1,15 @@
 <template>
 	<div>
 		<div class="messages-container">
-		<div v-for="(message, index) in messages" :key="index" class="message">
+		<div
+			v-for="(message, index) in messages"
+			:key="index"
+			class="message"
+			:class="{
+			'my-message': message.sender == getUserNickname,
+			'other-message': message.sender != getUserNickname
+			}"
+		>
 			<strong>{{ message.sender }}: </strong> {{ message.content }}
 		</div>
 		</div>
@@ -10,26 +18,34 @@
 		<input
 			v-model="messageContent"
 			type="text"
-			@keyup.enter="sendMessage"
+			@keyup.enter.prevent="sendMessage"
 			placeholder="메시지를 입력하세요..."
 		/>
 		<button @click="sendMessage">전송</button>
 		</div>
 	</div>
-</template>
+	</template>
 
 <script>
 import { Client } from '@stomp/stompjs'
 import SockJS from 'sockjs-client'
+import axios from 'axios'
+// import store from '@/store/store'
 
 export default {
   data() {
     return {
-      stompClient: null,
-      roomId: 'room123', // 채팅방 ID
-      messageContent: '',
-      messages: []
+		stompClient: null,
+		roomId: "this7", // 채팅방 ID
+		messageContent: '',
+		messages: [],
+		title: '자바기초강의'
     }
+  },
+  computed: {
+    getUserNickname() {
+      return (this.$store.getters.getUserNickname); // 사용자 닉네임을 반환하는 코드를 여기에 작성합니다.
+    },
   },
   created() {
     this.connect()
@@ -39,37 +55,61 @@ export default {
   },
   methods: {
     connect() {
-      const socket = new SockJS('http://localhost:8080/runup/websocket-chat')
-      this.stompClient = new Client({
-        webSocketFactory: () => socket,
-		debug: (str) => {
-			console.log(str)
+		axios.get("http://localhost:8080/runup/" + "chat", {
+			params : {
+				chatRoomId : this.roomId,
+			}
+		})
+		.then(result=> {
+			console.log(result.data)
+			if (result.data.roomId == null ) {
+				axios.post(this._baseUrl + "chat", {
+					roomId : this.roomId,
+					title : this.title
+				}).then(result => {
+					console.log(result.data);
+				}).catch(function (e) {
+					console.log(e);
+				});
+			}
+		}).catch(function (e) {
+			console.log(e);
+		});
+		const socket = new SockJS('http://localhost:8080/runup/websocket-chat')
+			this.stompClient = new Client({
+			webSocketFactory: () => socket,
+			debug: (str) => {
+				console.log(str)
 		},
 		onConnect: (frame) => {
-		console.log("Connected to server:", frame)
-		this.stompClient.subscribe(`/topic/${this.roomId}`, (message) => {
-			this.messages.push(JSON.parse(message.body));
-		});
+			console.log("Connected to server:", frame)
+			this.stompClient.subscribe(`/topic/${this.roomId}`, (message) => {
+				this.messages.push(JSON.parse(message.body));
+			});
 		},
 		onStompError: (error) => {
 			console.log("Stomp error:", error)
 		}
-      })
-
-      this.stompClient.activate()
-    },
+		})
+		this.stompClient.activate()
+		},
     disconnect() {
       if (this.stompClient) {
+		
         this.stompClient.deactivate()
       }
     },
     sendMessage() {
+		if (this.messageContent.trim() === "") {
+			return; // 빈 메시지는 보내지 않습니다.
+		}
 		if (this.stompClient.connected) {
 			this.stompClient.publish({
-			destinationㅞ: `/app/chat/${this.roomId}/sendMessage`,
+			destination: `/app/chat/${this.roomId}/sendMessage`,
 			body: JSON.stringify({
 				content: this.messageContent,
-				sender: 'USERNAME',
+				sender: this.$store.getters.getUserNickname,
+				roomId: this.roomId,
 			}),
 			})
 			this.messageContent = ''
@@ -142,4 +182,27 @@ export default {
   button:hover {
 	background-color: #0056b3;
   }
-  </style>
+  .messages-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .message {
+    display: flex;
+    flex-direction: column;
+    max-width: 50%;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+  }
+
+  .message.my-message {
+    margin-left: auto;
+    text-align: right;
+  }
+
+  .message.other-message {
+    margin-right: auto;
+    text-align: left;
+  }
+</style>

@@ -71,7 +71,7 @@ export default {
             alert("로그인 실패");
           } else {
             // alert("로그인 성공");
-            jwt.saveToken(result.data);
+            jwt.saveToken(result.data.token);
             store.commit("login", { accessToken: result.data.token });
             store.dispatch("setVuexId", result.data.userId);
             store.dispatch("setVuexNickname", result.data.userNickname);
@@ -121,7 +121,6 @@ export default {
                 }
               })
               .catch(function (e) {
-				console.log("Test")
                 console.log(e);
               });
           
