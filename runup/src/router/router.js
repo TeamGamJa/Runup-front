@@ -51,6 +51,8 @@ import MyPage from '../views/MyInfo/MyPage'
 // 쪽지함
 import MainMessage from '../views/MessageBox/MainMessage'
 
+import TestVue from '../views/test/TestVue.vue'
+
 const routes = [
     {
         path: "/",
@@ -104,6 +106,11 @@ const routes = [
         path: "/MainMessage",
         name: "MainMessage",
         component: MainMessage,
+    },
+    {
+        path: "/Test",
+        name: "Test",
+        component: TestVue,
     },
 ]
 
