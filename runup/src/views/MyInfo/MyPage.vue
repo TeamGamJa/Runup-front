@@ -29,10 +29,8 @@
                     </v-progress-linear>
 
                     <v-card-text>
-                        <v-btn text to="/MyRunning" class="MyPage-Btn " :rounded="true">나의 도움주기</v-btn>
-                        <v-btn text to="/MyRunning" class="MyPage-Btn1" :rounded="true">나의 도움받기</v-btn>
-                        <v-btn text to="/MyRunning" class="MyPage-Btn" :rounded="true">나의 묻고답하기</v-btn>
-                        <v-btn text to="/MyRunning" class="MyPage-Btn1" :rounded="true">나의 옹달샘</v-btn>
+                        <v-btn text to="/MyRunning" class="MyPage-Btn" :rounded="true">나의 도움신청</v-btn>
+                        <v-btn text to="/MyRunning" class="MyPage-Btn1" :rounded="true">나의 고민</v-btn>
                         <v-btn text to="/MyRunning" class="MyPage-Btn" :rounded="true">받은 쪽지함</v-btn>
                         <v-btn text to="/MyRunning" class="MyPage-Btn2" :rounded="true">보낸 쪽지함</v-btn>
                     </v-card-text>
@@ -58,10 +56,9 @@
                     <v-card-title>소금 보여줄 자리</v-card-title>
 
                     <v-card-text>
-                        <v-btn text to="/MyRunning" class="MyPage-Btn " :rounded="true">나의 도움주기</v-btn>
-                        <v-btn text to="/MyRunning" class="MyPage-Btn1" :rounded="true">나의 도움받기</v-btn>
-                        <v-btn text to="/MyRunning" class="MyPage-Btn" :rounded="true">나의 묻고답하기</v-btn>
-                        <v-btn text to="/MyRunning" class="MyPage-Btn1" :rounded="true">나의 옹달샘</v-btn>
+                 
+                        <v-btn text to="/MyRunning" class="MyPage-Btn" :rounded="true">나의 도움신청</v-btn>
+                        <v-btn text to="/MyRunning" class="MyPage-Btn1" :rounded="true">나의 고민</v-btn>
                         <v-btn text to="/MyRunning" class="MyPage-Btn" :rounded="true">받은 쪽지함</v-btn>
                         <v-btn text to="/MyRunning" class="MyPage-Btn2" :rounded="true">보낸 쪽지함</v-btn>
                     </v-card-text>
