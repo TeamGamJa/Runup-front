@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container fluid class="CreateRunning-container">
     <v-row class="fill-height">
       <v-col>
 
@@ -117,7 +117,7 @@
         <!-- 달력 생성  -->
         <v-sheet height="600">
           <v-calendar ref="calendar" v-model="focus" color="primary" :events="events" :event-color="getEventColor"
-            :type="type" @click:event="showEvent" @change="updateRange"></v-calendar>
+            :type="type" @click:event="showEvent" @change="updateRange" class="calender-css"></v-calendar>
           <!-- @click:more="viewDay" @click:date="viewDay" 일별로 날짜 보는 기능(지금은 안써서 주석) -->
 
           <!-- 달력안의 일정을 클릭 시 일정 상세-->
@@ -507,6 +507,13 @@ export default {
 </script>
 
 <style>
+.CreateRunning-container {
+  height: 85%;
+  width: 500px;
+}
+.calender-css {
+  width: 400px;
+}
 .ChatBtn {
   margin-left: 100px;
   color: black !important;

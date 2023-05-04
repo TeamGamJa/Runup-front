@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- RunHeader 상단바 시작 -->
-    <v-main>
+    <v-main class="Main-All">
       <v-toolbar app color="rgba(249, 243, 223, 100%)" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1;">
         <v-toolbar-title>
           <router-link to="/">
@@ -63,10 +63,10 @@
       <!-- RunHeader 상단바 끝 -->
 
       <!-- 화면의 몸통부분 -->
-      <router-view style="margin-top: 60px;" />
+      <router-view class="Main-Body" style="margin-top: 60px;" />
 
       <!-- 화면의 footer -->
-      <v-footer color="rgba(249, 243, 223, 100%)">
+      <v-footer class="Main-Footer" color="rgba(249, 243, 223, 100%)">
         <!-- <v-container fluid> -->
         <RunFooter />
         <!-- </v-container> -->
@@ -134,6 +134,22 @@ export default {
 
 
 <style>
+.Main-All {
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-end;
+  height: 100%;
+}
+.Main-Body {
+  display: inline-flex;
+  flex-direction: column;
+  /* width: 100%; */
+  height: 100%;
+}
+.Main-Footer {
+  display:inline-flex;
+  align-items: flex-end;
+}
 .menuBtn {
   color: gray !important;
   background-color: rgba(253, 252, 229, 1);
@@ -143,12 +159,12 @@ export default {
 
 }
 
-.footer {
+/* .footer {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
   visibility: hidden;
 
-}
+} */
 </style>

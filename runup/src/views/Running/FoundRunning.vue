@@ -1,31 +1,32 @@
 <template>
-    <v-container>
+    <v-container class="Rcontainer" fluid>
         <div class="Running-container">
             <v-card>
                 <div class="Running-header">
                     <v-row class="Running-category">
                         <v-col cols="3">
                             <v-select v-model="choice" label="대분류" :items="categories"
-                                @change="fetchcategoryMedium"></v-select>
+                                @change="fetchcategoryMedium" outlined></v-select>
                         </v-col>
                         <v-col cols="3">
                             <v-select v-model="RunningMcategory" id="Running-Mcategory" label="중분류" :items="categorymMedium"
-                                @change="inputSelectVal"></v-select>
+                                @change="inputSelectVal" outlined></v-select>
                         </v-col>
                         <v-col cols="3">
                             <v-btn class="categoryBtn" :rounded="true" @click.prevent="categorySearch()">검색</v-btn>
                         </v-col>
                     </v-row>
+                    <v-text-field v-model="search" class="titleSearch" label="제목 검색" single-line hide-details  @keyup.enter="titleSearch"></v-text-field>
                 </div>
                 <v-card-title>
                     <!-- 공백을 남겨놓아야 검색란의 크기가 전체적으로 퍼지지 않는다 -->
-                    <v-spacer></v-spacer>
-                    <v-text-field v-model="search" label="제목 검색" single-line hide-details  @keyup.enter="titleSearch"></v-text-field>
+                    <v-spacer></v-spacer><v-spacer></v-spacer>
                 </v-card-title>
-                <v-data-table :headers="headers" :items="runningList" :items-per-page="8"
-                    :options="{ itemsPerPageOptions: [] }" class="elevation=1" @click:row="showEvent">
+                <v-data-table :headers="headers" :items="runningList" :items-per-page="9"
+                    :options="{ itemsPerPageOptions: [] }" @click:row="showEvent" height="480">
+                    
                 </v-data-table>
-                <v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-y>
+                <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y>
                     <v-card :loading="loading" class="mx-auto my-12" width="300">
 
                         <v-img height="250" :src="categoryImg"></v-img>
@@ -61,9 +62,9 @@
                         </v-card-actions>
                     </v-card>
                 </v-menu>
-                <v-sheet id="scroll-threshold-example" class="overflow-y-auto pb-16" max-height="600">
+                <!-- <v-sheet id="scroll-threshold-example" class="overflow-y-auto pb-16" max-height="600">
                     <v-responsive height="auto"></v-responsive>
-                </v-sheet>
+                </v-sheet> -->
             </v-card>
         </div>
     </v-container>
@@ -88,14 +89,15 @@ export default {
                     text: '번호',
                     align: 'center',
                     sortable: false,
-                    value: 'runningNum'
+                    value: 'runningNum',
+                    divider: true 
                 },
-                { text: '제목', value: 'runningTitle' },
-                { text: 'Runner', value: 'userNickname' },
-                { text: '특기', value: 'runningCategoryMedium' },
-                { text: '무지개', value: 'userLuxColor' },
-                { text: '수업 횟수', value: 'userMentorCnt' },
-                { text: '수업 하는날', value: 'runningDate' },
+                { text: '제목', align: 'center', value: 'runningTitle'  },
+                { text: 'Runner', align: 'center', value: 'userNickname' },
+                { text: '특기', align: 'center', value: 'runningCategoryMedium'  },
+                { text: '무지개', align: 'center', value: 'userLuxColor'  },
+                { text: '수업 횟수', align: 'center', value: 'userMentorCnt'},
+                { text: '수업 하는날', align: 'center', value: 'runningDate'  },
                 {
                     text: '마감여부',
                     value: 'runningAble',
@@ -105,7 +107,7 @@ export default {
 
             // 다이얼 로그 작업
             dialog: false,
-            selectedElement: null,
+            selectedElement:false,
             selectedOpen: false,
             loading: false,
             runningTitle: '',
@@ -149,6 +151,7 @@ export default {
     methods: {
         showEvent(row) { // nativeEvent : DOM 이벤트 객체를 나타내는 java script객체
             const target = row;
+            this.selectedElement =target;
             console.log(target)
             this.selectedOpen = true;
             this.runningNum = target.runningNum;
@@ -303,22 +306,21 @@ export default {
         titleSearch() {
             var serverIP = '127.0.0.1',
                 serverPort = 8080,
-                pageUrl = 'runup/running/bar';
+                pageUrl = 'runup/running/searchbar';
             this.$axios({
                 url: `http://${serverIP}:${serverPort}/${pageUrl}`,
                 method: "GET",
-                data: {
-                    keyword: this.search,
+                params: {
+                    runningTitle: this.search,
                 }
             }).then(response => {
                 console.log(response.data);
-                //     this.updateRunningList(response.data);
-                //     this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
-                // for (let i = 0; i < this.runningList.length; i++) {
-                //     const item = this.runningList[i];
-                //     item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
+                this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
+                for (let i = 0; i < this.runningList.length; i++) {
+                    const item = this.runningList[i];
+                    item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
 
-                // }
+                }
             }).catch(error => {
                 console.log(error)
             })
@@ -328,11 +330,15 @@ export default {
 </script>
 
 <style>
+.Rcontainer {
+    height: 85%;
+}
+
 .Running-container {
     display: flex;
     background-color: white;
     flex-direction: column;
-    height: 660px;
+    /* height: 400px; */
 }
 
 .Running-header {
@@ -340,6 +346,7 @@ export default {
     width: 100%;
     height: 50px;
     margin-left: 10px;
+    margin-top: 30px;
 }
 
 .Running-body {
@@ -365,20 +372,26 @@ table td {
 .Running-footer {
     width: 100%;
     height: 30px;
-    justify-content: center;
+    
 
 }
-
+.titleSearch {
+    width:200px;
+    margin-right: 10px;
+}
 .searchFunc {
     padding-left: 550px;
     justify-content: center;
 }
 .categoryBtn {
-    margin-left: 10px;
+    margin-left: 2px;
 	color: black !important;
     background-color: rgba(244, 209, 155, 1) !important;
     justify-content: flex-end;
     border-radius: 200px;
-    margin-top: 4px;
+    margin-top: 8px;
+}
+.v-data-table-header th {
+  background-color: rgba(237, 247, 255, 1);
 }
 </style>

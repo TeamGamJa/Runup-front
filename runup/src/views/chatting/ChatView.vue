@@ -194,7 +194,7 @@ button:hover {
 .message.my-message {
 	margin-left: auto;
 	text-align: right;
-	background-color: rgba(237, 247, 255, 1);
+	background-color: rgba(251, 231, 200, 1);
 }
 
 .message.other-message {
