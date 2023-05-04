@@ -1,56 +1,84 @@
 <template>
-    <v-container>
+    <v-container class="Rcontainer" fluid>
         <div class="Running-container">
             <v-card>
                 <div class="Running-header">
                     <v-row class="Running-category">
                         <v-col cols="3">
-                            <v-select v-model="choice" label="대분류" :items="categories" @change="fetchcategoryMedium"></v-select>
+                            <v-select v-model="choice" label="대분류" :items="categories"
+                                @change="fetchcategoryMedium" outlined></v-select>
                         </v-col>
                         <v-col cols="3">
                             <v-select v-model="RunningMcategory" id="Running-Mcategory" label="중분류" :items="categorymMedium"
-                                @change="inputSelectVal"></v-select>
+                                @change="inputSelectVal" outlined></v-select>
                         </v-col>
                         <v-col cols="3">
-                            <v-btn color="primary" dark @click.prevent="categorySearch()">검색</v-btn>
+                            <v-btn class="categoryBtn" :rounded="true" @click.prevent="categorySearch()">검색</v-btn>
                         </v-col>
                     </v-row>
+                    <v-text-field v-model="search" class="titleSearch" label="제목 검색" single-line hide-details  @keyup.enter="titleSearch"></v-text-field>
                 </div>
                 <v-card-title>
                     <!-- 공백을 남겨놓아야 검색란의 크기가 전체적으로 퍼지지 않는다 -->
-                    <v-spacer></v-spacer>
-                    <v-text-field v-model="search" label="검색" single-line hide-details></v-text-field>
+                    <v-spacer></v-spacer><v-spacer></v-spacer>
                 </v-card-title>
-                <v-data-table :headers="headers" :items="runningList" :items-per-page="8"
-                    :options="{ itemsPerPageOptions: [] }" class="elevation=1">
-                    <template v-slot:items="props">
-                        <tr @mouseclick="goToDetailPage(props.item)">
-                            <td>{{ props.item.RunningNum }}</td>
-                            <td class="text-xs-center">{{ props.item.RunningTitle }} </td>
-                            <td class="text-xs-center">{{ props.item.userNickname }}</td>
-                            <td class="text-xs-center">{{ props.item.runningCategoryMedium }}</td>
-                            <td class="text-xs-center">{{ props.item.userLuxColor }}</td>
-                            <td class="text-xs-center">{{ props.item.userMentorCnt }}</td>
-                            <td class="text-xs-center">{{ props.item.RunningDate }}</td>
-                            <td class="text-xs-center">{{ props.item.RunningAble }}</td>
-                        </tr>
-                    </template>
+                <v-data-table :headers="headers" :items="runningList" :items-per-page="9"
+                    :options="{ itemsPerPageOptions: [] }" @click:row="showEvent" height="480">
+                    
                 </v-data-table>
-                <v-sheet id="scroll-threshold-example" class="overflow-y-auto pb-16" max-height="600">
+                <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y>
+                    <v-card :loading="loading" class="mx-auto my-12" width="300">
+
+                        <v-img height="250" :src="categoryImg"></v-img>
+
+                        <v-card-title class="Schedule-Info">
+                            제목: {{ runningTitle }}
+                        </v-card-title>
+
+                        <v-divider class="mx-4"></v-divider>
+
+                        <v-card-text>
+                            <v-row class="Schedule-Info">
+                                특기: {{ RunningBcategory }}
+                            </v-row>
+
+                            <v-row class="Schedule-Info">
+                                Runner: {{ userNickname }}
+                            </v-row>
+                            <v-row class="Schedule-Info">
+                                수업시작: {{ runningStartTime }}
+                            </v-row>
+                            <v-row class="Schedule-Info">
+                                수업종료: {{ runningEndTime }}
+                            </v-row>
+                            <v-row class="Schedule-Info">
+                                수업내용: {{ runningContent }}
+                            </v-row>
+                        </v-card-text>
+
+                        <v-card-actions>
+                            <v-btn class="ParticipateBtn" :rounded="true" @click="joinClass">수업신청 </v-btn>
+
+                        </v-card-actions>
+                    </v-card>
+                </v-menu>
+                <!-- <v-sheet id="scroll-threshold-example" class="overflow-y-auto pb-16" max-height="600">
                     <v-responsive height="auto"></v-responsive>
-                </v-sheet>
+                </v-sheet> -->
             </v-card>
         </div>
     </v-container>
 </template>
 
 <script>
+import store from '@/store/store'
+
 export default {
     name: 'FoundRunning',
     data() {
         return {
-            RunningBcatogry: '전체',      // select #Running-Bcategory에 현재 선택되어 있는 값
-            RunningMcategory: '전체',     // select #Running-Mcategory에 현재 선택되어 있는 값
+            RunningBcategory: '',      // select #Running-Bcategory에 현재 선택되어 있는 값
+            RunningMcategory: '',     // select #Running-Mcategory에 현재 선택되어 있는 값
             categories: ['IT', '라이프스타일', '문제풀이', '기타'], // select #Running-Bcategory안에 나열할 option 요소들의 리스트
             categorymMedium: [''],          // select #Running-Mcategory안에 나열할 option 요소들의 리스트
             runningList: [],  // 도움닿기 게시글 리스트 데이터 전송
@@ -61,32 +89,81 @@ export default {
                     text: '번호',
                     align: 'center',
                     sortable: false,
-                    value: 'runningNum'
+                    value: 'runningNum',
+                    divider: true 
                 },
-                { text: '제목', value: 'runningTitle' },
-                { text: 'Runner', value: 'userNickname' },
-                { text: '특기', value: 'runningCategoryMedium' },
-                { text: '무지개', value: 'userLuxColor' },
-                { text: 'Runner 횟수', value: 'userMentorCnt' },
-                { text: '작성일', value: 'runningDate' },
-                { text: '마감여부', value: 'runningAble' },
-            ]
+                { text: '제목', align: 'center', value: 'runningTitle'  },
+                { text: 'Runner', align: 'center', value: 'userNickname' },
+                { text: '특기', align: 'center', value: 'runningCategoryMedium'  },
+                { text: '무지개', align: 'center', value: 'userLuxColor'  },
+                { text: '수업 횟수', align: 'center', value: 'userMentorCnt'},
+                { text: '수업 하는날', align: 'center', value: 'runningDate'  },
+                {
+                    text: '마감여부',
+                    value: 'runningAble',
+                    align: 'center',
+                },
+            ],
 
+            // 다이얼 로그 작업
+            dialog: false,
+            selectedElement:false,
+            selectedOpen: false,
+            loading: false,
+            runningTitle: '',
+            runningContent: '',
+            runningStartTime: '',
+            runningEndTime: '',
+            runningNum: '',
+            runningMcategory: '',
+            userLuxColor: '',
+            userNickname: '',
+            userMentorCnt: '',
+            runningDate: '',
+            runningAble: '',   // 카테고리 이미지
+            categoryImg:'https://cdn.vuetifyjs.com/images/cards/cooking.png',
+
+            
         }
+    },
+    watch:{
+      RunningBcategory(newVal){
+        if( newVal === 'IT'){
+          this.categoryImg = 'https://ifh.cc/g/OHjgvF.png'
+        }else if( newVal === '라이프스타일') {
+          this.categoryImg = 'https://ifh.cc/g/0PfTRa.png'
+        }else if( newVal === '문제풀이') {
+          this.categoryImg = 'https://ifh.cc/g/C3lb3C.png'
+        }else if( newVal === '기타') {
+          this.categoryImg = 'https://ifh.cc/g/YvzaWZ.png'
+        }
+      }
     },
     created() {
         // this.fetchrunninglistall()
-        this.fetchcategoryBig()
+        this.fetchcategoryBig();
         // this.fetchcategoryMedium()
         // this.fetchrunningList()
     },
     mounted() {
-        this.fetchrunningList()
+        this.fetchrunningList();
     },
     methods: {
-        goToDetailPage(item) {
-            this.$router.push(`./DetailRunning/${item.RunningNum}`)
-            console.log('나 불렀엉??')
+        showEvent(row) { // nativeEvent : DOM 이벤트 객체를 나타내는 java script객체
+            const target = row;
+            this.selectedElement =target;
+            console.log(target)
+            this.selectedOpen = true;
+            this.runningNum = target.runningNum;
+            this.runningTitle = target.runningTitle;
+            this.RunningBcategory = target.runningCategoryBig;
+            this.RunningMcategory = target.runningCategoryMedium;
+            this.userLuxColor = target.userLuxColor;
+            this.userNickname = target.userNickname;
+            this.runningContent = target.runningContent;
+            this.runningStartTime = target.runningStartSmall;
+            this.runningEndTime = target.runningEndSmall;
+
         },
         inputSelectVal(value) {
             this.RunningMcategory = value;
@@ -115,9 +192,15 @@ export default {
                         categoryBig: this.choice == '전체' ? '%' : this.choice,
 
                     },
-                }).then((result) => {
-                    console.log(result);
-                    this.updateRunningList(result.data);
+                }).then((response) => {
+                    console.log(response.data);
+                    this.updateRunningList(response.data);
+                    this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
+                for (let i = 0; i < this.runningList.length; i++) {
+                    const item = this.runningList[i];
+                    item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
+
+                }
                 }).catch(error => {
                     console.log(error)
                 })
@@ -129,9 +212,15 @@ export default {
                         // categoryBig : this.choice == '전체' ? '%' : this.choice,
                         categoryMedium: this.RunningMcategory == '전체' ? '%' : this.RunningMcategory,
                     },
-                }).then((result) => {
-                    console.log(result);
-                    this.updateRunningList(result.data);
+                }).then((response) => {
+                    console.log(response.data);
+                    this.updateRunningList(response.data);
+                    this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
+                for (let i = 0; i < this.runningList.length; i++) {
+                    const item = this.runningList[i];
+                    item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
+
+                }
                 }).catch(error => {
                     console.log(error)
                 })
@@ -175,7 +264,7 @@ export default {
         },
 
         fetchrunningList() {
-            console.log("dsafsaf")
+            // console.log("dsafsaf")
             var serverIP = '127.0.0.1',
                 serverPort = 8080,
                 pageUrl = 'runup/running/all';
@@ -183,9 +272,55 @@ export default {
                 url: `http://${serverIP}:${serverPort}/${pageUrl}`,
                 method: "GET",
             }).then(response => {
-                console.log(response)
+                console.log(response.data)
                 this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
+                for (let i = 0; i < this.runningList.length; i++) {
+                    const item = this.runningList[i];
+                    item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
 
+                }
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+        joinClass() {
+            var serverIP = '127.0.0.1',
+                serverPort = 8080,
+                pageUrl = 'runup/running/participation';
+            this.$axios({
+                url: `http://${serverIP}:${serverPort}/${pageUrl}`,
+                method: "PUT",
+                data: {
+                    participateNum: store.getters.getUserNum,
+                    runningNum: this.runningNum,
+                }
+            }).then(response => {
+                console.log(response)
+                // 성공시 마감여부 변경
+                this.fetchrunningList()
+
+            }).catch(error => {
+                console.log(error)
+            })
+        },
+        titleSearch() {
+            var serverIP = '127.0.0.1',
+                serverPort = 8080,
+                pageUrl = 'runup/running/searchbar';
+            this.$axios({
+                url: `http://${serverIP}:${serverPort}/${pageUrl}`,
+                method: "GET",
+                params: {
+                    runningTitle: this.search,
+                }
+            }).then(response => {
+                console.log(response.data);
+                this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
+                for (let i = 0; i < this.runningList.length; i++) {
+                    const item = this.runningList[i];
+                    item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
+
+                }
             }).catch(error => {
                 console.log(error)
             })
@@ -195,11 +330,15 @@ export default {
 </script>
 
 <style>
+.Rcontainer {
+    height: 85%;
+}
+
 .Running-container {
     display: flex;
     background-color: white;
     flex-direction: column;
-    height: 660px;
+    /* height: 400px; */
 }
 
 .Running-header {
@@ -207,6 +346,7 @@ export default {
     width: 100%;
     height: 50px;
     margin-left: 10px;
+    margin-top: 30px;
 }
 
 .Running-body {
@@ -232,12 +372,26 @@ table td {
 .Running-footer {
     width: 100%;
     height: 30px;
-    justify-content: center;
+    
 
 }
-
+.titleSearch {
+    width:200px;
+    margin-right: 10px;
+}
 .searchFunc {
     padding-left: 550px;
     justify-content: center;
+}
+.categoryBtn {
+    margin-left: 2px;
+	color: black !important;
+    background-color: rgba(244, 209, 155, 1) !important;
+    justify-content: flex-end;
+    border-radius: 200px;
+    margin-top: 8px;
+}
+.v-data-table-header th {
+  background-color: rgba(237, 247, 255, 1);
 }
 </style>

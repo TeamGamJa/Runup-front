@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="MainPage-Screen">
     <v-row>
       <v-col cols="4">
         <div class="text">
@@ -65,6 +65,9 @@
 </template>
 
 <style scoped>
+.MainPage-Screen {
+  width:300%;
+}
 .text {
   margin-top: 16px;
 }
