@@ -49,7 +49,7 @@ import ChatView from '../views/chatting/ChatView.vue'
 import MyPage from '../views/MyInfo/MyPage'
 
 // 쪽지함
-import MainMessage from '../views/MessageBox/MainMessage'
+import MessageInbox from '../views/Message/MessageInbox'
 
 import TestVue from '../views/test/TestVue.vue'
 
@@ -103,9 +103,9 @@ const routes = [
         component: MyPage,
     },
     {
-        path: "/MainMessage",
-        name: "MainMessage",
-        component: MainMessage,
+        path: "/MessageInbox",
+        name: "MessageInbox",
+        component: MessageInbox,
     },
     {
         path: "/Test",
