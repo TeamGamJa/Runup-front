@@ -1,22 +1,24 @@
 <template>
   <v-app>
     <!-- RunHeader 상단바 시작 -->
-    <v-main class="Main-All">
-      <v-toolbar app color="rgba(249, 243, 223, 100%)" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1;">
-        <v-toolbar-title>
-          <router-link to="/">
-            <v-img src="https://ifh.cc/g/nqOcCY.png" height="48" contain></v-img>
-          </router-link>
-        </v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn text to="/FoundRunning" class="menuBtn" :rounded="true">도움받기</v-btn>
-        <v-btn text to="/CreateRunning" class="menuBtn" :rounded="true">도움관리</v-btn>
-        <v-btn text to="/QA" class="menuBtn" :rounded="true">묻고 답하기</v-btn>
-        <v-btn text to="/pool" class="menuBtn" :rounded="true">옹달샘</v-btn>
-        <!-- 로그인 여부에 따라 다르게 화면을 나타내야된다 -->
-        <v-btn text class="menuBtn-1" :rounded="true"
+    <v-main class="Main-All" >
+      <div class="toolbar-wrapper">
+        <v-toolbar app color="rgba(249, 243, 223, 100%)" style="position: fixed; top: 0; left: 0; right: 0; z-index: 1;">
+          <v-toolbar-title>
+            <router-link to="/">
+              <v-img src="https://ifh.cc/g/nqOcCY.png" height="48" contain></v-img>
+            </router-link>
+          </v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn text to="/FoundRunning" class="menuBtn" :rounded="true">도움받기</v-btn>
+          <v-btn text to="/CreateRunning" class="menuBtn" :rounded="true">도움관리</v-btn>
+          <v-btn text to="/QA" class="menuBtn" :rounded="true">묻고 답하기</v-btn>
+          <v-btn text to="/pool" class="menuBtn" :rounded="true">옹달샘</v-btn>
+          <!-- 로그인 여부에 따라 다르게 화면을 나타내야된다 -->
+          <v-btn text class="menuBtn-1" :rounded="true"
           @click="handleButtonClick"><v-icon>mdi-account-circle</v-icon></v-btn>
-      </v-toolbar>
+        </v-toolbar>
+      </div>
       <v-navigation-drawer v-model="drawer" absolute temporary right>
         <v-list-item>
           <v-list-item-avatar>
@@ -63,15 +65,17 @@
       <!-- RunHeader 상단바 끝 -->
 
       <!-- 화면의 몸통부분 -->
-      <router-view class="Main-Body" style="margin-top: 60px;" />
+      <v-container class="Main-Body">
+        <router-view />
+      </v-container>
 
       <!-- 화면의 footer -->
-      <v-footer class="Main-Footer" color="rgba(249, 243, 223, 100%)">
-        <!-- <v-container fluid> -->
-        <RunFooter />
-        <!-- </v-container> -->
-      </v-footer>
-    </v-main>
+      <!-- <v-footer class="Main-Footer" color="rgba(249, 243, 223, 100%)"> -->
+        <v-container class="Main-Footer" fluid>
+          <RunFooter/>
+        </v-container>
+        <!-- </v-footer> -->
+      </v-main>
   </v-app>
 </template>
 
@@ -90,18 +94,9 @@ export default {
     return {
       drawer: false,
       previousRoute: "", // 이전경로
+
     };
   },
-  // mounted() {
-  //   if(this.isAuthenticated){
-  //     if(this.$router.path != this.previousRoute) {
-  //       this.previousRoute = this.$router.path;
-  //       this.reloadPage()
-  //     }else{
-  //       this.previousRoute = "";
-  //     }
-  //   }
-  // },
   computed: {
     isAuthenticated() {
       return store.getters.isAuthenticated;
@@ -137,18 +132,23 @@ export default {
 .Main-All {
   display: flex;
   flex-direction: column;
-  justify-items: flex-end;
-  height: 100%;
+  display: inline-block;
+  
 }
 .Main-Body {
-  display: inline-flex;
-  flex-direction: column;
-  /* width: 100%; */
-  height: 100%;
+  margin-left: 1%;
+  margin-right: 1%;
+  max-width: 100%;
+  max-height: 95%;
+  margin-top: 50px;
 }
 .Main-Footer {
-  display:inline-flex;
-  align-items: flex-end;
+  /* display:inline-flex; */
+  /* position: center; */
+  /* width: 100%;  */
+  /* max-height: 8%; */
+  /* z-index: 1; */
+  border-top: 2px solid rgba(244, 209, 155, 1) ;
 }
 .menuBtn {
   color: gray !important;
@@ -158,13 +158,4 @@ export default {
   margin-right: 10px;
 
 }
-
-/* .footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  visibility: hidden;
-
-} */
 </style>
