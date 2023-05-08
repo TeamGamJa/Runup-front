@@ -47,9 +47,15 @@ import ChatView from '../views/chatting/ChatView.vue'
 
 // 내 정보
 import MyPage from '../views/MyInfo/MyPage'
+import MyClass from '../views/MyInfo/MyClass'
+import MyLearning from '../views/MyInfo/MyLearning'
+import MyPoint from '../views/MyInfo/MyPoint'
+import MyQuestion from '../views/MyInfo/MyQuestion'
 
 // 쪽지함
 import MessageInbox from '../views/Message/MessageInbox'
+import MessageSendbox from '../views/Message/MessageSendbox'
+import MessageTrashcan from '../views/Message/MessageTrashcan'
 
 import TestVue from '../views/test/TestVue.vue'
 
@@ -103,9 +109,39 @@ const routes = [
         component: MyPage,
     },
     {
+        path: "/MyClass", 
+        name: "MyClass",
+        component: MyClass,
+    },
+    {
+        path: "/MyPoint", 
+        name: "MyPoint",
+        component: MyPoint,
+    },
+    {
+        path: "/MyLearning", 
+        name: "MyLearning",
+        component: MyLearning,
+    },
+    {
+        path: "/MyQuestion", 
+        name: "MyQuestion",
+        component: MyQuestion,
+    },
+    {
         path: "/MessageInbox",
         name: "MessageInbox",
         component: MessageInbox,
+    },
+    {
+        path: "/MessageSendbox",
+        name: "MessageSendbox",
+        component: MessageSendbox,
+    },
+    {
+        path: "/MessageTrashcan",
+        name: "MessageTrashcan",
+        component: MessageTrashcan,
     },
     {
         path: "/Test",
