@@ -34,7 +34,7 @@
                         <v-btn text to="/MyPoint" class="MyPage-Btn" :rounded="true">무지개, 포인트 내역</v-btn>
                         <v-btn text to="/MyLearning" class="MyPage-Btn" :rounded="true">나의 도움신청</v-btn >
                         <v-btn text to="/MyQustion" class="MyPage-Btn" :rounded="true">나의 고민</v-btn>
-                        <v-btn text to="/MainMessage" class="MyPage-Btn" :rounded="true">쪽지함</v-btn>
+                        <v-btn text to="/MessageInbox" class="MyPage-Btn" :rounded="true">쪽지함</v-btn>
                     </v-card-text>
                 </v-card>
 
@@ -64,35 +64,35 @@
                         <v-row class="edittext" >
                             <v-col cols="7" class="mypage-inputText">
                                 이름
-                                <v-text-field v-model="userPw" outlined >
+                                <v-text-field v-model="userName" outlined >
                                 </v-text-field>
                             </v-col>
                         </v-row>
                         <v-row class="edittext">
                             <v-col cols="7" class="mypage-inputText">
                                 닉네임
-                                <v-text-field v-model="userPw" outlined >
+                                <v-text-field v-model="userNickname" outlined >
                                 </v-text-field>
                             </v-col>
                         </v-row>
                         <v-row class="edittext">
                             <v-col cols="7">
                                 전화번호
-                                <v-text-field v-model="userPw" outlined >
+                                <v-text-field v-model="userPhoneNumber" outlined >
                                 </v-text-field>
                             </v-col>
                         </v-row>
                         <v-row class="edittext">
                             <v-col cols="7" class="mypage-inputText">
                                 주소
-                                <v-text-field v-model="userPw" outlined >
+                                <v-text-field v-model="userAddress" outlined >
                                 </v-text-field>
                             </v-col>
                         </v-row>
                         <v-row class="edittext">
                             <v-col cols="7" class="mypage-inputText">
                                 특기
-                                <v-text-field v-model="userPw" outlined >
+                                <v-text-field v-model="userAbility" outlined >
                                 </v-text-field>
                             </v-col>
                         </v-row>
@@ -117,6 +117,14 @@ export default {
         loading: false,
         selection: 1,
         // UserLuxColor: 20,
+        userId:'',
+        userPw:'',
+        userName:'',
+        userNickname:'',
+        userPhoneNumber:'',
+        userAddress:'',
+        userAbility:'',
+        UserLuxColor:'',
     }),
 
     mounted() {
