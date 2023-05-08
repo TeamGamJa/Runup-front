@@ -1,20 +1,22 @@
 <template>
-	<v-container class="Chat-container">
-
+	<v-container class="Chat-container pa-1">
 		<div class="messages-container">
 			<div v-for="(message, index) in messages" :key="index" class="message" :class="{
-					'my-message': message.sender == getUserNickname,
-					'other-message': message.sender != getUserNickname
-				}">
-				<strong>{{ message.sender }}: </strong > {{ message.content }}
+				'my-message': message.sender == getUserNickname,
+				'other-message': message.sender != getUserNickname
+			}">
+				<strong>{{ message.sender }}: </strong> {{ message.content }}
 			</div>
 		</div>
-		<v-divider class="mx-1" style="width:1000px;" ></v-divider>
-		
+		<!-- <v-divider class="mx-1" style="width:1000px;"></v-divider> -->
+
 		<div class="message-input-container">
-			<input class="text-input" v-model="messageContent" type="text" @keyup.enter.prevent="sendMessage" placeholder="메시지를 입력하세요..." />
+			<input class="text-input" v-model="messageContent" type="text" @keyup.enter.prevent="sendMessage"
+				placeholder="메시지를 입력하세요" />
 			<v-btn class="sendBtn" @click="sendMessage" :rounded="true">전송</v-btn>
 		</div>
+
+
 
 	</v-container>
 </template>
@@ -111,28 +113,44 @@ export default {
 	},
 }
 </script>
-  
-<style scoped>
-/* .chat {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
-} */
 
-/* .chat-container {
-	width: 600px;
-	border: 1px solid #ccc;
-	padding: 20px;
+<style scoped>
+.Chat-container {
 	display: flex;
 	flex-direction: column;
-} */
+	justify-content: center;
+	/* align-items: flex-end; */
+	height: 90%;
+	border: 2px solid rgba(244, 209, 155, 1);
+	border-radius: 5.5px;
+	background-color: ivory;
+	margin-top: 2%;
+}
 
 .messages-container {
-	height: 500px;
+	/* display: flex; */
+	display: inline-block;
+	flex-direction: row;
+	width: 90%;
+	max-height: 80%;
+	/* justify-content: center; */
 	flex: 1;
 	overflow-y: auto;
-	margin-top: 30px;
+	margin-top: 3%;
+	margin-left: 5%;
+	margin-right: 3%;
+	/* margin-top: 30px; */
+}
+
+.message-input-container {
+	/* margin-top: 10px; */
+	background-color: white;
+	display: inline-flex;
+	border: 2px solid rgba(244, 209, 155, 1);
+	height: 8%;
+	width: 50%;
+	margin-left: 25%;
+
 }
 
 .message {
@@ -142,95 +160,98 @@ export default {
 	border-radius: 5px;
 }
 
-.message--own {
+/* .message--own {
 	background-color: #a0d3ff;
 	margin-left: 30px;
-}
+} */
 
-.sender {
-	font-weight: bold;
-}
 
-.input-container {
-	display: flex;
-	margin-top: 20px;
-}
-
-input {
-	flex: 1;
-	padding: 5px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-}
-
-button {
-	background-color: #007bff;
-	color: white;
-	border: none;
-	padding: 5px 10px;
-	margin-left: 10px;
-	cursor: pointer;
-	border-radius: 5px;
-}
-
-button:hover {
+/* button:hover {
 	background-color: #0056b3;
-}
-
-.messages-container {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-}
+} */
 
 .message {
 	display: flex;
 	flex-direction: column;
-	max-width: 50%;
+	width: auto;
+	max-width: 45%;
 	margin-bottom: 10px;
 	word-wrap: break-word;
 }
 
+/* 내가 채팅한 문자 */
 .message.my-message {
 	margin-left: auto;
 	text-align: right;
 	background-color: rgba(251, 231, 200, 1);
+	
 }
 
+/* 상대방이 채팅한 문자 */
 .message.other-message {
 	margin-right: auto;
 	text-align: left;
 	background-color: rgba(237, 247, 255, 1);
-}
-.Chat-container {
-	width: 900px;
-	margin-top: 75px !important;
-	height: 670px;
-	border:2px solid rgba(244, 209, 155, 1);
-	border-radius: 5.5px;
-	background-color:ivory
-}
-.text-input {
-	width: 500px;
-	height: 60px;
-	margin-left: 200px;
-	background-color: white;
-	margin-top: 30px;
-}
-.message-input-container{
-	/* margin-top: 10px; */
-	background-color: white;
-	width: 870px;
-	height: 120px;
-}
-.sendBtn {
-	margin-left: 10px;
-	color: black !important;
-    background-color: rgba(244, 209, 155, 1) !important;
-    justify-content: flex-end;
-    border-radius: 200px;
-   
-    
+	
 }
 
+
+.text-input {
+	width: 500px;
+	/* height: 30px; */
+	margin-left: 100px;
+	background-color: white;
+	/* margin-top: 30px; */
+}
+
+
+.sendBtn {
+	margin-left: 2%;
+	margin-top: 1.3%;
+	color: black !important;
+	background-color: rgba(244, 209, 155, 1) !important;
+	justify-content: flex-end;
+	border-radius: 200px;
+
+	/* .chat {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 100%;
+	} */
+
+	/* .chat-container {
+		width: 600px;
+		border: 1px solid #ccc;
+		padding: 20px;
+		display: flex;
+		flex-direction: column;
+	} */
+	/* .sender {
+		font-weight: bold;
+	}
+	
+	.input-container {
+		display: flex;
+		margin-top: 20px;
+	}
+	
+	input {
+		flex: 1;
+		padding: 5px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+	}
+	
+	button {
+		background-color: #007bff;
+		color: white;
+		border: none;
+		padding: 5px 10px;
+		margin-left: 10px;
+		cursor: pointer;
+		border-radius: 5px;
+	} */
+
+}
 </style>

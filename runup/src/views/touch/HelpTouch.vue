@@ -1,6 +1,6 @@
 <template>
   <v-container class="MainPage-Screen">
-    <v-row>
+    <v-row class="mt-2">
       <v-col cols="4">
         <div class="text">
           <h3>
@@ -15,17 +15,10 @@
         </v-img>
       </v-col>
     </v-row>
-    <v-row class="mt-10">
+    <v-row class="second-view mt-10">
       <v-col cols="8">
         <v-img src="https://ifh.cc/g/2bzhca.png" height="600px">
-          <v-img
-            slot="placeholder"
-            src="https://ifh.cc/g/l6dpmm.png"
-            height="200px"
-            left="50px"
-            top="50px"
-            absolute
-          />
+          <v-img slot="placeholder" src="https://ifh.cc/g/l6dpmm.png" height="200px" left="50px" top="50px" absolute />
         </v-img>
       </v-col>
       <v-col cols="4">
@@ -50,14 +43,7 @@
       </v-col>
       <v-col cols="8">
         <v-img src="https://ifh.cc/g/2bzhca.png" height="600px">
-          <v-img
-            slot="placeholder"
-            src="https://ifh.cc/g/l6dpmm.png"
-            height="200px"
-            left="50px"
-            top="50px"
-            absolute
-          />
+          <v-img slot="placeholder" src="https://ifh.cc/g/l6dpmm.png" height="200px" left="50px" top="50px" absolute />
         </v-img>
       </v-col>
     </v-row>
@@ -66,7 +52,15 @@
 
 <style scoped>
 .MainPage-Screen {
-  width:300%;
+ padding-left: 00px;
+ padding-right: 200px;
+ display: inline-block;
+}
+/* .first-screen {
+  width: 800px;
+} */
+.second-view {
+  background-color: rgba(253, 252, 229, 1);
 }
 .text {
   margin-top: 16px;

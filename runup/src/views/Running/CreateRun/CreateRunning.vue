@@ -1,5 +1,5 @@
 <template>
-  <v-container fluid class="CreateRunning-container">
+  <v-container fluid class="CreateRunning-container pa-1">
     <v-row class="fill-height">
       <v-col>
 
@@ -101,7 +101,7 @@
                   </v-card-text>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="createRunning">
+                    <v-btn color="blue darken-1" text @click="createRunning(); dialog = false">
                       저장
                     </v-btn>
                     <v-btn color="blue darken-1" text @click="dialog = false">
@@ -156,7 +156,7 @@
 
               <v-card-actions>
                 <v-btn class="ChatBtn" :rounded="true" text to="/Chat">수업시작 </v-btn>
-                <v-btn class="ChatBtn" :rounded="true">수업취소 </v-btn>
+                <v-btn class="ChatBtn" :rounded="true" @click="CancleClass">수업취소 </v-btn>
               </v-card-actions>
             </v-card>
           </v-menu>
@@ -501,6 +501,22 @@ export default {
         }).catch(error => {
           console.log(error)
         })
+    },
+    CancleClass() {
+      var serverIP= '127.0.0.1',
+          serverPort= 8080,
+          pageUrl= 'runup/running/';
+      this.$axios({
+        url: `${serverIP}:${serverPort}/${pageUrl}`,
+        method:'PUT',
+        data: {
+          userNum: store.getters.getUserNum,
+          runningNum: this.runningNum
+        }
+      })
+      .then((response)=> {
+        alert(response);
+      })
     },
   },
 }

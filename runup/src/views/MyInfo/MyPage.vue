@@ -3,12 +3,12 @@
          <v-main class="MyPage-main">
             <v-row>
                 <!-- 좌측 -->
-                <v-card :loading="loading" style="height: 642px; width:370px;">
+                <v-card :loading="loading" class="Mypage-content1">
                     <template slot="progress">
                         <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
                     </template>
 
-                    <v-img height="250" :rounded="true" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+                    <v-img height="220" :rounded="true" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
                     <v-card-title>{{ this.$store.getters.getUserNickname }}</v-card-title>
 
@@ -30,15 +30,16 @@
                     </v-progress-linear>
 
                     <v-card-text>
-
-                        <v-btn text to="/MyRunning" class="MyPage-Btn" :rounded="true">나의 도움신청</v-btn>
-                        <v-btn text to="/MyRunning" class="MyPage-Btn" :rounded="true">나의 고민</v-btn>
-                        <v-btn text to="/MyRunning" class="MyPage-Btn" :rounded="true">쪽지함</v-btn>
+                        <v-btn text to="/MyClass" class="MyPage-Btn" :rounded="true">나의 수업 통계</v-btn>
+                        <v-btn text to="/MyPoint" class="MyPage-Btn" :rounded="true">무지개, 포인트 내역</v-btn>
+                        <v-btn text to="/MyLearning" class="MyPage-Btn" :rounded="true">나의 도움신청</v-btn >
+                        <v-btn text to="/MyQustion" class="MyPage-Btn" :rounded="true">나의 고민</v-btn>
+                        <v-btn text to="/MainMessage" class="MyPage-Btn" :rounded="true">쪽지함</v-btn>
                     </v-card-text>
                 </v-card>
 
                 <!-- 우측 -->
-                <v-card :loading="loading" style="width:810px; height: 642px;">
+                <v-card :loading="loading" class="Mypage-content2">
                     <template slot="progress">
                         <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
                     </template>
@@ -47,51 +48,51 @@
 
                     <v-card-text style="height: 630px;">
                         <v-row class="edittext">
-                            <v-col cols="7">
+                            <v-col cols="7" class="mypage-inputText">
                                 아이디
                                 <v-text-field v-model="userId" outlined disabled>
                                 </v-text-field>
                             </v-col>
                         </v-row>
                         <v-row class="edittext">
-                            <v-col cols="7">
+                            <v-col cols="7" class="mypage-inputText">
                                 비밀번호
-                                <v-text-field v-model="userPw" outlined disabled>
+                                <v-text-field v-model="userPw" outlined >
                                 </v-text-field>
                             </v-col>
                         </v-row>
-                        <v-row class="edittext">
-                            <v-col cols="7">
+                        <v-row class="edittext" >
+                            <v-col cols="7" class="mypage-inputText">
                                 이름
-                                <v-text-field v-model="userPw" outlined disabled>
+                                <v-text-field v-model="userPw" outlined >
                                 </v-text-field>
                             </v-col>
                         </v-row>
                         <v-row class="edittext">
-                            <v-col cols="7">
+                            <v-col cols="7" class="mypage-inputText">
                                 닉네임
-                                <v-text-field v-model="userPw" outlined disabled>
+                                <v-text-field v-model="userPw" outlined >
                                 </v-text-field>
                             </v-col>
                         </v-row>
                         <v-row class="edittext">
                             <v-col cols="7">
                                 전화번호
-                                <v-text-field v-model="userPw" outlined disabled>
+                                <v-text-field v-model="userPw" outlined >
                                 </v-text-field>
                             </v-col>
                         </v-row>
                         <v-row class="edittext">
-                            <v-col cols="7">
+                            <v-col cols="7" class="mypage-inputText">
                                 주소
-                                <v-text-field v-model="userPw" outlined disabled>
+                                <v-text-field v-model="userPw" outlined >
                                 </v-text-field>
                             </v-col>
                         </v-row>
                         <v-row class="edittext">
-                            <v-col cols="7">
+                            <v-col cols="7" class="mypage-inputText">
                                 특기
-                                <v-text-field v-model="userPw" outlined disabled>
+                                <v-text-field v-model="userPw" outlined >
                                 </v-text-field>
                             </v-col>
                         </v-row>
@@ -154,16 +155,26 @@ export default {
 
 <style>
 .MyPage-container {
-    height: 85%;
-    display: flex;
-    justify-content: center;
+    width: 100%;
+    /* height: 85%; */
+    /* display: inline-block; */
+    /* justify-content: center; */
+    /* align-items: center; */
 }
 .MyPage-main {
-    margin-top: 60px;
+    margin-top: 2%;
 
-    /* margin-left: 140px; */
+    
 }
-
+.Mypage-content1 {
+    width: 32%;
+    height: 75%;
+}
+.Mypage-content2 {
+    width: 68%;
+    height: 75%;
+    overflow-y: auto;
+}
 .MyPage-Btn {
     width: 240px;
     color: black !important;
@@ -191,5 +202,8 @@ export default {
     height: 80px;
     padding-left: 200px;
     
+}
+.mypage-inputText {
+    height: 2%;
 }
 </style>
