@@ -8,7 +8,7 @@
                         <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
                     </template>
 
-                    <v-img height="220" :rounded="true" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+                    <v-img height="180" :rounded="true" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
 
                     <v-card-title>{{ this.$store.getters.getUserNickname }}</v-card-title>
 
@@ -28,7 +28,6 @@
                         <!-- <strong>{{ Math.ceil(off) }}</strong> -->
 
                     </v-progress-linear>
-
                     <v-card-text>
                         <v-btn text to="/MyClass" class="MyPage-Btn" :rounded="true">나의 수업 통계</v-btn>
                         <v-btn text to="/MyPoint" class="MyPage-Btn" :rounded="true">무지개, 포인트 내역</v-btn>
@@ -151,6 +150,13 @@ export default {
                 }
             }).then((response) => {
                 console.log(response.data);
+                this.userId = response.data.userId,
+                this.userPw = response.data.userPw,
+                this.userName = response.data.userName,
+                this.userNickname = response.data.userNickname,
+                this.userPhoneNumber = response.data.userPhoneNumber,
+                this.userAddress = response.data.userAddress,
+                this.userAbility = response.data.userAbility
 
             }).catch(error => {
                 console.log(error);
