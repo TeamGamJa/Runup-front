@@ -30,7 +30,7 @@ data() {
 },
 methods: {
 	async askChatGPT() {
-	const apiKey = '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';
+	const apiKey = '';
 	// 'your_openai_api_key';
 
 

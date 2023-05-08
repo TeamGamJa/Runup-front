@@ -195,13 +195,13 @@ export default {
             })
         },
         confirmNickname() {
-            var serverIP = '127.0.0.1',
-                serverPort = 8080,
-                pageUrl = 'runup/user/nickname';
+            // var serverIP = '127.0.0.1',
+            //     serverPort = 8080,
+            //     pageUrl = 'runup/user/nickname';
             this.$axios({
-                url: `${serverIP}:${serverPort}/${pageUrl}`,
+                url: this._baseUrl + "user/nickname",
                 method: 'GET',
-                data: {
+                params: {
                     userNickname:this.userNickname,
                 }
             })
@@ -219,11 +219,11 @@ export default {
             })
         },
         userInfoEdit() {
-            var serverIP = '127.0.0.1',
-                serverPort = 8080,
-                pageUrl = 'runup/user';
+            // var serverIP = '127.0.0.1',
+            //     serverPort = 8080,
+            //     pageUrl = 'runup/user';
             this.$axios({
-                url: `${serverIP}:${serverPort}/${pageUrl}`,
+                url: this._baseUrl + 'user',
                 method: 'PUT',
                 data: {
                     userNum: store.getters.getUserNum,
@@ -242,15 +242,15 @@ export default {
             })
         },
         userAbilityEdit() {
-            var serverIP = '127.0.0.1',
-                serverPort = 8080,
-                pageUrl = 'runup/user/ability';
+            // var serverIP = '127.0.0.1',
+            //     serverPort = 8080,
+            //     pageUrl = 'runup/user/ability';
             this.$axios({
-                url: `${serverIP}:${serverPort}/${pageUrl}`,
+                url: this._baseUrl + 'user/ability',
                 method: 'PUT',
                 data: {
-                    categoryBig: this.choice,
-                    categoryMedium: this.RunningMcategory,
+                    userCategoryBig: this.choice,
+                    userCategoryMedium: this.RunningMcategory,
                     userNum: store.getters.getUserNum
                 }
             })
