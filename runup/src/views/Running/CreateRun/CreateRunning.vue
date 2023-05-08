@@ -135,8 +135,18 @@
 
               <v-divider class="mx-4"></v-divider>
 
-              <v-card-text>
-                <v-row class="Schedule-Info mb-0">
+              <v-card-text class="detail-content">
+                <v-text-field v-model="RunningBcategory" class="detail-content" disabled height="15px" />
+              
+                <v-text-field v-model="userNickname" class="detail-content" disabled height="15px" />
+               
+                <v-text-field v-model="runningStartTime" class="detail-content"  disabled height="15px"  />
+                
+                <v-text-field v-model="runningEndTime" class="detail-content" disabled height="15px" />
+                
+                <v-text-field v-model="runningContent" class="detail-content" disabled height="15px" />
+                
+                <!-- <v-row class="Schedule-Info mb-0">
                   특기: {{ RunningBcategory }}
                 </v-row>
 
@@ -151,7 +161,7 @@
                 </v-row>
                 <v-row class="Schedule-Info mb-0">
                   수업내용: {{ runningContent }}
-                </v-row>
+                </v-row> -->
               </v-card-text>
 
               <v-card-actions>
@@ -510,7 +520,7 @@ export default {
         url: `${serverIP}:${serverPort}/${pageUrl}`,
         method:'PUT',
         data: {
-          userNum: store.getters.getUserNum,
+          ParticipateNum: store.getters.getUserNum,
           runningNum: this.runningNum
         }
       })
@@ -540,7 +550,22 @@ export default {
 
 }
 
+
 .Schedule-Info {
   margin-bottom: 10px;
+  /* font-family: 'dohyeon'; */
 }
+
+.detail-content {
+  color: aliceblue;
+}
+/* @font-face {
+  font-family: 'jua';
+  src: url('../../../../public/fonts/BMJUA_ttf.ttf');
+}
+
+@font-face {
+  font-family: 'dohyeon';
+  src: url('../../../../public/fonts/BMDOHYEON_ttf.ttf');
+} */
 </style>
