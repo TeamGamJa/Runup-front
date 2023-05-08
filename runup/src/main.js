@@ -15,7 +15,6 @@ import vuetify from './plugins/vuetify'
 
 Vue.use(vuetify);
 
-
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 Vue.prototype.moment = moment;

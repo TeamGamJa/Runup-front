@@ -139,7 +139,7 @@ export default {
   margin-left: 1%;
   margin-right: 1%;
   max-width: 100%;
-  max-height: 95%;
+  height: 95%;
   margin-top: 50px;
 }
 .Main-Footer {
