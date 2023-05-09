@@ -166,6 +166,11 @@ export default {
         // this.fetchcategoryMedium()
         // this.fetchrunningList()
     },
+    computed: {
+    isAuthenticated() {
+      return store.getters.isAuthenticated;
+    },
+  },
     mounted() {
         this.fetchrunningList();
     },
@@ -305,24 +310,28 @@ export default {
             })
         },
         joinClass() {
-            var serverIP = '127.0.0.1',
-                serverPort = 8080,
-                pageUrl = 'runup/running/participation';
-            this.$axios({
-                url: `http://${serverIP}:${serverPort}/${pageUrl}`,
-                method: "PUT",
-                data: {
-                    participateNum: store.getters.getUserNum,
-                    runningNum: this.runningNum,
-                }
-            }).then(response => {
-                console.log(response)
-                // 성공시 마감여부 변경
-                this.fetchrunningList()
-
-            }).catch(error => {
-                console.log(error)
-            })
+            if(this.isAuthenticated){
+                var serverIP = '127.0.0.1',
+                    serverPort = 8080,
+                    pageUrl = 'runup/running/participation';
+                this.$axios({
+                    url: `http://${serverIP}:${serverPort}/${pageUrl}`,
+                    method: "PUT",
+                    data: {
+                        participateNum: store.getters.getUserNum,
+                        runningNum: this.runningNum,
+                    }
+                }).then(response => {
+                    console.log(response)
+                    // 성공시 마감여부 변경
+                    this.fetchrunningList()
+    
+                }).catch(error => {
+                    console.log(error)
+                })
+            }else {
+                this.$router.push('/SignIn');
+            }
         },
         titleSearch() {
             var serverIP = '127.0.0.1',

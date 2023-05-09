@@ -12,7 +12,7 @@
           <v-spacer></v-spacer>
           <v-btn text to="/FoundRunning" class="menuBtn" :rounded="true">도움받기</v-btn>
           <v-btn text to="/CreateRunning" class="menuBtn" :rounded="true">도움관리</v-btn>
-          <v-btn text to="/QA" class="menuBtn" :rounded="true">묻고 답하기</v-btn>
+          <v-btn text to="/QuestionBoard" class="menuBtn" :rounded="true">묻고 답하기</v-btn>
           <v-btn text to="/pool" class="menuBtn" :rounded="true">옹달샘</v-btn>
           <!-- 로그인 여부에 따라 다르게 화면을 나타내야된다 -->
           <v-btn text class="menuBtn-1" :rounded="true"
@@ -22,10 +22,10 @@
       <v-navigation-drawer v-model="drawer" absolute temporary right>
         <v-list-item>
           <v-list-item-avatar>
-            <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+            <v-img :src="$store.getters.getProfileImg"></v-img>
           </v-list-item-avatar>
           <v-list-item-content>
-            <v-list-item-title>{{ this.$store.state.VuexNickname }}</v-list-item-title>
+            <v-list-item-title>{{ this.$store.getters.getUserNickname }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
@@ -35,19 +35,14 @@
               <v-list-item-title>내 정보</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item link @click="goToMyPage">
+          <v-list-item link @click="goToMyRecord">
             <v-list-item-content>
-              <v-list-item-title>나의 도움주기</v-list-item-title>
+              <v-list-item-title>달리기 기록지</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item link @click="goToMyPage">
+          <v-list-item link @click="goToMyQuestion">
             <v-list-item-content>
-              <v-list-item-title>나의 도움받기</v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item link @click="goToMyPage">
-            <v-list-item-content>
-              <v-list-item-title>나의 도움신청</v-list-item-title>
+              <v-list-item-title>내 고민</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item link @click="goToMessageBox">
@@ -118,6 +113,12 @@ export default {
     goToMessageBox() {
       this.$router.push('/MainMessage')
     },
+    goToMyRecord() {
+      this.$router.push('/MyRecord')
+    },
+    goToMyQuestion() {
+      this.$router.push('/MyQuestion')
+    },  
     logout() {
       store.dispatch('logout').then(() => {
         location.reload();

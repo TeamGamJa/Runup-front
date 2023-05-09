@@ -36,8 +36,11 @@ import SignUp from '../views/auth/SignUp'
 // 도움 닿기 메인 페이지
 import FoundRunning from '../views/Running/FoundRunning'
 
-// 도움 닿기 상세 페이지
-import DetailRunning from '../views/Running/DetailRunning'
+// 묻고 답하기
+import QuestionBoard from '../views/Questino&Answer/QuestionBoard'
+
+// 옹달셈
+import SFountain from '../views/SpringPool/SFountain'
 
 // 도움 닫기 
 import CreateRunning from '../views/Running/CreateRun/CreateRunning'
@@ -51,12 +54,15 @@ import MyClass from '../views/MyInfo/MyClass'
 import MyLearning from '../views/MyInfo/MyLearning'
 import MyPoint from '../views/MyInfo/MyPoint'
 import MyQuestion from '../views/MyInfo/MyQuestion'
+import MyPageEdit from '../views/MyInfo/MyPageEdit'
+import MyPageImgEdit from '../views/MyInfo/MyPageImgEdit'
 
 // 쪽지함
 import MessageInbox from '../views/Message/MessageInbox'
 import MessageSendbox from '../views/Message/MessageSendbox'
 import MessageTrashcan from '../views/Message/MessageTrashcan'
 
+// 요약 화면
 import TestVue from '../views/test/TestVue.vue'
 import Test2Vue from '../views/test/Test2Vue.vue'
 
@@ -89,9 +95,9 @@ const routes = [
         component: SignUp,
     },
     {
-        path: "/DetailRunning/:id",
-        name: "DetailRunning",
-        component: DetailRunning,
+        path: "/QuestionBoard",
+        name: "QuestionBoard",
+        component: QuestionBoard,
     },
     {
         path: "/CreateRunning",
@@ -103,46 +109,67 @@ const routes = [
         path: "/Chat",
         name: "Chat",
         component: ChatView,
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/MyPage", 
         name: "MyPage",
         component: MyPage,
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/MyClass", 
         name: "MyClass",
         component: MyClass,
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/MyPoint", 
         name: "MyPoint",
         component: MyPoint,
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/MyLearning", 
         name: "MyLearning",
         component: MyLearning,
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/MyQuestion", 
         name: "MyQuestion",
         component: MyQuestion,
+        beforeEnter: beforeAuth(true)
+    },
+    {
+        path: "/MyPageEdit", 
+        name: "MyPageEdit",
+        component: MyPageEdit,
+        beforeEnter: beforeAuth(true)
+    },
+    {
+        path: "/MyPageImgEdit", 
+        name: "MyPageImgEdit",
+        component: MyPageImgEdit,
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/MessageInbox",
         name: "MessageInbox",
         component: MessageInbox,
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/MessageSendbox",
         name: "MessageSendbox",
         component: MessageSendbox,
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/MessageTrashcan",
         name: "MessageTrashcan",
         component: MessageTrashcan,
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/Test",
@@ -154,6 +181,11 @@ const routes = [
         name: "Test2",
         component: Test2Vue,
     },
+    {
+        path: "/SFountain",
+        name: "SFountain",
+        component: SFountain, 
+    }
 ]
 
 const router = new Router({

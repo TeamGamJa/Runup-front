@@ -14,6 +14,7 @@ import vuetify from './plugins/vuetify'
 // import { VueNativeSock } from 'vue-native-websocket'
 
 Vue.use(vuetify);
+Vue._watchers = Vue.prototype._watchers = []
 
 axios.interceptors.request.use(config => {
   const token = localStorage.getItem('accessToken'); // 토큰을 로컬 스토리지에서 가져옵니다.

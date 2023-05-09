@@ -136,7 +136,7 @@
               <v-divider class="mx-4"></v-divider>
 
               <v-card-text class="detail-content">
-                <v-text-field v-model="RunningBcategory" class="detail-content" disabled height="15px" />
+                <!-- <v-text-field v-model="RunningBcategory" class="detail-content" disabled height="15px" />
               
                 <v-text-field v-model="userNickname" class="detail-content" disabled height="15px" />
                
@@ -145,8 +145,8 @@
                 <v-text-field v-model="runningEndTime" class="detail-content" disabled height="15px" />
                 
                 <v-text-field v-model="runningContent" class="detail-content" disabled height="15px" />
-                
-                <!-- <v-row class="Schedule-Info mb-0">
+                 -->
+                <v-row class="Schedule-Info mb-0">
                   특기: {{ RunningBcategory }}
                 </v-row>
 
@@ -161,7 +161,7 @@
                 </v-row>
                 <v-row class="Schedule-Info mb-0">
                   수업내용: {{ runningContent }}
-                </v-row> -->
+                </v-row>
               </v-card-text>
 
               <v-card-actions>

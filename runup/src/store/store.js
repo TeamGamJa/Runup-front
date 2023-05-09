@@ -11,6 +11,7 @@ const state = {
   VuexId: "",
   VuexNickname: "",
   VuexNum: "",
+  VuexProfileImg:"",
   count: 0,
   token: { // 사용자 인증을 위한 데이터 구조체로 사용자를 구분하는 고유한 식별자나 사용자의 권한 정보 등을 포함
     accessToken: jwt.getToken(),
@@ -39,6 +40,9 @@ const getters = {
   },
   getUserNum(state) {
     return state.VuexNum;
+  },
+  getProfileImg(state) {
+    return state.VuexProfileImg;
   }
 }
 
@@ -51,6 +55,9 @@ const mutations = {
   },
   mutSetVuexNum: (state, userNum) => {
     state.VuexNum = userNum;
+  },
+  mutSetVuexProfileImg: (state, userUrl) => {
+    state.VuexProfileImg = userUrl;
   },
   logout: function (state = {}) {
     state.token.accessToken = "";
@@ -77,6 +84,9 @@ const actions = {
   },
   setVuexNum: (context, userNum) => {
     context.commit("mutSetVuexNum", userNum);
+  },
+  setVuexProfileImg: (context, userUrl) => {
+    context.commit("mutSetVuexProfileImg", userUrl);
   },
   logout: function (context, payload) {
     return new Promise((resolve) => {

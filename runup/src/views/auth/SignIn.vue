@@ -75,7 +75,8 @@ export default {
             store.commit("login", { accessToken: result.data.token });
             store.dispatch("setVuexId", result.data.userId);
             store.dispatch("setVuexNickname", result.data.userNickname);
-            store.dispatch("setVuexNum", result.data.userNum)
+            store.dispatch("setVuexNum", result.data.userNum);
+            store.dispatch("setVuexProfileImg", result.data.userUrl);
             this.$router.push('/')
             // this.$router.go(-1)
             // location.reload()
