@@ -58,6 +58,7 @@ import MessageSendbox from '../views/Message/MessageSendbox'
 import MessageTrashcan from '../views/Message/MessageTrashcan'
 
 import TestVue from '../views/test/TestVue.vue'
+import Test2Vue from '../views/test/Test2Vue.vue'
 
 const routes = [
     {
@@ -147,6 +148,11 @@ const routes = [
         path: "/Test",
         name: "Test",
         component: TestVue,
+    },
+    {
+        path: "/Test2",
+        name: "Test2",
+        component: Test2Vue,
     },
 ]
 

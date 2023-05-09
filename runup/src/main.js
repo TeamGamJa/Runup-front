@@ -15,6 +15,25 @@ import vuetify from './plugins/vuetify'
 
 Vue.use(vuetify);
 
+axios.interceptors.request.use(config => {
+  const token = localStorage.getItem('accessToken'); // 토큰을 로컬 스토리지에서 가져옵니다.
+  if (token) {
+    config.headers['jwt-auth-token'] = token; // 토큰이 있다면 요청 헤더에 추가합니다.
+  }
+  return config;
+}, error => {
+  return Promise.reject(error);
+});
+
+axios.interceptors.response.use(response => {
+  return response;
+}, error => {
+  if (error.response.status === 401) { // 인증 실패 시 처리
+    console.log('인증 실패');
+  }
+  return Promise.reject(error);
+});
+
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 Vue.prototype.moment = moment;

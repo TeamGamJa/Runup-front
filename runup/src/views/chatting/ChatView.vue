@@ -28,10 +28,11 @@ import axios from 'axios'
 // import store from '@/store/store'
 
 export default {
+<<<<<<< Updated upstream
 	data() {
 		return {
 			stompClient: null,
-			roomId: "this7", // 채팅방 ID
+			roomId: "test0", // 채팅방 ID
 			messageContent: '',
 			messages: [],
 			title: '자바기초강의'
@@ -67,6 +68,43 @@ export default {
 							console.log(e);
 						});
 					}
+=======
+  data() {
+    return {
+		stompClient: null,
+		roomId: "test0", // 채팅방 ID
+		messageContent: '',
+		messages: [],
+		title: '자바기초강의'
+    }
+  },
+  computed: {
+    getUserNickname() {
+      return (this.$store.getters.getUserNickname); // 사용자 닉네임을 반환하는 코드를 여기에 작성합니다.
+    },
+  },
+  created() {
+    this.connect()
+  },
+  beforeDestroy() {
+    this.disconnect()
+  },
+  methods: {
+    connect() {
+		axios.get("http://localhost:8080/runup/" + "chat", {
+			params : {
+				chatRoomId : this.roomId,
+			}
+		})
+		.then(result=> {
+			console.log(result.data)
+			if (result.data.roomId == null ) {
+				axios.post(this._baseUrl + "chat", {
+					roomId : this.roomId,
+					title : this.title
+				}).then(result => {
+					console.log(result.data);
+>>>>>>> Stashed changes
 				}).catch(function (e) {
 					console.log(e);
 				});
