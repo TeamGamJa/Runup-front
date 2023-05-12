@@ -111,7 +111,7 @@ export default {
       this.$router.push('/MyPage')
     },
     goToMessageBox() {
-      this.$router.push('/MainMessage')
+      this.$router.push('/MessageInbox')
     },
     goToMyRecord() {
       this.$router.push('/MyRecord')

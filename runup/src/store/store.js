@@ -12,6 +12,9 @@ const state = {
   VuexNickname: "",
   VuexNum: "",
   VuexProfileImg:"",
+  VuexPoint:"",
+  VuexLuxColor:"",
+  VuexColor:"",
   count: 0,
   token: { // 사용자 인증을 위한 데이터 구조체로 사용자를 구분하는 고유한 식별자나 사용자의 권한 정보 등을 포함
     accessToken: jwt.getToken(),
@@ -43,7 +46,16 @@ const getters = {
   },
   getProfileImg(state) {
     return state.VuexProfileImg;
-  }
+  },
+  getUserPoint(state) {
+    return state.VuexPoint;
+  },
+  getUserLuxColor(state) {
+    return state.VuexLuxColor;
+  },
+  getUserColor(state) {
+    return state.VuexColor;
+  },
 }
 
 const mutations = {
@@ -58,6 +70,15 @@ const mutations = {
   },
   mutSetVuexProfileImg: (state, userUrl) => {
     state.VuexProfileImg = userUrl;
+  },
+  mutSetVuexUserPoint: (state, userPoint) => {
+    state.VuexPoint = userPoint;
+  },
+  mutSetVuexUserLuxColor: (state, userLuxcolor) => {
+    state.VuexLuxColor = userLuxcolor;
+  },
+  mutSetVuexUserColor: (state, userColor) => {
+    state.VuexColor = userColor;
   },
   logout: function (state = {}) {
     state.token.accessToken = "";
@@ -87,6 +108,15 @@ const actions = {
   },
   setVuexProfileImg: (context, userUrl) => {
     context.commit("mutSetVuexProfileImg", userUrl);
+  },
+  setVuexUserPoint: (context, userPoint) => {
+    context.commit("mutSetVuexUserPoint", userPoint);
+  },
+  setVuexUserLuxColor: (context, userLuxcolor) => {
+    context.commit("mutSetVuexUserLuxColor", userLuxcolor);
+  },
+  setVuexUserColor: (context, userColor) => {
+    context.commit("mutSetVuexUserColor", userColor);
   },
   logout: function (context, payload) {
     return new Promise((resolve) => {

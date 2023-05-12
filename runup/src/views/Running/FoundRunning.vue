@@ -30,28 +30,28 @@
                 <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y>
                     <v-card :loading="loading" class="mx-auto my-12" width="300">
 
-                        <v-img height="250" :src="categoryImg"></v-img>
+                        <v-img class="categoryImage" :src="categoryImg"></v-img>
 
                         <v-card-title class="Schedule-Info">
                             제목: {{ runningTitle }}
                         </v-card-title>
 
-                        <v-divider class="mx-4"></v-divider>
+                        <v-divider class="linepart mx-4"></v-divider>
 
                         <v-card-text>
-                            <v-row class="Schedule-Info">
+                            <v-row class="Schedule-Info1">
                                 특기: {{ RunningBcategory }}
                             </v-row>
-                            <v-row class="Schedule-Info">
+                            <v-row class="Schedule-Info1">
                                 Runner: {{ userNickname }}
                             </v-row>
-                            <v-row class="Schedule-Info">
+                            <v-row class="Schedule-Info1">
                                 수업시작: {{ runningStartTime }}
                             </v-row>
-                            <v-row class="Schedule-Info">
+                            <v-row class="Schedule-Info1">
                                 수업종료: {{ runningEndTime }}
                             </v-row>
-                            <v-row class="Schedule-Info">
+                            <v-row class="Schedule-Info1">
                                 수업내용: {{ runningContent }}
                             </v-row>
                         </v-card-text>
@@ -411,7 +411,13 @@ table td {
     padding-left: 550px;
     justify-content: center;
 }
-
+.categoryImage {
+    height: 50%;
+    display: center;
+}
+.linepart{
+    margin-bottom: 8%;
+}
 .categoryBtn {
     margin-left: 2px;
     color: black !important;
@@ -420,7 +426,17 @@ table td {
     border-radius: 200px;
     margin-top: 8px;
 }
+.Schedule-Info1 {
+    display: inline-block;
+   font-size: large;
+   margin-bottom: 8%;
+}
 
 .v-data-table-header th {
     background-color: rgba(237, 247, 255, 1);
-}</style>
+}
+.ParticipateBtn {
+    background-color: rgba(244, 209, 155, 1) !important;
+    margin-left: 75%;
+}
+</style>
