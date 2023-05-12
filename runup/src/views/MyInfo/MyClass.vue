@@ -55,7 +55,9 @@ export default {
         // VeLine
     },
     data: () => ({
-        loading: false,
+        //loading: false,
+        chartData1: null,
+        chartData2: null,
         selection: 1,
         UserLuxColor: 20,
         chartData: {
@@ -77,33 +79,65 @@ export default {
         this.fetchLine();
     },
     mounted() {
-        this.drawChart();
-        this.drawChart2();
+        // this.drawChart();
+        // this.drawChart2();
     },
     methods: {
         fetchData() {
             this.$axios({
-                url: `http://127.0.0.1:8080/runup/running/pchart`,
+                url: `http://127.0.0.1:8080/runup/running/allchart`,
                 method: 'GET',
                 params: {
-                    userNum: store.getters.getUserNum,
+                    userNum: store.getters.getUserNum
                 },
             })
                 .then((response) => {
-                    console.log(response.data);
-                    const item = response.data;
-                    // console.log(item);
-                    for (let i = 0; i < item.length; i++) {
-                        this.row = item[i];
-                        this.chartData.rows.push({
-                            runningCategoryBig: this.row.runningCategoryBig,
-                            runningValue: this.row.runningValue,
-                        });
-                    }
+                    this.chartData1 = response.data;
+                    this.drawChart();
                 })
                 .catch((error) => {
-                    console.error(error);
+                    console.log(error);
                 })
+                
+                this.$axios({
+        url: `http://127.0.0.1:8080/runup/running/weekchart`,
+        method: 'GET',
+        params: {
+          userNum: store.getters.getUserNum
+        },
+        })
+        .then((response) => {
+            this.chartData2 = response.data;
+            this.drawChart2();
+        })
+        .catch((error) => {
+          console.log(error);
+        })     
+        
+        
+  this.$axios({
+        url: `http://127.0.0.1:8080/runup/running/pchart`,
+        method: 'GET',
+        params: {
+          userNum: store.getters.getUserNum,
+        },
+        })
+        .then((response) => {
+            console.log(response.data);
+            const item = response.data;
+            // console.log(item);
+           for(let i=0; i<item.length; i++) {
+        this.row = item[i];
+        this.chartData.rows.push({
+        runningCategoryBig: this.row.runningCategoryBig,
+        runningValue: this.row.runningValue,
+        });
+    }
+        })
+        .catch((error) => {
+          console.error(error);
+        })    
+
         },
         fetchLine() {
             this.$axios({
@@ -131,59 +165,52 @@ export default {
                 });
         },
         drawChart() {
-            const chartDom = this.$refs.chart;
-            const myChart = echarts.init(chartDom);
-            const data = [
-                { name: 'label1', value: 10 },
-                { name: 'label2', value: 15 },
-                { name: 'label3', value: 18 },
-                { name: 'label4', value: 10 },
-                { name: 'label5', value: 20 },
-            ];
-            const option = {
-                xAxis: {
-                    type: 'category',
-                    data: data.map(item => item.name)
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: data.map(item => item.value),
-                    type: 'bar',
-                    barWidth: 40,
-                    itemStyle: {
-                        color: '#5cadff',
-                        borderWidth: 2
-                    }
-                }]
-            };
-            myChart.setOption(option);
+      const chartDom = this.$refs.chart;
+      const myChart = echarts.init(chartDom);
+      const option = {
+        xAxis: {
+          type: 'category',
+          data: this.chartData1.map(item => item.userNickname)
         },
-        drawChart2() {
-            const chartDom = this.$refs.chart2;
-            const myChart = echarts.init(chartDom);
-            const option = {
-                xAxis: {
-                    type: 'category',
-                    data: ['name1', 'name2', 'name3', 'name4', 'name5']
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: [200, 84, 20, 444, 190],
-                    type: 'bar',
-                    barWidth: 40, // 막대 굵기
-                    itemStyle: { // 막대 스타일
-                        color: '#32cd32', // 막대 색상
-                        borderWidth: 2 // 막대 테두리 굵기
-                    }
-                }]
-            };
-            myChart.setOption(option);
-        }
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          data: this.chartData1.map(item => item.falseCount),
+          type: 'bar',
+          barWidth: 40, 
+          itemStyle: { 
+            color: '#5cadff', 
+            borderWidth: 2 
+          }
+        }]
+      };
+      myChart.setOption(option);
+    },
+    drawChart2() {
+      const chartDom2 = this.$refs.chart2;
+      const myChart2 = echarts.init(chartDom2);
+      const option2 = {
+        xAxis: {
+          type: 'category',
+          data: this.chartData2.map(item => item.userNickname)
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          data: this.chartData2.map(item => item.falseCount),
+          type: 'bar',
+          barWidth: 40, // 막대 굵기
+          itemStyle: { // 막대 스타일
+            color: '#32cd32', // 막대 색상
+            borderWidth: 2 // 막대 테두리 굵기
+          }
+        }]
+      };
+      myChart2.setOption(option2);
     }
+  }
 
 };
 </script>

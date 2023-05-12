@@ -166,7 +166,7 @@
 
               <v-card-actions>
                 <v-btn class="ChatBtn" :rounded="true" text to="/Chat">수업시작 </v-btn>
-                <v-btn class="ChatBtn" :rounded="true" @click="CancleClass">수업취소 </v-btn>
+                <v-btn class="ChatBtn" :rounded="true" @click="CancleClass()">수업취소 </v-btn>
               </v-card-actions>
             </v-card>
           </v-menu>
@@ -203,6 +203,7 @@ export default {
     RunningMcategory: '',
     DateMenu: '',
     selectDate: '',
+    runningNum:'',
     runningTitle: '',
     runningContent: '',
     runningStartTime: '',
@@ -311,6 +312,7 @@ export default {
           if (item.runningDate === selectedDateStr) {
             console.log(item);
             // console.log(item.runningTitle);
+            this.runningNum = item.runningNum;
             this.runningTitle = item.runningTitle;
             this.runningContent = item.runningContent;
             this.runningStartTime = item.runningStartSmall;
@@ -327,6 +329,7 @@ export default {
           if (item.runningDate === selectedDateStr) {
             // console.log(item);
             // console.log(item.runningTitle);
+            this.runningNum = item.runningNum;
             this.runningTitle = item.runningTitle;
             this.runningContent = item.runningContent;
             this.runningStartTime = item.runningStartSmall;
@@ -443,6 +446,7 @@ export default {
           console.log(this.runningBlue2);
           // // 반복문을 통한 runningBlue 리스트 하나씩 꺼내기
           for (let i = 0; i < this.runningBlue.length; i++) {
+            this.runningNUm = this.runningBlue[i].runningNum;
             this.runningTitle = this.runningBlue[i].runningTitle;
             this.runningCategoryMedium = this.runningBlue[i].runningCategoryMedium;
             this.runningDate = this.runningBlue[i].runningDate;
@@ -487,6 +491,7 @@ export default {
           console.log(this.runningGreen2);
           // // 반복문을 통한 runningBlue 리스트 하나씩 꺼내기
           for (let i = 0; i < this.runningGreen.length; i++) {
+            this.runningNUm = this.runningGreen[i].runningNum;
             this.runningTitle = this.runningGreen[i].runningTitle;
             this.runningCategoryMedium = this.runningGreen[i].runningCategoryMedium;
             this.runningDate = this.runningGreen[i].runningDate;
@@ -513,19 +518,20 @@ export default {
         })
     },
     CancleClass() {
+      console.log(11);
       var serverIP= '127.0.0.1',
           serverPort= 8080,
-          pageUrl= 'runup/running/';
+          pageUrl= 'runup/running/cancellearning';
       this.$axios({
-        url: `${serverIP}:${serverPort}/${pageUrl}`,
+        url: `http://${serverIP}:${serverPort}/${pageUrl}`,
         method:'PUT',
         data: {
-          ParticipateNum: store.getters.getUserNum,
+          participateNum: store.getters.getUserNum,
           runningNum: this.runningNum
         }
       })
       .then((response)=> {
-        alert(response);
+        console.log(response.data);
       })
     },
   },

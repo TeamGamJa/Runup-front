@@ -77,6 +77,9 @@ export default {
             store.dispatch("setVuexNickname", result.data.userNickname);
             store.dispatch("setVuexNum", result.data.userNum);
             store.dispatch("setVuexProfileImg", result.data.userUrl);
+            store.dispatch("setVuexUserPoint", result.data.userPoint);
+            store.dispatch("setVuexUserLuxColor", result.data.userLuxColor);
+            store.dispatch("setVuexUserColor", result.data.userColor);
             this.$router.push('/')
             // this.$router.go(-1)
             // location.reload()

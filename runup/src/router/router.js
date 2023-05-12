@@ -63,7 +63,7 @@ import MessageSendbox from '../views/Message/MessageSendbox'
 import MessageTrashcan from '../views/Message/MessageTrashcan'
 
 // 요약 화면
-import TestVue from '../views/test/TestVue.vue'
+
 import Test2Vue from '../views/test/Test2Vue.vue'
 
 const routes = [
@@ -171,11 +171,7 @@ const routes = [
         component: MessageTrashcan,
         beforeEnter: beforeAuth(true)
     },
-    {
-        path: "/Test",
-        name: "Test",
-        component: TestVue,
-    },
+
     {
         path: "/Test2",
         name: "Test2",
