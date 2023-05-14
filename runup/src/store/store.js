@@ -15,6 +15,7 @@ const state = {
   VuexPoint:"",
   VuexLuxColor:"",
   VuexColor:"",
+  VuexChatRoomId:"",
   count: 0,
   token: { // 사용자 인증을 위한 데이터 구조체로 사용자를 구분하는 고유한 식별자나 사용자의 권한 정보 등을 포함
     accessToken: jwt.getToken(),
@@ -56,6 +57,9 @@ const getters = {
   getUserColor(state) {
     return state.VuexColor;
   },
+  getChatRoomId(state) {
+    return state.VuexChatRoomId;
+  }
 }
 
 const mutations = {
@@ -79,6 +83,9 @@ const mutations = {
   },
   mutSetVuexUserColor: (state, userColor) => {
     state.VuexColor = userColor;
+  },
+  mutSetChatRoomId: (state, chatRoomId) => {
+    state.VuexChatRoomId = chatRoomId;
   },
   logout: function (state = {}) {
     state.token.accessToken = "";
@@ -117,6 +124,9 @@ const actions = {
   },
   setVuexUserColor: (context, userColor) => {
     context.commit("mutSetVuexUserColor", userColor);
+  },
+  setVuexChatRoomId: (context, chatRoomId) => {
+    context.commit("mutChatRoomId", chatRoomId);
   },
   logout: function (context, payload) {
     return new Promise((resolve) => {
