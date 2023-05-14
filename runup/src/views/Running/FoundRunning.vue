@@ -25,7 +25,12 @@
                 </v-card-title>
                 <v-data-table :headers="headers" :items="runningList" :items-per-page="9"
                     :options="{ itemsPerPageOptions: [] }" @click:row="showEvent" height="480">
-
+                    <!-- eslint-disable-next-line vue/valid-v-slot -->
+                    <template v-slot:item.userLuxColor="{ item }">
+                        <v-chip :color="getColor(item.userLuxColor)" dark>
+                            {{ item.userLuxColor }}
+                        </v-chip>
+                    </template>
                 </v-data-table>
                 <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y>
                     <v-card :loading="loading" class="mx-auto my-12" width="300">
@@ -140,21 +145,21 @@ export default {
             }
         },
         userLuxColor(newJin) {
-            if(newJin === 'red') {
+            if (newJin === 'red') {
                 this.LuxColorImg = 'https://ifh.cc/g/RAXAxb.png'
-            } else if( newJin === 'orange') {
+            } else if (newJin === 'orange') {
                 this.LuxColorImg = 'https://ifh.cc/g/fzZpQn.png'
-            } else if( newJin === 'yello') {
+            } else if (newJin === 'yello') {
                 this.LuxColorImg = 'https://ifh.cc/g/rtobXp.png'
-            } else if( newJin === 'green') {
+            } else if (newJin === 'green') {
                 this.LuxColorImg = 'https://ifh.cc/g/AJGHHa.png'
-            } else if( newJin === 'blue') {
+            } else if (newJin === 'blue') {
                 this.LuxColorImg = 'https://ifh.cc/g/hBVVFB.png'
-            } else if( newJin === 'indigo') {
+            } else if (newJin === 'indigo') {
                 this.LuxColorImg = 'https://ifh.cc/g/xpcdfb.png'
-            } else if( newJin === 'violet') {
+            } else if (newJin === 'violet') {
                 this.LuxColorImg = 'https://ifh.cc/g/QTDW2n.png'
-            } else if( newJin === 'white') {
+            } else if (newJin === 'white') {
                 this.LuxColorImg = 'https://ifh.cc/g/lvmD7v.png'
             }
         }
@@ -167,10 +172,10 @@ export default {
         // this.fetchrunningList()
     },
     computed: {
-    isAuthenticated() {
-      return store.getters.isAuthenticated;
+        isAuthenticated() {
+            return store.getters.isAuthenticated;
+        },
     },
-  },
     mounted() {
         this.fetchrunningList();
     },
@@ -310,26 +315,31 @@ export default {
             })
         },
         joinClass() {
-            if(this.isAuthenticated){
-                var serverIP = '127.0.0.1',
-                    serverPort = 8080,
-                    pageUrl = 'runup/running/participation';
-                this.$axios({
-                    url: `http://${serverIP}:${serverPort}/${pageUrl}`,
-                    method: "PUT",
-                    data: {
-                        participateNum: store.getters.getUserNum,
-                        runningNum: this.runningNum,
-                    }
-                }).then(response => {
-                    console.log(response)
-                    // 성공시 마감여부 변경
-                    this.fetchrunningList()
-    
-                }).catch(error => {
-                    console.log(error)
-                })
-            }else {
+            if (this.isAuthenticated) {
+                if (this.userNickname !== store.getters.getUserNickname) {
+
+                    var serverIP = '127.0.0.1',
+                        serverPort = 8080,
+                        pageUrl = 'runup/running/participation';
+                    this.$axios({
+                        url: `http://${serverIP}:${serverPort}/${pageUrl}`,
+                        method: "PUT",
+                        data: {
+                            participateNum: store.getters.getUserNum,
+                            runningNum: this.runningNum,
+                        }
+                    }).then(response => {
+                        console.log(response)
+                        // 성공시 마감여부 변경
+                        this.fetchrunningList()
+
+                    }).catch(error => {
+                        console.log(error)
+                    })
+                } else {
+                    alert("내가 만든 수업은 신청이 앙되요~")
+                }
+            } else {
                 this.$router.push('/SignIn');
             }
         },
@@ -354,7 +364,17 @@ export default {
             }).catch(error => {
                 console.log(error)
             })
-        }
+        },
+        getColor(userLuxColor) {
+            if (userLuxColor === 'red') return 'red'
+            else if (userLuxColor === 'orange') return 'orange'
+            else if (userLuxColor === 'yellow') return 'yellow'
+            else if (userLuxColor === 'green') return 'green'
+            else if (userLuxColor === 'blue') return 'blue'
+            else if (userLuxColor === 'indigo') return 'indigo'
+            else if (userLuxColor === 'purple') return 'purple'
+            else if (userLuxColor === 'white') return 'white'
+        },
     }
 }
 </script>
@@ -411,13 +431,16 @@ table td {
     padding-left: 550px;
     justify-content: center;
 }
+
 .categoryImage {
     height: 50%;
     display: center;
 }
-.linepart{
+
+.linepart {
     margin-bottom: 8%;
 }
+
 .categoryBtn {
     margin-left: 2px;
     color: black !important;
@@ -426,15 +449,17 @@ table td {
     border-radius: 200px;
     margin-top: 8px;
 }
+
 .Schedule-Info1 {
     display: inline-block;
-   font-size: large;
-   margin-bottom: 8%;
+    font-size: large;
+    margin-bottom: 8%;
 }
 
 .v-data-table-header th {
     background-color: rgba(237, 247, 255, 1);
 }
+
 .ParticipateBtn {
     background-color: rgba(244, 209, 155, 1) !important;
     margin-left: 75%;

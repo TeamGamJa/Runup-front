@@ -1,22 +1,20 @@
 <template>
 	<v-container class="Chat-container pa-1">
+		<v-btn class="MovePage" :rounded="true" @click="PageMove()">채팅종료</v-btn>
 		<div class="messages-container">
 			<div v-for="(message, index) in messages" :key="index" class="message" :class="{
 				'my-message': message.sender == getUserNickname,
-				'other-message': message.sender != getUserNickname
-			}">
+				'other-message': message.sender != getUserNickname}">
 				<strong>{{ message.sender }}: </strong> {{ message.content }}
 			</div>
 		</div>
-		<!-- <v-divider class="mx-1" style="width:1000px;"></v-divider> -->
 
 		<div class="message-input-container">
 			<input class="text-input" v-model="messageContent" type="text" @keyup.enter.prevent="sendMessage"
 				placeholder="메시지를 입력하세요" />
 			<v-btn class="sendBtn" @click="sendMessage" :rounded="true">전송</v-btn>
 		</div>
-
-
+		
 
 	</v-container>
 </template>
@@ -34,7 +32,8 @@ export default {
 			roomId: "test0", // 채팅방 ID
 			messageContent: '',
 			messages: [],
-			title: '자바기초강의'
+			title: '자바기초강의',
+			userNickname:'',
 		}
 	},
 	computed: {
@@ -110,6 +109,17 @@ export default {
 				this.messageContent = ''
 			}
 		},
+		PageMove() {
+			console.log(this.userNickname)
+			if(this.getUserNickname) {
+				this.$router.push('/EvaluatePage')
+			}else if(!this.getUserNickname){
+				this.$router.push('/EvaluatePage');
+			}
+			// 화면이 평가페이지로 전환되어야 한다. (참여자인 경우)
+			// 화면이 메인페이지로 이동 ( 멘토 )
+
+		}
 	},
 }
 </script>
@@ -252,6 +262,11 @@ export default {
 		cursor: pointer;
 		border-radius: 5px;
 	} */
-
+}
+.MovePage {
+	margin-left: 90%;
+	width: 10%;	
+	background-color: rgba(237, 247, 255, 1) !important;
+	
 }
 </style>

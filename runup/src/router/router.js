@@ -51,7 +51,7 @@ import ChatView from '../views/chatting/ChatView.vue'
 // 내 정보
 import MyPage from '../views/MyInfo/MyPage'
 import MyClass from '../views/MyInfo/MyClass'
-import MyLearning from '../views/MyInfo/MyLearning'
+import MyRecord from '../views/MyInfo/MyRecord'
 import MyPoint from '../views/MyInfo/MyPoint'
 import MyQuestion from '../views/MyInfo/MyQuestion'
 import MyPageEdit from '../views/MyInfo/MyPageEdit'
@@ -61,6 +61,9 @@ import MyPageImgEdit from '../views/MyInfo/MyPageImgEdit'
 import MessageInbox from '../views/Message/MessageInbox'
 import MessageSendbox from '../views/Message/MessageSendbox'
 import MessageTrashcan from '../views/Message/MessageTrashcan'
+
+// 평가화면
+import EvaluatePage from '../views/Evaluation/EvaluatePage'
 
 // 요약 화면
 
@@ -130,9 +133,9 @@ const routes = [
         beforeEnter: beforeAuth(true)
     },
     {
-        path: "/MyLearning", 
-        name: "MyLearning",
-        component: MyLearning,
+        path: "/MyRecord", 
+        name: "MyRecord",
+        component: MyRecord,
         beforeEnter: beforeAuth(true)
     },
     {
@@ -181,6 +184,11 @@ const routes = [
         path: "/SFountain",
         name: "SFountain",
         component: SFountain, 
+    },
+    {
+        path: "/EvaluatePage",
+        name: "EvaluatePage",
+        component: EvaluatePage,
     }
 ]
 

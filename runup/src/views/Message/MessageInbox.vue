@@ -18,11 +18,11 @@
                     <v-spacer></v-spacer><v-spacer></v-spacer>
                 </v-card-title>
                 <v-table>
-                    <thead>
+                    <thead >
                     <tr>
-                        <th>보낸 사람</th>
-                        <th>제목</th>
-                        <th>보낸 날짜</th>
+                        <th class="table-head">보낸 사람</th>
+                        <th class="table-head">제목</th>
+                        <th class="table-head">보낸 날짜</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -214,5 +214,10 @@ table td {
 }
 
 .v-data-table-header th {
-    background-color: rgba(237, 247, 255, 1);
-}</style>
+    background-color: rgba(237, 247, 255, 1);   
+}
+.table-head {
+    margin-left: 20%;
+    margin-right: 20%;
+}
+</style>
