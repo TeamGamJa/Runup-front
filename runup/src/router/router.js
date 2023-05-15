@@ -67,7 +67,7 @@ import EvaluatePage from '../views/Evaluation/EvaluatePage'
 
 // 요약 화면
 
-import Test2Vue from '../views/test/Test2Vue.vue'
+import TestVue from '../views/test/TestVue.vue'
 
 const routes = [
     {
@@ -176,9 +176,9 @@ const routes = [
     },
 
     {
-        path: "/Test2",
-        name: "Test2",
-        component: Test2Vue,
+        path: "/Test",
+        name: "Test",
+        component: TestVue,
     },
     {
         path: "/SFountain",

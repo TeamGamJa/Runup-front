@@ -72,7 +72,7 @@
                                 @change="inputSelectVal"></v-select>
                         </v-col>
                         <v-col cols="5">
-                            <v-radio-group v-model="userSkill" row>
+                            <v-radio-group v-model="userSkill" row @change="inputAbility">
                                 <v-radio value="중수" label="중수"></v-radio>
                                 <v-radio value="초보" label="초보"></v-radio>
                             </v-radio-group>
@@ -89,6 +89,8 @@
 </template>
 
 <script>
+import store from '@/store/store'
+
 export default {
     name: 'SignUp',
     components: {},
@@ -98,7 +100,7 @@ export default {
                 email: v => !!(v || '').match(/@/) || '이메일 형식으로 입력해주세요',
                 pwcheck: v => v === this.userPw || '입력하신 비밀번호와 다릅니다'
             },
-            userId: '',
+            userId: store.getters.getUserId,
             userPw: '',
             userPwCheck: '',
             userName: '',
@@ -109,6 +111,8 @@ export default {
             userSkill: '',
             count: '',
             choice: '',
+            checkId: '',
+            checkNickname: '',
             categories: ['IT', '라이프스타일', '문제풀이', '기타'],
             categoryMedium: [''],
             RunningMcategory: '',
@@ -119,41 +123,58 @@ export default {
     computed: {},
     methods: {
         confirmId() {
-            var serverIP = '127.0.0.1',
-                serverPort = 8080,
-                pageUrl = 'runup/user/id'
             this.$axios({
-                url: `http://${serverIP}:${serverPort}/${pageUrl}`,
+                url: this._baseUrl + "user/id",
                 method: 'GET',
-                data: {
-                    userId: this.userId
-                },
-
-            }).then((result) => {
-                console.log(result)
-                this.count = parseInt(result.data);
-
-            })
+                params: {
+                    userId: this.userId,
+                }
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    if (response.data === 1) {
+                        alert('사용되고 있는 ID 입니다.')
+                    } else {
+                        alert('사용가능한 ID 입니다.')
+                        this.checkId = 1;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         },
         confirmNickname() {
-            var serverIP = '127.0.0.1',
-                serverPort = 8080,
-                pageUrl = 'runup/user/Nickname'
             this.$axios({
-                url: `http://${serverIP}:${serverPort}/${pageUrl}`,
+                url: this._baseUrl + "user/nickname",
                 method: 'GET',
-                data: {
-                    userNickname: this.userNickName
-                },
-
-            }).then((result) => {
-                console.log(result)
-                this.count = parseInt(result.data);
-
-            })
+                params: {
+                    userNickname: this.userNickname,
+                }
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    if (response.data === 1) {
+                        alert('사용되고 있는 닉네임 입니다.')
+                    } else {
+                        alert('사용가능한 닉네임 입니다.')
+                        this.checkNickname = 1;
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                })
         },
         inputSelectVal(value) {
             this.RunningMcategory = value;
+        },
+        inputAbility() {
+            console.log(this.userSkill);
+            if (this.userSkill == '중수') {
+                this.userAbility = 1;
+            }
+            if (this.userSkill == '하수') {
+                this.userAbility = 0;
+            }
         },
         fetchcategoryMedium() {
             // console.log(this.choice)
@@ -175,9 +196,28 @@ export default {
             })
         },
         SignUp(){
+            if (this.checkId != 1) {
+                alert("ID 중복확인을 해주세요")
+                return
+            }
+            if (this.checkNickname != 1) {
+                alert("닉네임 중복확인을 해주세요")
+                return
+            }
+            if (this.userId == '' ||
+                this.userPw == '' ||
+                this.userName == '' ||
+                this.userPhoneNumber == '' ||
+                this.userAddress == '' ||
+                this.choice == '' ||
+                this.userAbility == '' ||
+                this.RunningMcategory == '') {
+                    alert("모든값을 입력 후 회원가입을 해주세요")
+                    return
+                }
             var serverIP = '127.0.0.1',
                 serverPort = 8080,
-                pageUrl ='runup/user';
+                pageUrl ='runup/user/regist';
             this.$axios({
                 url: `http://${serverIP}:${serverPort}/${pageUrl}`,
                 method: 'POST',
@@ -186,10 +226,9 @@ export default {
                     userPw: this.userPw,
                     userName: this.userName,
                     userNickname: this.userNickname,
-                    userAblity: this.userAbility,
-                    userAddress: this.userAddress,
-                    userPhoneNumber: this.userPhoneNumber,
-                    userSkill: this.userSkill,
+                    userAbility: this.userAbility,
+                    userAddr: this.userAddress,
+                    userPhone: this.userPhoneNumber,
                     userCategoryBig: this.choice,
                     userCategoryMedium: this.RunningMcategory
                 }

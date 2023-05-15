@@ -119,6 +119,7 @@ export default {
                 console.log(result.data);
                 if (result.data.userNickname == null) {
                   console.log("회원가입페이지로 보내기")
+                  store.dispatch("setVuexId", this.userId);
                   this.$router.push("/SignUp")
                 } else {
                   console.log("로그인성공")

@@ -29,7 +29,7 @@ export default {
 	data() {
 		return {
 			stompClient: null,
-			roomId: "test0", // 채팅방 ID
+			roomId: "test6", // 채팅방 ID
 			messageContent: '',
 			messages: [],
 			title: '자바기초강의',
@@ -69,6 +69,7 @@ export default {
 				}).catch(function (e) {
 					console.log(e);
 				});
+			console.log("test1");
 			const socket = new SockJS('http://localhost:8080/runup/websocket-chat')
 			this.stompClient = new Client({
 				webSocketFactory: () => socket,
