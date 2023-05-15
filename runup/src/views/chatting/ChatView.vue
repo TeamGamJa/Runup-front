@@ -23,16 +23,17 @@
 import { Client } from '@stomp/stompjs'
 import SockJS from 'sockjs-client'
 import axios from 'axios'
+import store from '@/store/store'
 // import store from '@/store/store'
 
 export default {
 	data() {
 		return {
 			stompClient: null,
-			roomId: "test6", // 채팅방 ID
+			roomId: store.getters.getChatRoomId, // 채팅방 ID
 			messageContent: '',
 			messages: [],
-			title: '자바기초강의',
+			title: store.getters.getChatRoomTitle,
 			userNickname:'',
 		}
 	},

@@ -294,6 +294,7 @@ export default {
             // console.log(item.runningTitle);
             this.runningNum = item.runningNum;
             this.runningTitle = item.runningTitle;
+            store.dispatch("setVuexChatRoomTitle", item.runningTitle);
             this.runningContent = item.runningContent;
             this.runningStartTime = item.runningStartSmall;
             this.runningEndTime = item.runningEndSmall;
@@ -301,6 +302,7 @@ export default {
             this.userNickname = item.userNickname;
             this.RunningBcategory = item.runningCategoryBig;
             this.chatRoomId = item.chatRoomId;
+            store.dispatch("setVuexChatRoomId", item.chatRoomId);
           }
         });
         // 내가 만든거에 참여자 생긴 경우
@@ -310,6 +312,7 @@ export default {
             // console.log(item.runningTitle);
             this.runningNum = item.runningNum;
             this.runningTitle = item.runningTitle;
+            store.dispatch("setVuexChatRoomTitle", item.runningTitle);
             this.runningContent = item.runningContent;
             this.runningStartTime = item.runningStartSmall;
             this.runningEndTime = item.runningEndSmall;
@@ -317,6 +320,7 @@ export default {
             this.userNickname = item.userNickname;
             this.RunningBcategory = item.runningCategoryBig;
             this.chatRoomId = item.chatRoomId;
+            store.dispatch("setVuexChatRoomId", item.chatRoomId);
           }
         });
         // 내가 받는 수업
@@ -326,6 +330,7 @@ export default {
           if (item.runningDate === selectedDateStr) {
             this.runningNum = item.runningNum;
             this.runningTitle = item.runningTitle;
+            store.dispatch("setVuexChatRoomTitle", item.runningTitle);
             this.runningContent = item.runningContent;
             this.runningStartTime = item.runningStartSmall;
             this.runningEndTime = item.runningEndSmall;
@@ -333,6 +338,7 @@ export default {
             this.userNickname = item.userNickname;
             this.RunningBcategory = item.runningCategoryBig;
             this.chatRoomId = item.chatRoomId;
+            store.dispatch("setVuexChatRoomId", item.chatRoomId);
           }
         });
 
