@@ -17,6 +17,7 @@ const state = {
   VuexColor:"",
   VuexChatRoomId:"",
   VuexChatRoomTitle:"",
+  VuesParticipateNum: "",
   count: 0,
   token: { // 사용자 인증을 위한 데이터 구조체로 사용자를 구분하는 고유한 식별자나 사용자의 권한 정보 등을 포함
     accessToken: jwt.getToken(),
@@ -62,6 +63,9 @@ const getters = {
   },
   getChatRoomTitle(state) {
     return state.VuexChatRoomTitle;
+  },
+  getParticipateNum(state) {
+    return state.VuesParticipateNum;
   }
 }
 
@@ -92,6 +96,9 @@ const mutations = {
   },
   mutSetChatRoomTitle: (state, VuexChatRoomTitle) => {
     state.VuexChatRoomTitle = VuexChatRoomTitle;
+  },
+  mutSetParticipateNum: (state, VuesParticipateNum) => {
+    state.VuesParticipateNum = VuesParticipateNum;
   },
   logout: function (state = {}) {
     state.token.accessToken = "";
@@ -136,6 +143,9 @@ const actions = {
   },
   setVuexChatRoomTitle: (context, VuexChatRoomTitle) => {
     context.commit("mutSetChatRoomTitle", VuexChatRoomTitle);
+  },
+  setVuesParticipateNum: (context, VuesParticipateNum) => {
+    context.commit("mutSetParticipateNum", VuesParticipateNum);
   },
   logout: function (context, payload) {
     return new Promise((resolve) => {

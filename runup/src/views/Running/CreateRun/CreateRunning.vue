@@ -177,6 +177,7 @@ export default {
     runningStartTime: '08:00',
     runningEndTime: '08:00',
     runningshow: '',
+    participateNum: '',
 
     // 도움관리 - 내가 만든 멘토
     runningBlue: [],
@@ -320,6 +321,8 @@ export default {
             this.userNickname = item.userNickname;
             this.RunningBcategory = item.runningCategoryBig;
             this.chatRoomId = item.chatRoomId;
+            this.participateNum = item.participateNum;
+            store.dispatch("setVuesParticipateNum", item.participateNum);
             store.dispatch("setVuexChatRoomId", item.chatRoomId);
           }
         });
@@ -504,9 +507,12 @@ export default {
         }
       })
         .then((response) => {
+          console.log('test');
+          console.log(response.data.runningOrange);
           this.runningOrange = response.data.runningOrange;
 
           // // 반복문을 통한 runningBlue 리스트 하나씩 꺼내기
+
           for (let i = 0; i < this.runningOrange.length; i++) {
             this.runningNUm = this.runningOrange[i].runningNum;
             this.runningTitle = this.runningOrange[i].runningTitle;
@@ -517,6 +523,7 @@ export default {
             this.runningContent = this.runningOrange[i].runningContent;
             this.chatRoomId = this.runningOrange[i].chatRoomId;
             this.RunningBcategory = this.runningOrange[i].runningCategoryBig;
+            this.participateNum = this.runningOrange[i].participateNum
             const newEvent = {
               name: this.runningTitle,
               details: this.runningContent,

@@ -123,14 +123,17 @@ export default {
 		},
 		PageMove() {
 			console.log(this.userNickname)
-			if (this.time > 30*30) {
+			if (this.time > 30*60) {
 				alert("멘토링이 30분이전에 종료되어 평가페이지로 넘어가지 않습니다")
 				// this.$router.push('/')
 			}
 			var mentorNum = this.roomId.substr(0,1) // 멘토넘 뽑기
 			if(store.getters.getUserNum == mentorNum) {
+				alert("멘토링을 종료합니다 Learner평가를 마친후 포인트가 지급됩니다.")
 				this.$router.push('/EvaluatePageRunner')
 			}else {
+				alert("멘토링을 종료합니다 Runner에대한 평가를 해주세요.")
+				store.dispatch("setVuesParticipateNum", mentorNum);
 				this.$router.push('/EvaluatePageLearner');
 			}
 			// 화면이 평가페이지로 전환되어야 한다. (참여자인 경우)
