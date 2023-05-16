@@ -63,7 +63,8 @@ import MessageSendbox from '../views/Message/MessageSendbox'
 import MessageTrashcan from '../views/Message/MessageTrashcan'
 
 // 평가화면
-import EvaluatePage from '../views/Evaluation/EvaluatePage'
+import EvaluatePageRunner from '../views/Evaluation/EvaluatePageRunner'
+import EvaluatePageLearner from '../views/Evaluation/EvaluatePageLearner'
 
 // 요약 화면
 
@@ -186,10 +187,15 @@ const routes = [
         component: SFountain, 
     },
     {
-        path: "/EvaluatePage",
-        name: "EvaluatePage",
-        component: EvaluatePage,
-    }
+        path: "/EvaluatePageRunner",
+        name: "EvaluatePageRunner",
+        component: EvaluatePageRunner,
+    },
+    {
+        path: "/EvaluatePageLearner",
+        name: "EvaluatePageLearner",
+        component: EvaluatePageLearner,
+    },
 ]
 
 const router = new Router({

@@ -1,13 +1,13 @@
 <template>
     <v-card>
-        <v-card-title>설문 조사</v-card-title>
+        <v-card-title>설문 조사(Runner -> Learner)</v-card-title>
         <v-card-text>
             <v-form>
                 <v-container>
                     <v-row>
                         <v-col cols="12">
                             <!-- <h3> 1. 질문</h3> -->
-                            <h3>수업의 내용은 만족스러웠습니까?</h3>
+                            <h3>Learner의 수업태도는 만족스러웠습니까?</h3>
                             <v-radio-group v-model="answers.question1">
                                 <v-radio label="매우 만족" value="10"></v-radio>
                                 <v-radio label="만족" value="8"></v-radio>
@@ -21,27 +21,13 @@
                     <v-row>
                         <v-col cols="12">
                             <!-- <h3>2. 질문</h3> -->
-                            <h3>Runner의 설명은 이해하기 쉬웠습니까?</h3>
+                            <h3>Learner의 수업적극성은 좋았습니까??</h3>
                             <v-radio-group v-model="answers.question2">
-                                <v-radio label="매우 이해하기 쉬웠음" value="10"></v-radio>
-                                <v-radio label="이해하기 쉬웠음" value="8"></v-radio>
+                                <v-radio label="매우 적극적" value="10"></v-radio>
+                                <v-radio label="적극적" value="8"></v-radio>
                                 <v-radio label="보통" value="6"></v-radio>
-                                <v-radio label="이해하기 어려웠음" value="4"></v-radio>
-                                <v-radio label="매우 이해하기 어려웠음" value="2"></v-radio>
-                            </v-radio-group>
-                        </v-col>
-                    </v-row>
-
-                    <v-row>
-                        <v-col cols="12">
-                            <!-- <h3>3. 질문</h3> -->
-                            <h3>수업의 난이도는 어땠습니까?</h3>
-                            <v-radio-group v-model="answers.question3">
-                                <v-radio label="매우 쉬웠음" value="10"></v-radio>
-                                <v-radio label="쉬웠음" value="8"></v-radio>
-                                <v-radio label="보통" value="6"></v-radio>
-                                <v-radio label="어려웠음" value="4"></v-radio>
-                                <v-radio label="매우 어려웠음" value="2"></v-radio>
+                                <v-radio label="좋지 않았음" value="4"></v-radio>
+                                <v-radio label="매우 좋지 않았음" value="2"></v-radio>
                             </v-radio-group>
                         </v-col>
                     </v-row>
@@ -49,13 +35,13 @@
                     <v-row>
                         <v-col cols="12">
                             <!-- <h3>4. 질문</h3> -->
-                            <h3>정해진 시간에 수업이 시작되었습니까?</h3>
-                            <v-radio-group v-model="answers.question4">
-                                <v-radio label="매우 만족" value="10"></v-radio>
-                                <v-radio label="만족" value="8"></v-radio>
+                            <h3>Learner는 수업시간에 잘맞춰 왔습니까??</h3>
+                            <v-radio-group v-model="answers.question3">
+                                <v-radio label="매우 정확하게 옴" value="10"></v-radio>
+                                <v-radio label="정확하게 옴" value="8"></v-radio>
                                 <v-radio label="보통" value="6"></v-radio>
-                                <v-radio label="불만족" value="4"></v-radio>
-                                <v-radio label="매우 불만족" value="2"></v-radio>
+                                <v-radio label="조금 늦음" value="4"></v-radio>
+                                <v-radio label="많이 늦음" value="2"></v-radio>
                             </v-radio-group>
                         </v-col>
                     </v-row>
@@ -64,7 +50,7 @@
                         <v-col cols="12">
                             <!-- <h3>5. 질문</h3> -->
                             <h3>대화를 하는데 있어 불쾌함을 느낀적은 없습니까?</h3>
-                            <v-radio-group v-model="answers.question5">
+                            <v-radio-group v-model="answers.question4">
                                 <v-radio label="매우 만족" value="10"></v-radio>
                                 <v-radio label="만족" value="8"></v-radio>
                                 <v-radio label="보통" value="6"></v-radio>
@@ -101,7 +87,6 @@ export default {
                 question2: '',
                 question3: '',
                 question4: '',
-                question5: '',
                 question6: '',
             }
         }
@@ -116,7 +101,6 @@ export default {
             totalScore += parseInt(this.answers.question2);
             totalScore += parseInt(this.answers.question3);
             totalScore += parseInt(this.answers.question4);
-            totalScore += parseInt(this.answers.question5);
 
             // 총 점수
             console.log('총 점수' + totalScore);

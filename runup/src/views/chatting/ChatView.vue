@@ -1,6 +1,7 @@
 <template>
 	<v-container class="Chat-container pa-1">
 		<v-btn class="MovePage" :rounded="true" @click="PageMove()">채팅종료</v-btn>
+		<div class="timer">Remaining time: {{ timeRemaining }}</div>
 		<div class="messages-container">
 			<div v-for="(message, index) in messages" :key="index" class="message" :class="{
 				'my-message': message.sender == getUserNickname,
@@ -35,18 +36,27 @@ export default {
 			messages: [],
 			title: store.getters.getChatRoomTitle,
 			userNickname:'',
+			time: 60 * 60 // 초 단위로 1시간 설정
+
 		}
 	},
 	computed: {
 		getUserNickname() {
 			return (this.$store.getters.getUserNickname); // 사용자 닉네임을 반환하는 코드를 여기에 작성합니다.
 		},
+		timeRemaining() {
+			const minutes = Math.floor(this.time / 60);
+			const seconds = this.time % 60;
+			return `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+		}
 	},
 	created() {
 		this.connect()
+		this.startTimer();
 	},
 	beforeDestroy() {
 		this.disconnect()
+		this.stopTimer();
 	},
 	methods: {
 		connect() {
@@ -113,15 +123,34 @@ export default {
 		},
 		PageMove() {
 			console.log(this.userNickname)
-			if(this.getUserNickname) {
-				this.$router.push('/EvaluatePage')
-			}else if(!this.getUserNickname){
-				this.$router.push('/EvaluatePage');
+			if (this.time > 30*30) {
+				alert("멘토링이 30분이전에 종료되어 평가페이지로 넘어가지 않습니다")
+				// this.$router.push('/')
+			}
+			var mentorNum = this.roomId.substr(0,1) // 멘토넘 뽑기
+			if(store.getters.getUserNum == mentorNum) {
+				this.$router.push('/EvaluatePageRunner')
+			}else {
+				this.$router.push('/EvaluatePageLearner');
 			}
 			// 화면이 평가페이지로 전환되어야 한다. (참여자인 경우)
 			// 화면이 메인페이지로 이동 ( 멘토 )
 
-		}
+		},
+		startTimer() {
+			this.timer = setInterval(() => {
+				if (this.time > 0) {
+			this.time--;
+				} else {
+			this.stopTimer();
+			this.disconnect(); // 시간이 다 되면 웹소켓 연결을 종료합니다.
+			}
+        }, 1000);
+		},
+		stopTimer() {
+			clearInterval(this.timer);
+		},
+
 	},
 }
 </script>

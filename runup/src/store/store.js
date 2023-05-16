@@ -31,7 +31,6 @@ const getters = {
   getUserNickname: (state) => {
     return state.VuexNickname;
   },
-
   getAccessToken(state) {
     return state.token.accessToken;
   },
