@@ -1,5 +1,5 @@
 <template>
-  <v-containor>
+  <v-container>
     <v-row>
       <v-col cols="3">
         <v-btn class="SentboxBtn" :rounded="true" text to="/messageSentbox">
@@ -7,7 +7,12 @@
         </v-btn>
       </v-col>
       <v-col cols="3">
-        <v-btn class="DeleteBtn" :rounded="true" text to="/messageTrashcan">
+        <v-btn class="TrashcanBtn" :rounded="true" text to="/messageTrashcan">
+          휴지통
+        </v-btn>
+      </v-col>
+      <v-col cols="3">
+        <v-btn class="DeleteBtn" :rounded="true" @click="trashMessage()">
           버리기
         </v-btn>
       </v-col>
@@ -28,7 +33,7 @@
         </v-chip>
       </template> -->
     </v-data-table>
-  </v-containor>
+  </v-container>
 </template>
 
 <script>
@@ -51,7 +56,9 @@ export default {
         { text: "", align: "center", value: "checkbox" }
       ],
       messageInboxList: [],
-      itemKey: "messageNum"
+      itemKey: "messageNum",
+      selectedItems: [],
+      messageNum:'',
     };
   },
   created() {
@@ -68,7 +75,9 @@ export default {
       .then((data) => {
         console.log(data.data);
         const messageInboxList = data.data;
-
+        for(let i=0; i<messageInboxList.length; i++){
+          this.messageNum = messageInboxList[i].messageNum;
+        }
         messageInboxList.sort(
           (a, b) => new Date(b.messageDate) - new Date(a.messageDate)
         );
@@ -81,10 +90,23 @@ export default {
   },
 
   methods: {
-    // reportList() {
-    //     axios
-    //     .get(baseUrl."")
-    // }
+    trashMessage() {
+      console.log(1111);
+        var serverIP = '127.0.0.1',
+                serverPort = 8080,
+                pageUrl = 'runup/message/trash';
+            this.$axios({
+                url: `http://${serverIP}:${serverPort}/${pageUrl}`,
+                method: "POST",
+                data: {
+                    messageNum:this.messageNum,
+                }
+            }).then((data) => {
+                console.log(data.data);
+            }).catch(error => {
+                console.log(error)
+            })
+    }
   },
 };
 </script>
