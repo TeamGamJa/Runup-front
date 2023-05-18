@@ -36,10 +36,13 @@
                 
                 <!-- 우측 -->
                 <v-card class="Grape-shape">
+
+                    
                     <v-card-title>내가 신청한 수업</v-card-title>
                     <ve-pie :data="chartData" :settings="chartSettings" />
-                    <v-card-title>내가 신청한 수업</v-card-title>
-                    <ve-pie :data="chartData" :settings="chartSettings" />
+                    <v-card-title>전체 수분</v-card-title>
+                    <div ref="chart3" class="chart-container3"></div>
+                    
                 </v-card>
                 
             </v-row>
@@ -63,6 +66,7 @@ export default {
         //loading: false,
         chartData1: null,
         chartData2: null,
+        chartData3: null,
         selection: 1,
         UserLuxColor: 20,
         chartData: {
@@ -119,6 +123,20 @@ export default {
                     console.log(error);
                 })
 
+                this.$axios({
+                url: `http://127.0.0.1:8080/runup/running/allpointchart`,
+                method: 'GET',
+                params: {
+                    userNum: store.getters.getUserNum
+                },
+            })
+                .then((response) => {
+                    this.chartData3 = response.data;
+                    this.drawChart3();
+                })
+                .catch((error) => {
+                    console.log(error);
+                })    
 
             this.$axios({
                 url: `http://127.0.0.1:8080/runup/running/pchart`,
@@ -185,7 +203,7 @@ export default {
                     type: 'bar',
                     barWidth: 40,
                     itemStyle: {
-                        color: '#5cadff',
+                        color: '#ff9900',
                         borderWidth: 2
                     }
                 }]
@@ -214,6 +232,29 @@ export default {
                 }]
             };
             myChart2.setOption(option2);
+        },
+        drawChart3() {
+            const chartDom3 = this.$refs.chart3;
+            const myChart3 = echarts.init(chartDom3);
+            const option3 = {
+                xAxis: {
+                    type: 'category',
+                    data: this.chartData3.map(item => item.userNickname)
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: this.chartData3.map(item => item.result),
+                    type: 'bar',
+                    barWidth: 40, // 막대 굵기
+                    itemStyle: { // 막대 스타일
+                        color: '#5cadff', // 막대 색상
+                        borderWidth: 2 // 막대 테두리 굵기
+                    }
+                }]
+            };
+            myChart3.setOption(option3);
         }
     }
 
@@ -306,6 +347,13 @@ export default {
     height: 400px;
 
 }
+
+.chart-container3 {
+    width: 100%;
+    height: 400px;
+
+}
+
 .Grape-shape {
     width: 35%;
     height: 40%;
