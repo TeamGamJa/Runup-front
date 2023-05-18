@@ -59,7 +59,7 @@ import MyPageImgEdit from '../views/MyInfo/MyPageImgEdit'
 
 // 쪽지함
 import MessageInbox from '../views/Message/MessageInbox'
-import MessageSendbox from '../views/Message/MessageSendbox'
+import MessageSentbox from '../views/Message/MessageSentbox'
 import MessageTrashcan from '../views/Message/MessageTrashcan'
 
 // 평가화면
@@ -164,9 +164,9 @@ const routes = [
         beforeEnter: beforeAuth(true)
     },
     {
-        path: "/MessageSendbox",
-        name: "MessageSendbox",
-        component: MessageSendbox,
+        path: "/MessageSentbox",
+        name: "MessageSentbox",
+        component: MessageSentbox,
         beforeEnter: beforeAuth(true)
     },
     {
