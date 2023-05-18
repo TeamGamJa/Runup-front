@@ -27,7 +27,7 @@
                     :options="{ itemsPerPageOptions: [] }" @click:row="showEvent" height="480">
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template v-slot:item.userLuxColor="{ item }">
-                        <v-chip :color="getColor(item.userLuxColor)" dark>
+                        <v-chip class="Luxcolor-found text-center" :color="getColor(item.userLuxColor)" dark>
                             {{ item.userLuxColor }}
                         </v-chip>
                     </template>
@@ -463,5 +463,13 @@ table td {
 .ParticipateBtn {
     background-color: rgba(244, 209, 155, 1) !important;
     margin-left: 75%;
+}
+.Luxcolor-found{
+    width: 90%;
+    /* text-align: center; */
+}
+.v-chip__content{
+    text-align: center;
+    margin-left: 23%;
 }
 </style>
