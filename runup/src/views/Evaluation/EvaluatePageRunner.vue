@@ -108,11 +108,10 @@ export default {
             // 총 점수
             console.log('총 점수' + totalScore);
             
-            axios.put("http://localhost:8080/runup/" + "주소", {
-				data: {
+            axios.put("http://localhost:8080/runup/running/finishrunning", {
                     userNum : store.getters.getParticipateNum,
-                    userPoint : this.totalScore
-                }
+                    userPoint : store.getters.getUserNum,
+                    userColor : totalScore
 			}).then(result => {
                 console.log(result.data)
                 alert("평가가 완료되었습니다.\n 참여해주셔서 감사합니다")
