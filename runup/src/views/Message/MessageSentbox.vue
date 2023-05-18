@@ -7,6 +7,11 @@
         </v-btn>
       </v-col>
       <v-col cols="3">
+        <v-btn class="TrashcanBtn" :rounded="true" text to="/messageTrashcan">
+          휴지통
+        </v-btn>
+      </v-col>
+      <v-col cols="3">
         <v-btn class="DeleteBtn" :rounded="true" text to="/messageTrashcan">
           버리기
         </v-btn>
