@@ -188,12 +188,12 @@ export default {
             })
             .then((response)=> {
                 console.log(response.data);
-                if(response.data === 1) {
+                if(response.data.result === '1') {
                     alert('사용되고 있는 닉네임 입니다.')
                 } else {
+                    store.dispatch("setVuexNickname", response.data.userNickname);
                     alert('사용가능한 닉네임 입니다.')
                 }
-
             })
             .catch(error => {
                 console.log(error);
@@ -219,7 +219,7 @@ export default {
                 if(response.data === 1){
                     alert('정보가 수정되었습니다.')
                 }else{
-                    alert('관리자에게 문의바랍니다.')
+                    alert('변경 실패 관리자에게 문의바랍니다.')
                 }
             })
             .catch(error => {
@@ -242,8 +242,6 @@ export default {
             .then((response)=> {
                 console.log(response.data);
                 alert('변경되셨습니다.')
-               
-
             })
             .catch(error => {
                 console.log(error);
