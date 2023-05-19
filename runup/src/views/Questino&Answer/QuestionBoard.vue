@@ -17,6 +17,14 @@
                     <v-card-text>
                         <v-container>
                             <v-row>
+                                <v-col cols="12" sm="6">
+                                    <v-select v-model="choice" label="대분류" :items="categories"
+                                        @change="fetchcategoryMedium"></v-select>
+                                </v-col>
+                                <v-col cols="5">
+                                    <v-select v-model="RunningMcategory" id="Running-Mcategory" label="중분류"
+                                        :items="categoryMedium" @change="inputSelectVal"></v-select>
+                                </v-col>
                                 <v-col>
                                     <v-radio-group row>
                                         <v-radio label="도움요청" value="Option1">도움요청</v-radio>
@@ -27,17 +35,10 @@
                                     <v-text-field label="질문제목" v-model="WriteTitle" required></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-text-field v-model="WriteContent" label="질문내용" hint="Learner에게 강의할 내용을 간략하게 적어주세요"
+                                    <v-text-field v-model="WriteContent" label="질문내용" hint="질문 혹은 요청하고싶은 내용을 간략하게 적어주세요"
                                         required></v-text-field>
                                 </v-col>
-                                <v-col cols="12" sm="6">
-                                    <v-select v-model="choice" label="특기-대분류" :items="categories"
-                                        @change="fetchcategoryMedium"></v-select>
-                                </v-col>
-                                <v-col cols="3">
-                                    <v-select v-model="RunningMcategory" id="Running-Mcategory" label="특기-중분류"
-                                        :items="categoryMedium" @change="inputSelectVal"></v-select>
-                                </v-col>
+                                
                             </v-row>
                         </v-container>
                     </v-card-text>
@@ -54,13 +55,13 @@
             </v-dialog>
         </v-row>
         <v-row>
-            <v-col v-for="(item, index) in runningList" :key="index" cols="4">
+            <v-col v-for="(item, index) in questionList" :key="index" cols="4">
                 <v-card class="post-card-item" @click="GoDetail()">
                     <v-img height="200" :rounded="true" src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
                     <v-card-text>
-                        <div>{{ item.runningTitle }}</div>
-                        <div>{{ item.runningContent }}</div>
-                        <div>{{ item.runningCategoryMedium }}</div>
+                        <div>{{ item.questionCategoryBig }}</div>
+                        <div>{{ item.questionCategoryMedium }}</div>
+                        <div>{{ item.questionTitle }}</div>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -75,7 +76,7 @@ export default {
     name: 'QuestionBoard',
     data() {
         return {
-            runningList: [],
+            questionList: [],
             dialog: false,
             WriteTitle: '',
             WriteContent: '',
@@ -84,8 +85,7 @@ export default {
             categories: ['IT', '라이프스타일', '문제풀이', '기타'],
             categoryMedium: [''],
             choice: '',
-            RunningBcategory: '',
-            RunningMcategory: '',
+            RunningMcategory:'',
         };
     },
     mounted() {
@@ -95,12 +95,12 @@ export default {
         fetchRunningList() {
             var serverIP = '127.0.0.1',
                 serverPort = 8080,
-                pageUrl = 'runup/running/all';
+                pageUrl = 'runup/question/all';
             this.$axios
                 .get(`http://${serverIP}:${serverPort}/${pageUrl}`)
                 .then((response) => {
                     console.log(response.data);
-                    this.runningList = response.data;
+                    this.questionList = response.data;
                 })
                 .catch((error) => {
                     console.log(error);
