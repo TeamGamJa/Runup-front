@@ -3,16 +3,16 @@
         <v-row>
             <v-card class="cotent-card">
                 <v-card-title>
-                    질문 제목: 금 캐는 방법에 대해 수업을 열어주셨으면 좋겠습니다.
+                    제목: 금 캐는 방법에 대해 수업을 열어주셨으면 좋겠습니다.
                 </v-card-title>
                 <v-card-title>
                     작성자: 맹구
                 </v-card-title>
                 <v-card-title>
-                    질문일: 2077-11-12
+                    작성일: 2077-11-12
                 </v-card-title>
                 <v-card-title>
-                    질문 내용: 우리나라에서 금을 캐거나 사금을 채취할 수 있는 곳에 대해 알려주시고 도움을 주는 수업이 생기면 좋겠습니다!
+                    내용: 우리나라에서 금을 캐거나 사금을 채취할 수 있는 곳에 대해 알려주시고 도움을 주는 수업이 생기면 좋겠습니다!
                 </v-card-title>
                 <v-card-actions class="btn-group">
                     <v-btn class="Que-btn-edit" :rounded="true" text to="/editQuestion"
@@ -96,7 +96,7 @@ export default{
 }
 
 .Que-btn-del {
-    background-color: red !important;
+    background-color: rgba(255, 107, 107, 1) !important;
 }
 
 /* 댓글 모음 */
