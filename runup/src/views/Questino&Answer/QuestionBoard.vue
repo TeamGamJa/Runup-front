@@ -35,8 +35,8 @@
                                     <v-text-field label="질문제목" v-model="WriteTitle" required></v-text-field>
                                 </v-col>
                                 <v-col cols="12">
-                                    <v-text-field v-model="WriteContent" label="질문내용" hint="질문 혹은 요청하고싶은 내용을 간략하게 적어주세요"
-                                        required></v-text-field>
+                                    <v-textarea v-model="WriteContent" label="질문내용" hint="질문 혹은 요청하고 싶은 내용을 간략하게 적어주세요"
+                                        required :outlined="true"></v-textarea>
                                 </v-col>
                                 
                             </v-row>
@@ -44,7 +44,7 @@
                     </v-card-text>
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="blue darken-1" text @click="createRunning(); dialog = false">
+                        <v-btn color="blue darken-1" text @click="createQuestion(); dialog = false">
                             등록
                         </v-btn>
                         <v-btn color="blue darken-1" text @click="dialog = false">
@@ -89,10 +89,10 @@ export default {
         };
     },
     mounted() {
-        this.fetchRunningList();
+        this.fetchQuestionList();
     },
     methods: {
-        fetchRunningList() {
+        fetchQuestionList() {
             var serverIP = '127.0.0.1',
                 serverPort = 8080,
                 pageUrl = 'runup/question/all';
@@ -107,7 +107,7 @@ export default {
                 });
         },
         inputSelectVal(value) {
-            this.RunningMcategory = value;
+            this.questionCategoryMedium = value;
         },
         fetchcategoryMedium() {
             // console.log(this.choice)
@@ -129,17 +129,7 @@ export default {
             })
         },
         GoDetail() {
-            // let tmp = this;
-            // axios
-            // .get(tmp.baseUrl+"running",{
-            //     param: {
-            //         runningNum: this.runnningNum
-            //     }
-            // })
-            // .then((response) => {
-            //     console.log(response);
             this.$router.push('/DetailQuestion');
-            // })
         },
     },
 };
