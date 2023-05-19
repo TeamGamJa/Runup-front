@@ -31,7 +31,10 @@
 
                             <!-- 등급 -->
                             <!-- <v-row> -->
-                            <v-col cols="3">
+                            <v-col cols="2">
+                                <v-img class="MyPage-waterImg" src="https://ifh.cc/g/WNALrw.png"></v-img>
+                            </v-col>
+                            <v-col cols="2">
                                 <v-chip :class="getChipColor" class="luxcolor">
                                     나의 색
                                 </v-chip>
@@ -43,7 +46,7 @@
                             <v-col cols="2">
                                 <v-img class="MyPage-waterImg" src="https://ifh.cc/g/TY25V8.png"></v-img>
                             </v-col>
-                            <v-col cols="3">
+                            <v-col cols="2">
                                 <v-progress-linear :value="percent" class="salt-gage-bar" :color="getChipColor" :rounded="true" height="20"></v-progress-linear>
                             </v-col>
                             <!-- </v-row> -->
@@ -218,7 +221,7 @@ export default {
 .salt-gage-bar {
     /* cols로 크기를 정해놨기 때문에 width랑 height를 해도 적용 안됨 */
     /* background-color: whitesmoke !important; */
-    margin-top: 8%;
+    margin-top: 20%;
 }
 
 

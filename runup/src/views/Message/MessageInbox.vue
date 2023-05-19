@@ -1,123 +1,130 @@
 <template>
-    <v-container>
+    <v-container class="ReceiveMessage-container">
         <v-row>
-            <v-col cols="2">
-                <v-btn class="SentboxBtn" :rounded="true" text to="/messageSentbox">
-                    보낸 쪽지함
-                </v-btn>
-            </v-col>
-            <v-col cols="2">
-                <v-btn class="TrashcanBtn" :rounded="true" text to="/messageTrashcan">
-                    휴지통
-                </v-btn>
-            </v-col>
-            <v-col cols="8">
-                <v-btn class="DeleteBtn" :rounded="true" @click="trashMessage()">
-                    버리기
-                </v-btn>
-            </v-col>
-        </v-row>
-        <v-data-table :headers="headers" :items="messageInboxList" :item-key="itemKey" :show-select="true"
-            v-model="selectedItems" class="elevation-1" @click:row="showEvent">
-            <!-- eslint-disable-next-line vue/valid-v-slot -->
-            <template v-slot:item.actions="{ item }">
-                <!-- 수정 -->
-                <v-icon small class="mr-2" @click="editItem(item)">
-                    mdi-pencil
-                </v-icon>
-                <!-- 삭제 -->
-                <v-icon small @click="deleteItem(item)">
-                    mdi-delete
-                </v-icon>
-            </template>
-        </v-data-table>
-
-        <v-dialog v-model="dialog" class="Message-dialog">
-            <v-card>
-                <v-card-title>
-                    <span class="text-h5">메세지 작성</span>
-                </v-card-title>
-
+            <v-card style="width: 15%; height: 50%; margin-top: 8%;">
+                
                 <v-card-text>
-                    <v-container>
-                        <v-row>
-                            <v-card-title class="sendMessage-text">제목:</v-card-title>
-                            <v-col cols="8">
-                                <v-text-field label="제목을 작성해주세요." class="sendMessage-text-field"></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-card-title class="sendMessage-text">작성자:</v-card-title>
-                            <v-col cols="8">
-                                <v-text-field disabled :label="userNickname"></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-row>
-                            <v-card-title class="sendMessage-text">보낼 내용:</v-card-title>
-                            <v-col cols="8">
-                                <v-textarea label="보내실 메세지를 적어주세요." :outlined="true" rows="5"></v-textarea>
-                            </v-col>
-                        </v-row>
-                    </v-container>
+                    <v-btn text to="/MyPageEdit" class="Message-menubar" disabled :rounded="true">Menu-bar</v-btn>
+                    
+                    <v-btn class="MessgeBtn" :rounded="true" text to="/messageSentbox">
+                        보낸 쪽지함
+                    </v-btn>
+                    
+                    <v-btn class="MessgeBtn2" :rounded="true" text to="/messageTrashcan">
+                        버린 휴지통
+                    </v-btn>
                 </v-card-text>
-
-                <v-card-actions clsss="btn-message-group">
-                    <v-btn color="blue darken-1" text @click="save">
-                        보내기
-                    </v-btn>
-                    <v-btn color="blue darken-1" text @click="close">
-                        취소
-                    </v-btn>
-                </v-card-actions>
             </v-card>
-        </v-dialog>
-
-        <v-dialog v-model="dialogDelete" max-width="500px">
-            <v-card>
-                <v-card-title class="text-h5">해당 메세지를 삭제하시겠습니까?</v-card-title>
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn color="blue darken-1" text @click="deleteItemConfirm">삭제</v-btn>
-                    <v-btn color="blue darken-1" text @click="closeDelete">취소</v-btn>
-                    <v-spacer></v-spacer>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-        <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y>
-                    <v-card  class="mx-auto" width="300">
-
-                        <!-- <v-img class="categoryImage" :src="categoryImg"></v-img> -->
-
-                        <!-- <v-card-title class="Schedule-Info">
-                            제목: {{ runningTitle }}
-                        </v-card-title> -->
-
-                        <v-divider class="linepart mx-4"></v-divider>
-
-                        <!-- <v-card-text>
-                            <v-row class="Schedule-Info1">
-                                특기: {{ RunningBcategory }}
+            <v-card style="width: 80%; margin-left: 3%;">
+                <v-row style="margin-top: 0.5%; margin-left: 1%;">
+                    <v-btn class="DeleteBtn" :rounded="true" @click="trashMessage()">
+                        휴지통
+                    </v-btn>
+                </v-row>
+                <v-data-table :headers="headers" :items="messageInboxList" :item-key="itemKey" :show-select="true"
+                v-model="selectedItems" class="elevation-1" @click:row="showEvent">
+                <!-- eslint-disable-next-line vue/valid-v-slot -->
+                <template v-slot:item.actions="{ item }">
+                    <!-- 수정 -->
+                    <v-icon small class="mr-2" @click="editItem(item)">
+                        mdi-pencil
+                    </v-icon>
+                    <!-- 삭제 -->
+                    <v-icon small @click="deleteItem(item)">
+                        mdi-delete
+                    </v-icon>
+                </template>
+            </v-data-table>
+            
+            <v-dialog v-model="dialog" class="Message-dialog">
+                <v-card>
+                    <v-card-title>
+                        <span class="text-h5">메세지 작성</span>
+                    </v-card-title>
+                    
+                    <v-card-text>
+                        <v-container>
+                            <v-row>
+                                <v-card-title class="sendMessage-text">제목:</v-card-title>
+                                <v-col cols="8">
+                                    <v-text-field label="제목을 작성해주세요." class="sendMessage-text-field"></v-text-field>
+                                </v-col>
                             </v-row>
-                            <v-row class="Schedule-Info1">
-                                Runner: {{ userNickname }}
+                            <v-row>
+                                <v-card-title class="sendMessage-text">작성자:</v-card-title>
+                                <v-col cols="8">
+                                    <v-text-field disabled :label="userNickname"></v-text-field>
+                                </v-col>
                             </v-row>
-                            <v-row class="Schedule-Info1">
-                                수업시작: {{ runningStartTime }}
+                            <v-row>
+                                <v-card-title class="sendMessage-text">보낼 내용:</v-card-title>
+                                <v-col cols="8">
+                                    <v-textarea label="보내실 메세지를 적어주세요." :outlined="true" rows="5"></v-textarea>
+                                </v-col>
                             </v-row>
-                            <v-row class="Schedule-Info1">
-                                수업종료: {{ runningEndTime }}
-                            </v-row>
-                            <v-row class="Schedule-Info1">
-                                수업내용: {{ runningContent }}
-                            </v-row>
-                        </v-card-text> -->
-
-                        <v-card-actions>
-                            <!-- <v-btn class="ParticipateBtn" :rounded="true" @click="joinClass">수업신청 </v-btn> -->
-
-                        </v-card-actions>
-                    </v-card>
-                </v-menu>
+                        </v-container>
+                    </v-card-text>
+                    
+                    <v-card-actions clsss="btn-message-group">
+                        <v-btn color="blue darken-1" text @click="save">
+                            보내기
+                        </v-btn>
+                        <v-btn color="blue darken-1" text @click="close">
+                            취소
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+            
+            <v-dialog v-model="dialogDelete" max-width="500px">
+                <v-card>
+                    <v-card-title class="text-h5">해당 메세지를 삭제하시겠습니까?</v-card-title>
+                    <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="deleteItemConfirm">삭제</v-btn>
+                        <v-btn color="blue darken-1" text @click="closeDelete">취소</v-btn>
+                        <v-spacer></v-spacer>
+                    </v-card-actions>
+                </v-card>
+            </v-dialog>
+            <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y>
+                <v-card class="mx-auto" width="300">
+                    
+                    <!-- <v-img class="categoryImage" :src="categoryImg"></v-img> -->
+                    
+                    <!-- <v-card-title class="Schedule-Info">
+                        제목: {{ runningTitle }}
+                    </v-card-title> -->
+                    
+                    <v-divider class="linepart mx-4"></v-divider>
+                    
+                    <!-- <v-card-text>
+                        <v-row class="Schedule-Info1">
+                            특기: {{ RunningBcategory }}
+                        </v-row>
+                        <v-row class="Schedule-Info1">
+                            Runner: {{ userNickname }}
+                        </v-row>
+                        <v-row class="Schedule-Info1">
+                            수업시작: {{ runningStartTime }}
+                        </v-row>
+                        <v-row class="Schedule-Info1">
+                            수업종료: {{ runningEndTime }}
+                        </v-row>
+                        <v-row class="Schedule-Info1">
+                            수업내용: {{ runningContent }}
+                        </v-row>
+                    </v-card-text> -->
+                    
+                    <v-card-actions>
+                        <!-- <v-btn class="ParticipateBtn" :rounded="true" @click="joinClass">수업신청 </v-btn> -->
+                        
+                    </v-card-actions>
+                </v-card>
+            </v-menu>
+            
+        </v-card>
+    </v-row>
     </v-container>
 </template>
   
@@ -139,7 +146,7 @@ export default {
                 { text: "제목", align: "left", value: "messageTitle" },
                 { text: "보낸 날짜", align: "center", value: "messageDate" },
                 { text: "", align: "center", value: "checkbox" },
-                { text: '답장/삭제', value: 'actions', sortable: false },
+                { text: '답장/휴지통', value: 'actions', sortable: false },
             ],
             messageInboxList: [],
             itemKey: "messageNum",
@@ -269,31 +276,64 @@ export default {
 </script>
   
 <style>
-.SentboxBtn {
-    margin-left: 2px;
-    color: black !important;
-    background-color: rgba(244, 209, 155, 1) !important;
-    justify-content: flex-end;
-    border-radius: 200px;
-    margin-top: 8px;
+.ReceiveMessage-container {
+    margin-top: 3%;
 }
 
-.TrashcanBtn {
-    margin-left: 2px;
+/* .PageBtn-message {
+  display: flex;
+  justify-content:flex-start;
+} */
+/* .Message-left {
+    width: 10%;
+} */
+/* .SentboxBtn {
     color: black !important;
     background-color: rgba(244, 209, 155, 1) !important;
     justify-content: flex-end;
-    border-radius: 200px;
-    margin-top: 8px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 30%;
+} */
+.Message-menubar {
+    margin-top: 10%;
+    background-color: #D7E9F7;
+    /* margin-bottom: 7%; */
+    margin-left: 13%;
+    width: 70%;
 }
+.MessgeBtn {
+    margin-top: 5%;
+    margin-left: 8%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    width: 80%;
+    background-color: rgba(244, 209, 155, 1) !important;
+}
+.MessgeBtn2  {
+    margin-top: 5%;
+    margin-left: 8%;
+    margin-right: 5%;
+    margin-bottom: 5%;
+    width: 80%;
+    background-color: rgba(244, 209, 155, 1) !important;
+}
+/* .TrashcanBtn {
+    color: black !important;
+    background-color: rgba(244, 209, 155, 1) !important;
+    justify-content: flex-end;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 30%;
+} */
 
 .DeleteBtn {
-    margin-left: 2px;
     color: black !important;
     background-color: rgba(255, 107, 107, 1) !important;
     justify-content: flex-end;
-    border-radius: 200px;
-    margin-top: 8px;
+    margin-top: 5%;
+    margin-bottom: 2%;
+    margin-left: 100%;
 }
 
 .v-dialog {
@@ -304,6 +344,7 @@ export default {
 .sendMessage-text {
     display: inline-block;
 }
+
 .btn-message-group {
     display: inline-block;
     margin-left: 80%;

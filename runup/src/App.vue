@@ -19,7 +19,7 @@
           @click="handleButtonClick"><v-icon>mdi-account-circle</v-icon></v-btn>
         </v-toolbar>
       </div>
-      <v-navigation-drawer v-model="drawer" absolute temporary right>
+      <v-navigation-drawer v-model="drawer" absolute temporary right >
         <v-list-item>
           <v-list-item-avatar>
             <v-img :src="$store.getters.getProfileImg"></v-img>

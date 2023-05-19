@@ -17,14 +17,8 @@
         </v-btn>
       </v-col>
     </v-row>
-    <v-data-table
-      :headers="headers"
-      :items="messageSentboxList"
-      :item-key="itemKey"
-      :show-select="true"
-      :selectes.sync="selectedItems"
-      class="elevation-1"
-    >
+    <v-data-table :headers="headers" :items="messageSentboxList" :item-key="itemKey" :show-select="true"
+      :selectes.sync="selectedItems" class="elevation-1">
       <!-- eslint-disable-next-line vue/valid-v-slot -->
       <!-- v-slot 규칙 비 활성화 하는 구문 !!! ㅅㅂ 이게 찐이네-->
       <!-- <template v-slot:item.calories="{ item }">
