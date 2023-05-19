@@ -1,14 +1,20 @@
 <template>
     <v-container class="Fountain-container">
-        <!-- 내가 받은 수업 리스트 불러오기 -->
+        <!-- 내가 받은 수업 리스트 불러오기
         <v-text-field v-model="newFountain" label="글 작성" @keyup.enter="addFountain"></v-text-field>
         <v-data-table :headers="headers" :items="fountainData" class="elevation-1" :items-per-page="9"
             @click:row="clickEvent">
             <template v-slot="{ item }">
     <td>{{ formattedFountainPoints[item.fountainNum - 1] }}</td>
   </template>
-        </v-data-table>
-        
+        </v-data-table> -->
+        <v-card>
+            <v-text-field v-model="newFountain" label="글 작성" @keyup.enter="addFountain"></v-text-field>
+            <div v-for="(fountainData, index) in fountainData" :key="index" class="Data"></div>
+            <div class="chat-item">
+      <strong>{{ fountainNum }}:</strong> {{ fountainContent }}
+    </div>
+        </v-card>
         
 
     </v-container>

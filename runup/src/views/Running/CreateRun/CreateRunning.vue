@@ -94,7 +94,7 @@
 
           <!-- 달력안의 일정을 클릭 시 일정 상세-->
           <v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-x>
-            <v-card :loading="loading" class="mx-auto my-12 pa-0" max-width="374">
+            <v-card  class=" my-12 pa-0" max-width="374">
 
               <v-img height="250" :src="categoryImg"></v-img>
 

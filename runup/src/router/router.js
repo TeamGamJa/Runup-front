@@ -38,6 +38,7 @@ import FoundRunning from '../views/Running/FoundRunning'
 
 // 묻고 답하기
 import QuestionBoard from '../views/Questino&Answer/QuestionBoard'
+import DetailQuestion from '../views/Questino&Answer/DetailQuestion'
 
 // 옹달셈
 import SFountain from '../views/SpringPool/SFountain'
@@ -102,6 +103,11 @@ const routes = [
         path: "/QuestionBoard",
         name: "QuestionBoard",
         component: QuestionBoard,
+    },
+    {
+        path: "/DetailQuestion",
+        name: "DetailQuestion",
+        component: DetailQuestion,
     },
     {
         path: "/CreateRunning",

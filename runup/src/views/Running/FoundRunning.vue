@@ -470,6 +470,6 @@ table td {
 }
 .v-chip__content{
     text-align: center;
-    margin-left: 23%;
+    margin-left: 22%;
 }
 </style>
