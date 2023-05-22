@@ -264,7 +264,7 @@ export default {
 
 }
 
-.Mypage-content1 {
+/* .Mypage-content1 {
     width: 32%;
     height: 75%;
 }
@@ -273,7 +273,7 @@ export default {
     width: 68%;
     height: 75%;
     overflow-y: auto;
-}
+} */
 
 .right-content {
     height: 60%;

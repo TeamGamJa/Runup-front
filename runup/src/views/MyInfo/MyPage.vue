@@ -126,7 +126,7 @@ export default {
 }
 
 .Mypage-content1 {
-    width: 32%;
+    width: 27%;
     height: 75%;
 }
 

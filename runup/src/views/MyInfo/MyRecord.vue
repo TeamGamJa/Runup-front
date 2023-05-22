@@ -1,47 +1,61 @@
 <template>
     <v-container class="Record-container">
-        <!-- 내가 받은 수업 리스트 불러오기 -->
-        <v-data-table :headers="headers" :items="runningList" class="elevation-1" :items-per-page="9"
-            @click:row="showEvent">
-        </v-data-table>
-
-        <v-menu v-model="selectedOpen" :close-on-content-click="false" class="screen-record" offset-y>
-            <v-card class="dialog-Record">
-
-                <!-- 여기에 요약본이라고 나타낼 이미지가 필요 -->
-                <!-- <v-img class="categoryImage" :src="categoryImg"></v-img> -->
-
-                <v-card-title class="Schedule-Info">
-                    제목: {{ runningTitle }}
-                </v-card-title>
-
-                <!-- <v-divider class="linepart mx-4"></v-divider> -->
-
+        <v-row>
+            <v-card class="Mypoint-content">
                 <v-card-text>
-                    <!-- <v-row class="Schedule-Info1">
+                    <v-btn text to="/MyPageEdit" class="MyPoint-menubar" disabled :rounded="true">Menu-bar</v-btn>
+                    <v-btn text to="/MyPageEdit" class="MyPoint-Btn" :rounded="true">내 정보 수정</v-btn>
+                    <v-btn text to="/MyClass" class="MyPoint-Btn" :rounded="true">나의 수업 통계</v-btn>
+                    <v-btn text to="/MyPoint" class="MyPoint-Btn" :rounded="true">무지개, 포인트 내역</v-btn>
+                    <v-btn text to="/MyRecord" class="MyPoint-Btn" :rounded="true">달리기 기록지</v-btn>
+                    <v-btn text to="/MyQustion" class="MyPoint-Btn" :rounded="true">나의 고민</v-btn>
+                    <v-btn text to="/MessageInbox" class="MyPoint-Btn" :rounded="true">쪽지함</v-btn>
+                </v-card-text>
+            </v-card>
+            <!-- 내가 받은 수업 리스트 불러오기 -->
+            <v-card style="width: 75%;">
+                <v-data-table :headers="headers" :items="runningList" class="elevation-1" :items-per-page="9"
+                    @click:row="showEvent">
+                </v-data-table>
+
+                <v-menu v-model="selectedOpen" :close-on-content-click="false" class="screen-record" offset-y>
+                    <v-card class="dialog-Record">
+
+                        <!-- 여기에 요약본이라고 나타낼 이미지가 필요 -->
+                        <!-- <v-img class="categoryImage" :src="categoryImg"></v-img> -->
+
+                        <v-card-title class="Schedule-Info">
+                            제목: {{ runningTitle }}
+                        </v-card-title>
+
+                        <!-- <v-divider class="linepart mx-4"></v-divider> -->
+
+                        <v-card-text>
+                            <!-- <v-row class="Schedule-Info1">
                         특기: {{ RunningMcategory }}
                     </v-row> -->
-                    <v-row class="Schedule-Info1">
-                        Runner: {{ userNickname }}
-                    </v-row>
-                </v-card-text>
-                <v-divider class="mx-4"></v-divider>
-                <v-card-title class="test1">
-                    수업요약
-                </v-card-title>
-                <v-divider class="mx-4"></v-divider>
-                <v-card-title>
-                    <!-- <v-row > -->
-                        <v-virtual-scroll :bench="benched" :items="items" height="300" item-height="2000">
+                            <v-row class="Schedule-Info1">
+                                Runner: {{ userNickname }}
+                            </v-row>
+                        </v-card-text>
+                        <v-divider class="mx-4"></v-divider>
+                        <v-card-title class="test1">
+                            수업요약
+                        </v-card-title>
+                        <v-divider class="mx-4"></v-divider>
+                        <v-card-title>
+                            <!-- <v-row > -->
+                            <v-virtual-scroll :bench="benched" :items="items" height="300" item-height="2000">
 
-                            <p ref="content">{{ text }}
-                            </p>
-                        </v-virtual-scroll>
-                    <!-- </v-row> -->
-                </v-card-title>
+                                <p ref="content">{{ text }}
+                                </p>
+                            </v-virtual-scroll>
+                            <!-- </v-row> -->
+                        </v-card-title>
+                    </v-card>
+                </v-menu>
             </v-card>
-        </v-menu>
-
+        </v-row>
     </v-container>
 </template>
 
@@ -83,18 +97,18 @@ export default {
             questionLine: [],
             questionRequest: null,
             answer: '',
-            USE_MODEL : true, // true: use 'model', false: use 'engine'
-            url : 'https://api.openai.com/v1/completions',
-            answerLine : '',
+            USE_MODEL: true, // true: use 'model', false: use 'engine'
+            url: 'https://api.openai.com/v1/completions',
+            answerLine: '',
         }
     },
     computed: {
-      items () {
-        return Array.from({ length: this.length }, (k, v) => v + 1)
-      },
-      length () {
-        return 1
-      },
+        items() {
+            return Array.from({ length: this.length }, (k, v) => v + 1)
+        },
+        length() {
+            return 1
+        },
     },
     mounted() {
         this.recordList()
@@ -117,29 +131,29 @@ export default {
             let tmp = this;
             axios.get(tmp._baseUrl + "chat", {
                 params: {
-                chatRoomId: 'test0' 
+                    chatRoomId: 'test0'
                 },
             })
-            .then((result) => {
-                this.questionLine = (result.data.content).split('\n');
-                tmp.questionRequest = new Array(tmp.questionLine.length).fill('');
+                .then((result) => {
+                    this.questionLine = (result.data.content).split('\n');
+                    tmp.questionRequest = new Array(tmp.questionLine.length).fill('');
 
-                let i = 0;
-                
-                for (let j = 0; j < tmp.questionLine.length; j++) {
-                    
-                    tmp.questionRequest[i] += tmp.questionLine[j];
-                    if (tmp.questionRequest[i].length > 250) {
-                        console.log(tmp.questionRequest[i].length);
-                        this.askChatGPT(tmp.questionRequest[i]);
-                        i++;
+                    let i = 0;
+
+                    for (let j = 0; j < tmp.questionLine.length; j++) {
+
+                        tmp.questionRequest[i] += tmp.questionLine[j];
+                        if (tmp.questionRequest[i].length > 250) {
+                            console.log(tmp.questionRequest[i].length);
+                            this.askChatGPT(tmp.questionRequest[i]);
+                            i++;
+                        }
                     }
-                }
-            })
-            .catch((error) => {
-                console.log("오류발생");
-                console.log(error);
-            });
+                })
+                .catch((error) => {
+                    console.log("오류발생");
+                    console.log(error);
+                });
         },
         async askChatGPT(question) {
             const apiKey = '';
@@ -205,7 +219,8 @@ export default {
 .Record-container {
     margin-top: 5%;
 }
-.screen-record{
+
+.screen-record {
     width: 50%;
 }
 
@@ -213,8 +228,8 @@ export default {
     width: 500px;
     height: 50%;
 }
+
 .test1 {
     margin-left: 37%;
 }
-
 </style>
