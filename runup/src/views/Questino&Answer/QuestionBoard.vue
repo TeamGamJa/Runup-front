@@ -68,7 +68,6 @@
                     <v-card-text>
                         <v-card-title>{{ item.questionTitle }}</v-card-title>
                         <v-card-text>{{ item.questionWriter }}</v-card-text>
-                        <v-card-text>{{ item.questionNum }}</v-card-text>
                         <v-card-text>{{ item.questionCategoryMedium }}</v-card-text>
                     </v-card-text>
                 </v-card>

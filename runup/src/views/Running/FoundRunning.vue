@@ -33,7 +33,7 @@
                     </template>
                 </v-data-table>
                 <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y>
-                    <v-card :loading="loading" class="mx-auto my-12" width="300">
+                    <v-card class="mx-auto" width="300">
 
                         <v-img class="categoryImage" :src="categoryImg"></v-img>
 
