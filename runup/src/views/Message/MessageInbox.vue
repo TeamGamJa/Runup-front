@@ -2,19 +2,10 @@
   <v-container class="ReceiveMessage-container">
     <v-row>
       <v-card
-        style="width: 15%; height: 40%; margin-top: 10%, border: 2px solid #e0e0e0; background-color: #f5f5f5; border-radius: 30px;"
-        elevation="0"
-      >
+        style="width: 15%; height: 40%; margin-top: 30%, border: 2px solid #e0e0e0; background-color: #f5f5f5; border-radius: 30px;"
+        elevation="0">
         <v-card-text>
-          <v-btn
-            text
-            to="/MyPageEdit"
-            class="Message-menubar"
-            disabled
-            :rounded="true"
-            elevation="0"
-            >Menu</v-btn
-          >
+          <v-btn text to="/MyPageEdit" class="Message-menubar" disabled :rounded="true" elevation="0">Menu</v-btn>
 
           <v-btn class="MoveToBtn" :rounded="true" text to="/messageSentbox">
             보낸 쪽지함
@@ -35,24 +26,12 @@
       </v-card>
       <v-card style="width: 80%; margin-left: 3%" elevation="0">
         <v-row style="margin-top: 0.5%; margin-left: 1%">
-          <v-btn
-            class="DeleteBtn elevation-0"
-            :rounded="true"
-            @click="trashMessage()"
-          >
+          <v-btn class="DeleteBtn elevation-0" :rounded="true" @click="trashMessage()">
             <v-icon left>mdi-delete</v-icon>
           </v-btn>
         </v-row>
-        <v-data-table
-          :headers="headers"
-          :items="messageInboxList"
-          :item-key="itemKey"
-          :show-select="true"
-          v-model="selectedItems"
-          class="elevation-0"
-          style="border: 1px solid #e0e0e0"
-          @click:row="showEvent"
-        >
+        <v-data-table :headers="headers" :items="messageInboxList" :item-key="itemKey" :show-select="true"
+          v-model="selectedItems" class="elevation-0" style="border: 1px solid #e0e0e0" @click:row="showEvent">
           <!-- eslint-disable-next-line vue/valid-v-slot -->
           <template v-slot:item.actions="{ item }">
             <!-- 작성 -->
@@ -77,26 +56,16 @@
                     <v-card-title class="messageTitle">제목:</v-card-title>
                   </v-col>
                   <v-col cols="12" md="9">
-                    <v-text-field
-                      label="제목을 작성해주세요."
-                      class="sendMessage-input"
-                      outlined
-                      v-model="messageTitle"
-                    ></v-text-field>
+                    <v-text-field label="제목을 작성해주세요." class="sendMessage-input" outlined
+                      v-model="messageTitle"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row class="sendMessage-row">
                   <v-col cols="12" md="3">
-                    <v-card-title class="messageReceiver"
-                      >받는이:</v-card-title
-                    >
+                    <v-card-title class="messageReceiver">받는이:</v-card-title>
                   </v-col>
                   <v-col cols="12" md="9">
-                    <v-text-field
-                      disabled
-                      :label="editedItem.messageSender"
-                      outlined
-                    ></v-text-field>
+                    <v-text-field disabled :label="editedItem.messageSender" outlined></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row class="sendMessage-row">
@@ -104,12 +73,7 @@
                     <v-card-title class="messageContent">내용:</v-card-title>
                   </v-col>
                   <v-col cols="12" md="9">
-                    <v-textarea
-                      label="보내실 메세지를 적어주세요."
-                      outlined
-                      rows="5"
-                      v-model="messageContent"
-                    ></v-textarea>
+                    <v-textarea label="보내실 메세지를 적어주세요." outlined rows="5" v-model="messageContent"></v-textarea>
                   </v-col>
                 </v-row>
               </v-container>
@@ -126,26 +90,18 @@
 
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h8 text-center"
-              >선택한 메세지가 휴지통으로 이동합니다.</v-card-title
-            >
+            <v-card-title class="text-h8 text-center">선택한 메세지가 휴지통으로 이동합니다.</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                >확인</v-btn
-              >
-              <v-btn color="blue darken-1" text @click="closeDelete"
-                >취소</v-btn
-              >
+              <v-btn color="blue darken-1" text @click="deleteItemConfirm">확인</v-btn>
+              <v-btn color="blue darken-1" text @click="closeDelete">취소</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
         </v-dialog>
         <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y>
           <v-card class="mx-auto" width="300">
-            <v-btn color="blue darken-1" text @click="deleteItemConfirm"
-                >확인</v-btn
-              >
+            <v-btn color="blue darken-1" text @click="deleteItemConfirm">확인</v-btn>
             <!-- <v-img class="categoryImage" :src="categoryImg"></v-img> -->
 
             <!-- <v-card-title class="Schedule-Info">
@@ -212,8 +168,8 @@ export default {
       editedIndex: -1,
       formTitle: "",
       selectedOpen: false,
-      messageContent:"",
-      messageTitle:""
+      messageContent: "",
+      messageTitle: ""
     };
   },
   created() {
@@ -272,33 +228,33 @@ export default {
       this.dialog = true;
     },
     save() {
-        console.log(store.getters.getuserNickname);
+      console.log(store.getters.getuserNickname);
       var serverIP = "127.0.0.1",
-      serverPort = 8080,
-      pageUrl = "runup/message";
+        serverPort = 8080,
+        pageUrl = "runup/message";
 
-    this.$axios({
-      url: `http://${serverIP}:${serverPort}/${pageUrl}`,
-      method: "POST",
-      data: {
-        messageNum:1,
-        messageSender: this.editedItem.messageReceiver,
-        senderNum:store.getters.getUserNum,
-        messageReceiver: this.editedItem.messageSender,
-        receiverNum:this.editedItem.senderNum,
-        messageOpenStatus:1,
-        messageTitle:this.messageTitle,
-        messageContent:this.messageContent,
-        messageDate:1,
-        messageTrash:1
-      },
-    })
-      .then((data) => {
-        console.log(data.data);
+      this.$axios({
+        url: `http://${serverIP}:${serverPort}/${pageUrl}`,
+        method: "POST",
+        data: {
+          messageNum: 1,
+          messageSender: this.editedItem.messageReceiver,
+          senderNum: store.getters.getUserNum,
+          messageReceiver: this.editedItem.messageSender,
+          receiverNum: this.editedItem.senderNum,
+          messageOpenStatus: 1,
+          messageTitle: this.messageTitle,
+          messageContent: this.messageContent,
+          messageDate: 1,
+          messageTrash: 1
+        },
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((data) => {
+          console.log(data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     deleteItem(item) {
       this.editedItem = { ...item };
@@ -380,6 +336,7 @@ export default {
   margin-left: 13%;
   width: 70%;
 }
+
 .MoveToBtn {
   margin-top: 5%;
   margin-left: 8%;
@@ -388,6 +345,7 @@ export default {
   width: 90%;
   background-color: rgba(244, 209, 155, 1) !important;
 }
+
 .TrashBtn {
   margin-top: 5%;
   margin-left: 8%;
@@ -396,6 +354,7 @@ export default {
   width: 80%;
   background-color: rgba(244, 209, 155, 1) !important;
 }
+
 /* .TrashcanBtn {
     color: black !important;
     background-color: rgba(244, 209, 155, 1) !important;

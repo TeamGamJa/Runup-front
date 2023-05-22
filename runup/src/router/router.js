@@ -40,6 +40,7 @@ import FoundRunning from '../views/Running/FoundRunning'
 import QuestionBoard from '../views/Questino&Answer/QuestionBoard'
 import DetailQuestion from '../views/Questino&Answer/DetailQuestion'
 import EditQuestion from '../views/Questino&Answer/EditQuestion'
+import EditComment from '../views/Questino&Answer/EditComment'
 
 // 옹달셈
 import SFountain from '../views/SpringPool/SFountain'
@@ -115,6 +116,12 @@ const routes = [
         path: "/EditQuestion/:questionNum",
         name: "EditQuestion",
         component: EditQuestion,
+        beforeEnter: beforeAuth(true)
+    },
+    {
+        path: "/EditComment/:qCommentNum",
+        name: "EditComment",
+        component: EditComment,
         beforeEnter: beforeAuth(true)
     },
     {
