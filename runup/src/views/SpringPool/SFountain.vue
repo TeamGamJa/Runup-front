@@ -8,13 +8,19 @@
     <td>{{ formattedFountainPoints[item.fountainNum - 1] }}</td>
   </template>
         </v-data-table> -->
-        <v-card>
-            <v-text-field v-model="newFountain" label="글 작성" @keyup.enter="addFountain"></v-text-field>
-            <div v-for="(fountainData, index) in fountainData" :key="index" class="Data"></div>
-            <div class="chat-item">
-      <strong>{{ fountainNum }}:</strong> {{ fountainContent }}
-    </div>
-        </v-card>
+        <v-row>
+            <v-col v-for="(item, index) in fountainData" :key="index" cols="4">
+                <v-card class="post-card-item" @click="GoDetail(item.questionNum)">
+                    <v-img width="340" height="340" :rounded="true" :src="getQuestionImage(item.questionChoice)"></v-img>
+                    <v-card-text>
+                        <v-card-title>{{ item.questionTitle }}</v-card-title>
+                        <v-card-text>{{ item.questionWriter }}</v-card-text>
+                        <v-card-text>{{ item.questionNum }}</v-card-text>
+                        <v-card-text>{{ item.questionCategoryMedium }}</v-card-text>
+                    </v-card-text>
+                </v-card>
+            </v-col>
+        </v-row>
         
 
     </v-container>

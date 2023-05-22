@@ -39,6 +39,7 @@ import FoundRunning from '../views/Running/FoundRunning'
 // 묻고 답하기
 import QuestionBoard from '../views/Questino&Answer/QuestionBoard'
 import DetailQuestion from '../views/Questino&Answer/DetailQuestion'
+import EditQuestion from '../views/Questino&Answer/EditQuestion'
 
 // 옹달셈
 import SFountain from '../views/SpringPool/SFountain'
@@ -105,9 +106,16 @@ const routes = [
         component: QuestionBoard,
     },
     {
-        path: "/DetailQuestion",
+        path: "/DetailQuestion/:questionNum",
         name: "DetailQuestion",
         component: DetailQuestion,
+        beforeEnter: beforeAuth(true)
+    },
+    {
+        path: "/EditQuestion/:questionNum",
+        name: "EditQuestion",
+        component: EditQuestion,
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/CreateRunning",
