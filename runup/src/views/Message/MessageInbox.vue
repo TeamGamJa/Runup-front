@@ -1,28 +1,15 @@
 <template>
   <v-container class="ReceiveMessage-container">
     <v-row>
-      <v-card
-<<<<<<< Updated upstream
-        style="width: 15%; height: 40%; margin-top: 30%, border: 2px solid #e0e0e0; background-color: #f5f5f5; border-radius: 30px;"
+      <!-- 좌측 메뉴바 -->
+      <v-card style="width: 15%; height: 40%; margin-top: 10%; background-color: #f5f5f5; border-radius: 30px;"
         elevation="0">
         <v-card-text>
-          <v-btn text to="/MyPageEdit" class="Message-menubar" disabled :rounded="true" elevation="0">Menu</v-btn>
-=======
-        style="width: 15%; height: 40%; margin-top: 6%; background-color: #f5f5f5; border-radius: 30px;"
-        elevation="0"
-      >
-        <v-card-text>
-          <v-btn
-            text
-            to="/MyPageEdit"
-            class="Message-sidemenubar"
-            disabled
-            :rounded="true"
-            elevation="0"
-            >Menu</v-btn
-          >
->>>>>>> Stashed changes
-
+          <v-btn text to="/fdsfas" class="Message-sidemenubar" disabled :rounded="true" elevation="0">Menu</v-btn>
+          
+          <v-btn class="MoveToBtn" :rounded="true" text to="/messageInbox">
+            받은 쪽지함
+          </v-btn>
           <v-btn class="MoveToBtn" :rounded="true" text to="/messageSentbox">
             보낸 쪽지함
           </v-btn>
@@ -35,43 +22,30 @@
             마이페이지
           </v-btn>
 
-          <v-btn class="MoveToBtn" :rounded="true" text to="/CreateRunning">
-            도움 관리
-          </v-btn>
         </v-card-text>
       </v-card>
+
+      <!-- 우측 쪽지함 -->
       <v-card style="width: 80%; margin-left: 3%" elevation="0">
-        <v-row style="margin-top: 0.5%; margin-left: 1%">
+        <v-row style="margin-top: 0.5%; ">
           <v-btn class="DeleteBtn elevation-0" :rounded="true" @click="trashMessage()">
-            <v-icon left>mdi-delete</v-icon>
+            <v-icon size="26">mdi-delete</v-icon>
           </v-btn>
         </v-row>
-<<<<<<< Updated upstream
         <v-data-table :headers="headers" :items="messageInboxList" :item-key="itemKey" :show-select="true"
-          v-model="selectedItems" class="elevation-0" style="border: 1px solid #e0e0e0" @click:row="showEvent">
-=======
-        <v-data-table
-          :headers="headers"
-          :items="messageInboxList"
-          :item-key="itemKey"
-          :show-select="true"
-          v-model="selectedItems"
-          class="elevation-0"
-          
-          @click:row="showEvent"
-        >
->>>>>>> Stashed changes
+          v-model="selectedItems" class="elevation-0" @click:row="showEvent">
           <!-- eslint-disable-next-line vue/valid-v-slot -->
           <template v-slot:item.actions="{ item }">
             <!-- 작성 -->
-            <v-icon small class="mr-2" @click="editItem(item)">
+            <v-icon size="22" class="mr-2" @click.stop="editItem(item)">
               mdi-pencil
             </v-icon>
             <!-- 삭제 -->
-            <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
+            <v-icon size="22" @click.stop="deleteItem(item)"> mdi-delete </v-icon>
           </template>
         </v-data-table>
 
+        <!-- 답장 아이콘 클릭시 다이얼로그 오픈 -->
         <v-dialog v-model="dialog" class="Message-dialog">
           <v-card>
             <v-card-title>
@@ -94,7 +68,7 @@
                     <v-card-title class="messageReceiver">받는이:</v-card-title>
                   </v-col>
                   <v-col cols="12" md="9">
-                    <v-text-field disabled :label="editedItem.messageSender" outlined></v-text-field>
+                    <v-text-field disabled v-model="receiveMessageSender" outlined></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row class="sendMessage-row">
@@ -110,32 +84,30 @@
 
             <v-card-actions class="btn-message-group">
               <v-btn color="blue darken-1" text @click="save()"> 보내기 </v-btn>
-              <v-btn color="blue darken-1" text @click="close"> 취소 </v-btn>
+              <v-btn color="blue darken-1" text @click="dialog = false"> 취소 </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
 
+        <!-- row 안의 휴지통 아이콘 클릭 시 다이얼로그 작동  -->
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
             <v-card-title class="text-h8 text-center">선택한 메세지가 휴지통으로 이동합니다.</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="deleteItemConfirm">확인</v-btn>
-              <v-btn color="blue darken-1" text @click="closeDelete">취소</v-btn>
+              <v-btn color="blue darken-1" text @click="dialogDelete = false">취소</v-btn>
               <v-spacer></v-spacer>
             </v-card-actions>
           </v-card>
         </v-dialog>
+
+        <!-- 메세지 상세보기 (row 클릭시 이벤트 동작해서 내용 다이얼로그로 뜸) -->
         <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y>
-          <v-card class="mx-auto" width="300">
-<<<<<<< Updated upstream
-            <v-btn color="blue darken-1" text @click="deleteItemConfirm">확인</v-btn>
-            <!-- <v-img class="categoryImage" :src="categoryImg"></v-img> -->
-=======
+          <v-card style="width: 100%;">
             <v-card-title>
               <span class="text-h5">메세지 상세</span>
             </v-card-title>
->>>>>>> Stashed changes
 
             <v-card-text>
               <v-container>
@@ -144,11 +116,7 @@
                     <v-card-title class="messageTitle">제목:</v-card-title>
                   </v-col>
                   <v-col cols="12" md="9">
-                    <v-text-field
-                      class="receiveMessageTitle"
-                      disabled
-                      :label="receiveMessageTitle"
-                    ></v-text-field>
+                    <v-text-field class="receiveMessageTitle" disabled v-model="receiveMessageTitle"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row class="receiveMessage-row">
@@ -156,10 +124,7 @@
                     <v-card-title class="messageSender">보낸이:</v-card-title>
                   </v-col>
                   <v-col cols="12" md="9">
-                    <v-text-field
-                      disabled
-                      :label="receiveMessageSender"
-                    ></v-text-field>
+                    <v-text-field disabled v-model="receiveMessageSender"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row class="receiveMessage-row">
@@ -167,18 +132,14 @@
                     <v-card-title class="messageContent">내용:</v-card-title>
                   </v-col>
                   <v-col cols="12" md="9">
-                    <v-textarea
-                      rows="3"
-                      disabled
-                      :label="receiveMessageContent"
-                    ></v-textarea>
+                    <v-textarea rows="3" disabled v-model="receiveMessageContent" :outlined="true"></v-textarea>
                   </v-col>
                 </v-row>
               </v-container>
             </v-card-text>
 
             <v-card-actions class="btn-message-group">
-              <v-btn color="blue darken-1" text @click="close()"> 확인 </v-btn>
+              <v-btn color="blue darken-1" text @click="selectedOpen = false"> 확인 </v-btn>
             </v-card-actions>
           </v-card>
         </v-menu>
@@ -190,6 +151,8 @@
 <script>
 // import axios from 'axios';
 import store from "@/store/store";
+import axios from "axios";
+import moment from 'moment';
 
 export default {
   data() {
@@ -218,12 +181,14 @@ export default {
       formTitle: "",
       selectedOpen: false,
       messageContent: "",
-<<<<<<< Updated upstream
-      messageTitle: ""
-=======
       messageTitle: "",
-      messageSender:""
->>>>>>> Stashed changes
+      messageSender: "",
+      messageNum:'',
+
+      // 상세페이지용
+      receiveMessageTitle: '',
+      receiveMessageSender: '',
+      receiveMessageContent: '',
     };
   },
   created() {
@@ -242,6 +207,7 @@ export default {
         const messageInboxList = data.data;
         for (let i = 0; i < messageInboxList.length; i++) {
           this.messageNum = messageInboxList[i].messageNum;
+          messageInboxList[i].messageDate = moment(messageInboxList[i].messageDate).format('YYYY-MM-DD');
         }
         messageInboxList.sort(
           (a, b) => new Date(b.messageDate) - new Date(a.messageDate)
@@ -268,14 +234,6 @@ export default {
       this.receiveMessageTitle = target.messageTitle;
       this.receiveMessageSender = target.messageSender;
       this.receiveMessageContent = target.messageContent;
-      // this.runningTitle = target.runningTitle;
-      // this.RunningBcategory = target.runningCategoryBig;
-      // this.RunningMcategory = target.runningCategoryMedium;
-      // this.userLuxColor = target.userLuxColor;
-      // this.userNickname = target.userNickname;
-      // this.runningContent = target.runningContent;
-      // this.runningStartTime = target.runningStartSmall;
-      // this.runningEndTime = target.runningEndSmall;
     },
     editItem(item) {
       this.editedItem = { ...item };
@@ -284,11 +242,7 @@ export default {
       this.dialog = true;
     },
     save() {
-<<<<<<< Updated upstream
-      console.log(store.getters.getuserNickname);
-=======
       console.log(store.getters.getUserNickname);
->>>>>>> Stashed changes
       var serverIP = "127.0.0.1",
         serverPort = 8080,
         pageUrl = "runup/message";
@@ -306,11 +260,7 @@ export default {
           messageTitle: this.messageTitle,
           messageContent: this.messageContent,
           messageDate: 1,
-<<<<<<< Updated upstream
-          messageTrash: 1
-=======
           messageTrash: 1,
->>>>>>> Stashed changes
         },
       })
         .then((data) => {
@@ -325,17 +275,31 @@ export default {
       this.editedIndex = this.messageInboxList.indexOf(item);
       this.dialogDelete = true;
     },
-    close() {
-      this.dialog = false;
-      this.resetForm();
-    },
+    // close() {
+    //   this.selectedOpen = false;
+    //   this.resetForm();
+    // },
     closeDelete() {
       this.dialogDelete = false;
       this.resetForm();
     },
+
+    // 로우 안의 휴지통 클릭 하여 삭제시 동작하는 메소드
     deleteItemConfirm() {
+      console.log(this.messageNum);
+      let tmp = this;
+      axios.post(tmp._baseUrl +'message/trash',{
+        messageNum: this.messageNum,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
       this.messageInboxList.splice(this.editedIndex, 1);
       this.closeDelete();
+      
     },
 
     resetForm() {
@@ -344,6 +308,8 @@ export default {
       this.editedIndex = -1;
       this.formTitle = "";
     },
+
+    // 휴지통으로 이동
     trashMessage() {
       const selectedMessageNums = this.selectedItems.map(
         (item) => item.messageNum
@@ -376,29 +342,13 @@ export default {
   
 <style>
 .ReceiveMessage-container {
-  margin-top: 3%;
+  margin-top: 1%;
 }
-
-/* .PageBtn-message {
-  display: flex;
-  justify-content:flex-start;
-} */
-/* .Message-left {
-    width: 10%;
-} */
-/* .SentboxBtn {
-    color: black !important;
-    background-color: rgba(244, 209, 155, 1) !important;
-    justify-content: flex-end;
-    margin-top: 2%;
-    margin-bottom: 2%;
-    margin-left: 30%;
-} */
 .Message-sidemenubar {
   margin-top: 10%;
-  background-color: #d7e9f7;
+  background-color: #d7e9f7 !important;
   /* margin-bottom: 7%; */
-  margin-left: 13%;
+  margin-left: 18%;
   width: 70%;
 }
 
@@ -432,10 +382,9 @@ export default {
 .DeleteBtn {
   color: black !important;
   background-color: rgba(255, 107, 107, 1) !important;
-  justify-content: flex-end;
   margin-top: 5%;
   margin-bottom: 3%;
-  margin-left: 100%;
+  margin-left: 1%;
 }
 
 .v-dialog {
