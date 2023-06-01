@@ -13,9 +13,9 @@
                     <v-card-text>
                         <v-btn text to="/MyPageEdit" class="MyPage-Btn" :rounded="true">내 정보 수정</v-btn>
                         <v-btn text to="/MyClass" class="MyPage-Btn" :rounded="true">나의 수업 통계</v-btn>
-                        <v-btn text to="/MyPoint" class="MyPage-Btn" :rounded="true">무지개, 포인트 내역</v-btn>
+                        <!-- <v-btn text to="/MyPoint" class="MyPage-Btn" :rounded="true">무지개, 포인트 내역</v-btn> -->
                         <v-btn text to="/MyRecord" class="MyPage-Btn" :rounded="true">달리기 기록지</v-btn>
-                        <v-btn text to="/MyQustion" class="MyPage-Btn" :rounded="true">나의 고민</v-btn>
+                        <!-- <v-btn text to="/MyQustion" class="MyPage-Btn" :rounded="true">나의 고민</v-btn> -->
                         <v-btn text to="/MessageInbox" class="MyPage-Btn" :rounded="true">쪽지함</v-btn>
                     </v-card-text>
                 </v-card>

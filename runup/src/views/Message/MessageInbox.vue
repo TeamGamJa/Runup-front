@@ -31,6 +31,7 @@
           <v-btn class="DeleteBtn elevation-0" :rounded="true" @click="trashMessage()">
             <v-icon size="26">mdi-delete</v-icon>
           </v-btn>
+          <v-img src="https://ifh.cc/g/37TJy4.png" max-width="200" max-height="40" style="margin-left: 70%; margin-top:4% ;"></v-img>
         </v-row>
         <v-data-table :headers="headers" :items="messageInboxList" :item-key="itemKey" :show-select="true"
           v-model="selectedItems" class="elevation-0" @click:row="showEvent">
@@ -48,9 +49,9 @@
         <!-- 답장 아이콘 클릭시 다이얼로그 오픈 -->
         <v-dialog v-model="dialog" class="Message-dialog">
           <v-card>
-            <v-card-title>
-              <span class="text-h5">메세지 작성</span>
-            </v-card-title>
+            <v-row>
+              <v-img src="https://ifh.cc/g/MqYX9S.png" max-width="200" max-height="45" style="margin-left: 3%; margin-top: 3%;"></v-img>
+            </v-row>
 
             <v-card-text>
               <v-container>
@@ -76,7 +77,7 @@
                     <v-card-title class="messageContent">내용:</v-card-title>
                   </v-col>
                   <v-col cols="12" md="9">
-                    <v-textarea label="보내실 메세지를 적어주세요." outlined rows="5" v-model="messageContent"></v-textarea>
+                    <v-textarea label="메세지를 입력해주세요." outlined rows="5" v-model="messageContent"></v-textarea>
                   </v-col>
                 </v-row>
               </v-container>
@@ -92,7 +93,7 @@
         <!-- row 안의 휴지통 아이콘 클릭 시 다이얼로그 작동  -->
         <v-dialog v-model="dialogDelete" max-width="500px">
           <v-card>
-            <v-card-title class="text-h8 text-center">선택한 메세지가 휴지통으로 이동합니다.</v-card-title>
+            <v-card-title class="text-h8 text-center">휴지통으로 이동하겠습니까?</v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="deleteItemConfirm">확인</v-btn>
@@ -112,26 +113,26 @@
             <v-card-text>
               <v-container>
                 <v-row class="receiveMessage-row">
-                  <v-col cols="12" md="3">
+                  <v-col cols="4">
                     <v-card-title class="messageTitle">제목:</v-card-title>
                   </v-col>
-                  <v-col cols="12" md="9">
+                  <v-col cols="6">
                     <v-text-field class="receiveMessageTitle" disabled v-model="receiveMessageTitle"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row class="receiveMessage-row">
-                  <v-col cols="12" md="3">
+                  <v-col cols="5">
                     <v-card-title class="messageSender">보낸이:</v-card-title>
                   </v-col>
-                  <v-col cols="12" md="9">
+                  <v-col cols="6">
                     <v-text-field disabled v-model="receiveMessageSender"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row class="receiveMessage-row">
-                  <v-col cols="12" md="3">
+                  <v-col cols="4">
                     <v-card-title class="messageContent">내용:</v-card-title>
                   </v-col>
-                  <v-col cols="12" md="9">
+                  <v-col cols="8">
                     <v-textarea rows="3" disabled v-model="receiveMessageContent" :outlined="true"></v-textarea>
                   </v-col>
                 </v-row>
@@ -394,6 +395,7 @@ export default {
 
 .sendMessage-text {
   display: inline-block;
+  margin-top: 3%;
 }
 
 .btn-message-group {

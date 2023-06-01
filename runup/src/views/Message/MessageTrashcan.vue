@@ -31,6 +31,7 @@
           <v-btn class="DeleteBtn elevation-0" :rounded="true" @click="seldelMessage()">
             <v-icon size="26">mdi-delete</v-icon>
           </v-btn>
+          <v-img src="https://ifh.cc/g/HlCQmz.png" max-width="200" max-height="40" style="margin-left: 70%; margin-top:4% ;"></v-img>
         </v-row>
         <v-data-table :headers="headers" :items="messageTrashcanList" :item-key="itemKey" :show-select="true"
           v-model="selectedItems" class="elevation-0" @click:row="showEvent">

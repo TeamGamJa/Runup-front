@@ -1,23 +1,23 @@
 <template>
     <v-container class="Fountain-container">
-        <!-- 내가 받은 수업 리스트 불러오기
-        <v-text-field v-model="newFountain" label="글 작성" @keyup.enter="addFountain"></v-text-field>
-        <v-data-table :headers="headers" :items="fountainData" class="elevation-1" :items-per-page="9"
-            @click:row="clickEvent">
-            <template v-slot="{ item }">
-    <td>{{ formattedFountainPoints[item.fountainNum - 1] }}</td>
-  </template>
-        </v-data-table> -->
+        <!-- 내가 받은 수업 리스트 불러오기 -->
         <v-row>
-            <v-col v-for="(item, index) in fountainData" :key="index" cols="4">
+            <v-col cols="8" style="margin-left: 15%;">
+                <v-text-field v-model="newFountain" label="수분 요청" :outlined="true"></v-text-field>
+            </v-col>
+            <v-col cols="2">
+                <v-btn @click="addFountain" :rounded="true" style="margin-top: 4%;">분수대 생성</v-btn>
+            </v-col>
+        </v-row>
+
+        <v-row>
+            <v-col v-for="(item, index) in fountainData" :key="index" cols="3">
                 <v-card class="post-card-item" @click="givePoint(item)">
-                    <v-img width="400" height="200" :rounded="true"
-                        src="https://cdn.vuetifyjs.com/images/cards/cooking.png"></v-img>
+                    <v-img width="400" height="250" :rounded="true" src="https://ifh.cc/g/xGGgvk.png"></v-img>
                     <v-card-text>
-                        <v-card-title>{{ item.fountainContent }}</v-card-title>
+                        <v-img src="https://ifh.cc/g/0WZtoK.png" max-width="170" max-heigtht="50"></v-img>
                         <v-card-text>{{ item.fountainDate }}</v-card-text>
                         <v-card-text>{{ item.fountainWriter }}</v-card-text>
-                        <!-- <v-card-text>{{ item.fountainContent }}</v-card-text> -->
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -25,30 +25,46 @@
 
         <!-- 포인트 기부  -->
         <v-row>
-            <v-dialog v-model="PointDialog" persistent max-width="70%">
+            <v-dialog v-model="PointDialog" persistent max-width="50%">
                 <v-card>
                     <v-row>
                         <v-col>
+                            <v-img src="https://ifh.cc/g/0WZtoK.png" max-width="250" max-heigtht="50"
+                                style="margin-top: 2%; margin-left: 2%; margin-bottom: 2%;"></v-img>
                             <v-card-title>
-                                기부 내용: {{ selectItem.fountainContent }}
-                            </v-card-title>
-                            <v-card-title>
-                                기부 요청자: {{ selectItem.fountainWriter }}
+                                수분 요청내용
                             </v-card-title>
                             <v-card-text>
-                                기부 요청날: {{ selectItem.fountainDate }}
+                                {{ selectItem.fountainContent }}
+                            </v-card-text>
+                            <v-card-title>
+                                수분 요청자
+                            </v-card-title>
+                            <v-card-text>
+                                {{ selectItem.fountainWriter }}
+                            </v-card-text>
+                            <v-card-title>
+                                수분 요청날
+                            </v-card-title>
+                            <v-card-text>
+                                {{ selectItem.fountainDate }}
                             </v-card-text>
                             <v-row>
-                                <v-col cols="2">
-                                    <v-card-title>기부금액:</v-card-title>
+                                <v-col cols="3">
+                                    <v-card-title>수분 충전</v-card-title>
                                 </v-col>
                                 <v-col cols="4">
-                                    <v-text-field v-model="point"></v-text-field>
+                                    <v-text-field v-model="point" :rules="[rules.point]" label="mL"></v-text-field>
                                 </v-col>
                             </v-row>
-                            <v-btn @click="addPoint(selectItem.fountainWriter,selectItem.fountainNum); PointDialog = false">
-                                닫아라
-                            </v-btn>
+                            <v-btn-group class="poolbtngroup">
+                                <v-btn class="poolBtn" :rounded="true" plain color="blue"
+                                    @click="addPoint(selectItem.fountainWriter, selectItem.fountainNum); PointDialog = false">
+                                    동전 던지기
+                                </v-btn>
+                                <v-btn class="poolBtn" :rounded="true" plain color="blue"
+                                    @click="PointDialog = false">취소</v-btn>
+                            </v-btn-group>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -92,7 +108,24 @@ export default {
 
             PointDialog: false,
             selectItem: {}, // 선택된 게시글 정보
-            point:'',
+            point: '',
+            rules: {
+                point: v => {
+                    if (!v) {
+                        return '최대 50mL를 줄 수 있습니다.';
+                    }
+                    const numberValue = Number(v);
+                    if (isNaN(numberValue)) {
+                        return '포인트를 입력해주세요';
+                    }
+                    if (numberValue < 1 || numberValue > 50) {
+                        return '1부터 50 사이의 포인트를 입력해주세요';
+                    }
+                    return true;
+                }
+            },
+            showAlert: false,
+            alertMessage: '',
         }
     },
     computed: {
@@ -116,11 +149,11 @@ export default {
         addFountain() {
             let tmp = this;
             axios
-            .post(tmp._baseUrl + 'fountain', {
-                fountainContent: this.newFountain,
-                fountainWriter: store.getters.getUserNickname,
-                userNum: store.getters.getUserNum
-            })
+                .post(tmp._baseUrl + 'fountain', {
+                    fountainContent: this.newFountain,
+                    fountainWriter: store.getters.getUserNickname,
+                    userNum: store.getters.getUserNum
+                })
                 .then(response => {
 
                     console.log(response.data)
@@ -150,22 +183,28 @@ export default {
             this.selectItem = item;
             this.PointDialog = true;
         },
-        addPoint(Receiver,fountainNum) {
+        addPoint(Receiver, fountainNum) {
             let tmp = this;
+            const parsedPoint = parseFloat(this.point, 10); // 문자열을 숫자로 변환
+            if (isNaN(parsedPoint) || parsedPoint < 1 || parsedPoint > 50) {
+                this.alertMessage = '1부터 50 사이의 숫자를 입력해주세요';
+                this.showAlert = true;
+                return;
+            }
+
             axios
-            .post(tmp._baseUrl + 'donation', {
-                fountainNum: fountainNum,
-                donationPoint: this.point,
-                donationReceiver: Receiver,
-                donationSender: store.getters.getUserNickname,
-            })
+                .post(tmp._baseUrl + 'donation', {
+                    fountainNum: fountainNum,
+                    donationPoint: this.point,
+                    donationReceiver: Receiver,
+                    donationSender: store.getters.getUserNickname,
+                })
                 .then(response => {
                     console.log(response.data)
+                    this.point='';
                 })
                 .catch(error => {
-          
                     console.error(error);
-            
                 });
         },
     },
@@ -174,6 +213,15 @@ export default {
 
 <style>
 .Fountain-container {
-    margin-top: 5%;
+    margin-top: 2%;
+}
+
+.poolbtngroup {
+    margin-left: 72%;
+}
+
+.poolBtn {
+    /* background-color: white; */
+    margin-left: 1%;
 }
 </style>

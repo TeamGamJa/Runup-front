@@ -31,15 +31,12 @@
           <v-btn class="DeleteBtn elevation-0" :rounded="true" @click="trashMessage()">
             <v-icon size="26">mdi-delete</v-icon>
           </v-btn>
+          <v-img src="https://ifh.cc/g/j967xa.png" max-width="200" max-height="40" style="margin-left: 70%; margin-top:4% ;"></v-img>
         </v-row>
         <v-data-table :headers="headers" :items="messageSentboxList" :item-key="itemKey" :show-select="true"
           v-model="selectedItems" class="elevation-0" @click:row="showEvent">
           <!-- eslint-disable-next-line vue/valid-v-slot -->
           <template v-slot:item.actions="{ item }">
-            <!-- 작성 -->
-            <v-icon size="22" class="mr-2" @click.stop="editItem(item)">
-              mdi-pencil
-            </v-icon>
             <!-- 삭제 -->
             <v-icon size="22" @click.stop="deleteItem(item)"> mdi-delete </v-icon>
           </template>
@@ -48,9 +45,7 @@
         <!-- 답장 아이콘 클릭시 다이얼로그 오픈 -->
         <v-dialog v-model="dialog" class="Message-dialog">
           <v-card>
-            <v-card-title>
-              <span class="text-h5">메세지 작성</span>
-            </v-card-title>
+           <v-img src="https://ifh.cc/g/MqYX9S.png" max-width="200" max-height="40"></v-img>
 
             <v-card-text>
               <v-container>
@@ -112,26 +107,26 @@
             <v-card-text>
               <v-container>
                 <v-row class="receiveMessage-row">
-                  <v-col cols="12" md="3">
+                  <v-col cols="4">
                     <v-card-title class="messageTitle">제목:</v-card-title>
                   </v-col>
-                  <v-col cols="12" md="9">
+                  <v-col cols="6">
                     <v-text-field class="receiveMessageTitle" disabled v-model="receiveMessageTitle"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row class="receiveMessage-row">
-                  <v-col cols="12" md="3">
+                  <v-col cols="5">
                     <v-card-title class="messageSender">보낸이:</v-card-title>
                   </v-col>
-                  <v-col cols="12" md="9">
+                  <v-col cols="6">
                     <v-text-field disabled v-model="receiveMessageSender"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row class="receiveMessage-row">
-                  <v-col cols="12" md="3">
+                  <v-col cols="4">
                     <v-card-title class="messageContent">내용:</v-card-title>
                   </v-col>
-                  <v-col cols="12" md="9">
+                  <v-col cols="8">
                     <v-textarea rows="3" disabled v-model="receiveMessageContent" :outlined="true"></v-textarea>
                   </v-col>
                 </v-row>
@@ -168,7 +163,7 @@ export default {
         { text: "제목", align: "left", value: "messageTitle" },
         { text: "보낸 날짜", align: "center", value: "messageDate" },
         { text: "", align: "center", value: "checkbox" },
-        { text: "답장 / 휴지통", value: "actions", sortable: false },
+        { text:  "휴지통", value: "actions", sortable: false },
       ],
       messageSentboxList: [],
       itemKey: "messageNum",
@@ -274,7 +269,7 @@ export default {
     },
     deleteItem(item) {
       this.editedItem = { ...item };
-      this.editedIndex = this.messageInboxList.indexOf(item);
+      this.editedIndex = this.messageSentboxList.indexOf(item);
       this.dialogDelete = true;
     },
     // close() {
