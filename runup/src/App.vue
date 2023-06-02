@@ -19,7 +19,8 @@
           @click="handleButtonClick"><v-icon>mdi-account-circle</v-icon></v-btn>
         </v-toolbar>
       </div>
-      <v-navigation-drawer v-model="drawer" absolute temporary right >
+      
+      <v-navigation-drawer v-model="drawer" absolute temporary right style="position: fixed;" >
         <v-list-item>
           <v-list-item-avatar>
             <v-img :src="$store.getters.getProfileImg"></v-img>
@@ -29,7 +30,7 @@
           </v-list-item-content>
         </v-list-item>
         <v-divider></v-divider>
-        <v-list dense>
+        <v-list nav dense>
           <v-list-item link @click="goToMyPage">
             <v-list-item-content>
               <v-list-item-title>내 정보</v-list-item-title>
@@ -40,9 +41,9 @@
               <v-list-item-title>달리기 기록지</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item link @click="goToMyQuestion">
+          <v-list-item link @click="goToMyClass">
             <v-list-item-content>
-              <v-list-item-title>내 고민</v-list-item-title>
+              <v-list-item-title>나의 수업 통계</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-list-item link @click="goToMessageBox">
@@ -116,8 +117,8 @@ export default {
     goToMyRecord() {
       this.$router.push('/MyRecord')
     },
-    goToMyQuestion() {
-      this.$router.push('/MyQuestion')
+    goToMyClass() {
+      this.$router.push('/MyClass')
     },  
     logout() {
       store.dispatch('logout').then(() => {

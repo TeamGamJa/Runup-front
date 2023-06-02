@@ -64,10 +64,17 @@ import MyPageImgEdit from '../views/MyInfo/MyPageImgEdit'
 import MessageInbox from '../views/Message/MessageInbox'
 import MessageSentbox from '../views/Message/MessageSentbox'
 import MessageTrashcan from '../views/Message/MessageTrashcan'
+import MessageWrite from '../views/Message/MessageWrite'
 
 // 평가화면
 import EvaluatePageRunner from '../views/Evaluation/EvaluatePageRunner'
 import EvaluatePageLearner from '../views/Evaluation/EvaluatePageLearner'
+
+// 다른 유저 정보 확인
+import ProfileInfo from '../views/OtherProfile/ProfileInfo'
+
+// 신고하기
+import DoReport from '../views/report/DoReport'
 
 // 요약 화면
 
@@ -196,7 +203,12 @@ const routes = [
         component: MessageTrashcan,
         beforeEnter: beforeAuth(true)
     },
-
+    {
+        path: "/MessageWrite",
+        name: "MessageWrite",
+        component: MessageWrite,
+        beforeEnter: beforeAuth(true)
+    },
     {
         path: "/Test",
         name: "Test",
@@ -211,11 +223,24 @@ const routes = [
         path: "/EvaluatePageRunner",
         name: "EvaluatePageRunner",
         component: EvaluatePageRunner,
+        beforeEnter: beforeAuth(true)
     },
     {
         path: "/EvaluatePageLearner",
         name: "EvaluatePageLearner",
         component: EvaluatePageLearner,
+        beforeEnter: beforeAuth(true)
+    },
+    {
+        path: "/ProfileInfo",
+        name: "ProfileInfo",
+        component: ProfileInfo, 
+    },
+    {
+        path: "/DoReport",
+        name: "DoReport",
+        component: DoReport, 
+        beforeEnter: beforeAuth(true)
     },
 ]
 

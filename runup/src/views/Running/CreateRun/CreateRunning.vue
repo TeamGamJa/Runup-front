@@ -94,7 +94,7 @@
 
           <!-- 달력안의 일정을 클릭 시 일정 상세-->
           <v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-x>
-            <v-card  class=" my-12 pa-0" max-width="374">
+            <v-card  class=" pa-0" max-width="374">
 
               <v-img height="250" :src="categoryImg"></v-img>
 
@@ -684,7 +684,7 @@ export default {
 <style>
 .CreateRunning-container {
   height: 85%;
-  width: 500px;
+  width: 70%;
 }
 
 .calender-css {
@@ -692,12 +692,11 @@ export default {
 }
 
 .ChatBtn {
-  margin-left: 100px;
+  margin-left: 50%;
   color: black !important;
   background-color: rgba(244, 209, 155, 1) !important;
   justify-content: flex-end;
-  border-radius: 200px;
-  margin-top: 20px;
+  margin-top: 5%;
 
 }
 

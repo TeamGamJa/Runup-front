@@ -27,7 +27,8 @@
                     :options="{ itemsPerPageOptions: [] }" @click:row="showEvent" height="480">
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template v-slot:item.userLuxColor="{ item }">
-                        <v-chip class="Luxcolor-found text-center" :color="getColor(item.userLuxColor)" dark>
+                        <v-chip class="Luxcolor-found text-center" :color="getColor(item.userLuxColor)" style="border:2px solid rgba(244, 209, 155, 1);"
+                        text-color="black" dark>
                             {{ item.userLuxColor }}
                         </v-chip>
                     </template>
@@ -77,6 +78,7 @@
 
 <script>
 import store from '@/store/store'
+import axios from 'axios'
 
 export default {
     name: 'FoundRunning',
@@ -212,18 +214,15 @@ export default {
             this.runningList = list;
         },
         categorySearch() {
-            var serverIP = '127.0.0.1',
-                serverPort = 8080;
-            // pageUrl ='runup/running/categorymedium';
             if (this.RunningMcategory == '전체') {
-                this.$axios({
-                    url: `http://${serverIP}:${serverPort}/runup/running/bycategorybig`,
-                    method: "GET",
-                    params: {
-                        categoryBig: this.choice == '전체' ? '%' : this.choice,
+                axios
+                    .get(this._baseUrl + 'running/bycategorybig', {
+                        params: {
+                            categoryBig: this.choice == '전체' ? '%' : this.choice,
+    
+                        },
 
-                    },
-                }).then((response) => {
+                    }).then((response) => {
                     console.log(response.data);
                     this.updateRunningList(response.data);
                     this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
@@ -236,14 +235,14 @@ export default {
                     console.log(error)
                 })
             } else {
-                this.$axios({
-                    url: `http://${serverIP}:${serverPort}/runup/running/bycategorymedium`,
-                    method: "GET",
-                    params: {
-                        // categoryBig : this.choice == '전체' ? '%' : this.choice,
-                        categoryMedium: this.RunningMcategory == '전체' ? '%' : this.RunningMcategory,
-                    },
-                }).then((response) => {
+                axios
+                    .get(this._baseUrl + 'running/bycategorymedium',{
+                        params: {
+                            categoryBig: this.choice == '전체' ? '%' : this.choice,
+    
+                        },
+
+                    }).then((response) => {
                     console.log(response.data);
                     this.updateRunningList(response.data);
                     this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
@@ -310,7 +309,7 @@ export default {
                     item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
 
                 }
-            }).catch(error => {
+            }).catch(error => { 
                 console.log(error)
             })
         },
