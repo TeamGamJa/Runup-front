@@ -31,27 +31,25 @@
                         <v-col>
                             <v-img src="https://ifh.cc/g/0WZtoK.png" max-width="250" max-heigtht="50"
                                 style="margin-top: 2%; margin-left: 2%; margin-bottom: 2%;"></v-img>
-                            <v-card-title>
-                                수분 요청내용
-                            </v-card-title>
-                            <v-card-text>
+                            <v-img src="https://ifh.cc/g/7BJdqj.png" max-width="150" max-height="50"
+                                style="margin-top: 3%; margin-left: 1%"></v-img>
+                            <v-card-text style="font-size: 18px; margin-left: 2%;">
                                 {{ selectItem.fountainContent }}
                             </v-card-text>
-                            <v-card-title>
-                                수분 요청자
-                            </v-card-title>
-                            <v-card-text>
+                            <v-img src="https://ifh.cc/g/gAC9rq.png" max-width="150" max-height="50"
+                                style="margin-top: 3%; margin-left: 1%"></v-img>
+                            <v-card-text style="font-size: 18px; margin-left: 2%;">
                                 {{ selectItem.fountainWriter }}
                             </v-card-text>
-                            <v-card-title>
-                                수분 요청날
-                            </v-card-title>
-                            <v-card-text>
+                            <v-img src="https://ifh.cc/g/s2L1Cn.png" max-width="150" max-height="50"
+                                style="margin-top: 3%; margin-left: 1%"></v-img>
+                            <v-card-text style="font-size: 18px; margin-left: 2%;">
                                 {{ selectItem.fountainDate }}
                             </v-card-text>
                             <v-row>
                                 <v-col cols="3">
-                                    <v-card-title>수분 충전</v-card-title>
+                                    <v-img src="https://ifh.cc/g/JkRCFN.png" max-width="150" max-height="50"
+                                        style="margin-top: 3%; margin-left: 3%;"></v-img>
                                 </v-col>
                                 <v-col cols="4">
                                     <v-text-field v-model="point" :rules="[rules.point]" label="mL"></v-text-field>
@@ -201,7 +199,7 @@ export default {
                 })
                 .then(response => {
                     console.log(response.data)
-                    this.point='';
+                    this.point = '';
                 })
                 .catch(error => {
                     console.error(error);

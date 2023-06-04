@@ -38,62 +38,16 @@
           <!-- eslint-disable-next-line vue/valid-v-slot -->
           <template v-slot:item.actions="{ item }">
             <!-- 작성 -->
-            <v-icon size="22" class="mr-2" @click.stop="editItem(item)">
-              mdi-pencil
-            </v-icon>
             <!-- 삭제 -->
             <v-icon size="22" @click.stop="deleteItem(item)"> mdi-delete </v-icon>
           </template>
         </v-data-table>
 
-        <!-- 답장 아이콘 클릭시 다이얼로그 오픈 -->
-        <v-dialog v-model="dialog" class="Message-dialog">
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">메세지 작성</span>
-            </v-card-title>
-
-            <v-card-text>
-              <v-container>
-                <v-row class="sendMessage-row">
-                  <v-col cols="12" md="3">
-                    <v-card-title class="messageTitle">제목:</v-card-title>
-                  </v-col>
-                  <v-col cols="12" md="9">
-                    <v-text-field label="제목을 작성해주세요." class="sendMessage-input" outlined
-                      v-model="messageTitle"></v-text-field>
-                  </v-col>
-                </v-row>
-                <v-row class="sendMessage-row">
-                  <v-col cols="12" md="3">
-                    <v-card-title class="messageReceiver">받는이:</v-card-title>
-                  </v-col>
-                  <v-col cols="12" md="9">
-                    <v-text-field disabled v-model="receiveMessageSender" outlined></v-text-field>
-                  </v-col>
-                </v-row>
-                <v-row class="sendMessage-row">
-                  <v-col cols="12" md="3">
-                    <v-card-title class="messageContent">내용:</v-card-title>
-                  </v-col>
-                  <v-col cols="12" md="9">
-                    <v-textarea label="보내실 메세지를 적어주세요." outlined rows="5" v-model="messageContent"></v-textarea>
-                  </v-col>
-                </v-row>
-              </v-container>
-            </v-card-text>
-
-            <v-card-actions class="btn-message-group">
-              <v-btn color="blue darken-1" text @click="save()"> 보내기 </v-btn>
-              <v-btn color="blue darken-1" text @click="dialog = false"> 취소 </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-
         <!-- row 안의 휴지통 아이콘 클릭 시 다이얼로그 작동  -->
-        <v-dialog v-model="dialogDelete" max-width="500px">
+        <v-dialog v-model="dialogDelete" width="800">
           <v-card>
-            <v-card-title class="text-h8 text-center">선택한 메세지가 휴지통으로 이동합니다.</v-card-title>
+            <v-img src="https://ifh.cc/g/tGJJDd.png" width="700" max-height="400"
+                       style="margin-bottom: 2%; margin-left: 5%; margin-right: 5%;"></v-img>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="deletemessage">확인</v-btn>
@@ -104,40 +58,45 @@
         </v-dialog>
 
         <!-- 메세지 상세보기 (row 클릭시 이벤트 동작해서 내용 다이얼로그로 뜸) -->
-        <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y>
-          <v-card style="width: 100%;">
+        <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y >
+          <v-card width="800">
             <v-card-title>
-              <span class="text-h5">메세지 상세</span>
+              <v-img src="https://ifh.cc/g/XyTLjf.png" max-width="150" max-height="50"
+                       style="margin-top: 3%; "></v-img>
             </v-card-title>
 
             <v-card-text>
               <v-container>
                 <v-row class="receiveMessage-row">
-                  <v-col cols="12" md="3">
-                    <v-card-title class="messageTitle">제목:</v-card-title>
+                  <v-col cols="2">
+                    <v-img src="https://ifh.cc/g/nQPWmh.png" max-width="60" max-height="50"
+                       style="margin-top: 5%;"></v-img>
                   </v-col>
-                  <v-col cols="12" md="9">
+                  <v-col cols="6">
                     <v-text-field class="receiveMessageTitle" disabled v-model="receiveMessageTitle"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row class="receiveMessage-row">
-                  <v-col cols="12" md="3">
-                    <v-card-title class="messageSender">보낸이:</v-card-title>
+                  <v-col cols="2">
+                    <v-img src="https://ifh.cc/g/DXPckA.png" max-width="80" max-height="50"
+                       style="margin-top: 5%; "></v-img>
                   </v-col>
-                  <v-col cols="12" md="9">
+                  <v-col cols="6">
                     <v-text-field disabled v-model="receiveMessageSender"></v-text-field>
                   </v-col>
                 </v-row>
                 <v-row class="receiveMessage-row">
-                  <v-col cols="12" md="3">
-                    <v-card-title class="messageContent">내용:</v-card-title>
+                  <v-col cols="2">
+                    <v-img src="https://ifh.cc/g/Kx7lFD.png" max-width="60" max-height="50"
+                       style="margin-top: 3%; margin-left: 3%;"></v-img>
                   </v-col>
-                  <v-col cols="12" md="9">
+                  <v-col cols="8">
                     <v-textarea rows="3" disabled v-model="receiveMessageContent" :outlined="true"></v-textarea>
                   </v-col>
                 </v-row>
               </v-container>
             </v-card-text>
+
 
             <v-card-actions class="btn-message-group">
               <v-btn color="blue darken-1" text @click="selectedOpen = false"> 확인 </v-btn>
@@ -169,7 +128,7 @@ export default {
         { text: "제목", align: "left", value: "messageTitle" },
         { text: "보낸 날짜", align: "center", value: "messageDate" },
         { text: "", align: "center", value: "checkbox" },
-        { text: "답장 / 휴지통", value: "actions", sortable: false },
+        { text: "휴지통", value: "actions", sortable: false },
       ],
       messageTrashcanList: [],
       itemKey: "messageNum",
@@ -193,16 +152,22 @@ export default {
     };
   },
   created() {
-    var serverIP = "127.0.0.1",
-      serverPort = 8080,
-      pageUrl = "runup/message/trashcan";
-    this.$axios({
-      url: `http://${serverIP}:${serverPort}/${pageUrl}`,
-      method: "GET",
-      params: {
-        userNum: store.getters.getUserNum,
-      },
-    })
+    this.trashList()
+  },
+  computed: {
+    userNickname() {
+      return this.$store.getters.getUserNickname;
+    },
+  },
+  methods: {
+    //  ㅅㅂ 개 그지 같게 만들어놔서 일 두번 쳐 하게 만들어놓네
+    trashList(){
+      axios 
+      .get(this._baseUrl+'message/trashcan', {
+        params: {
+          userNum: store.getters.getUserNum,
+        },
+      })
       .then((data) => {
         console.log(data.data);
         const messageTrashcanList = data.data;
@@ -212,21 +177,16 @@ export default {
         }
         messageTrashcanList.sort(
           (a, b) => new Date(b.messageDate) - new Date(a.messageDate)
-        );
-
-        this.messageTrashcanList = messageTrashcanList;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  },
-  computed: {
-    userNickname() {
-      return this.$store.getters.getUserNickname;
-    },
-  },
-  methods: {
-    showEvent(row) {
+          );
+          
+          this.messageTrashcanList = messageTrashcanList;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      },
+        
+        showEvent(row) {
       // nativeEvent : DOM 이벤트 객체를 나타내는 java script객체
       const target = row;
       this.selectedElement = target;
@@ -288,7 +248,8 @@ export default {
       })
       .then((res) => {
         console.log(res.data);
-        this.created()
+        this.closeDelete()
+        this.trashList()
       })
       .catch((error) => {
         console.log(error);

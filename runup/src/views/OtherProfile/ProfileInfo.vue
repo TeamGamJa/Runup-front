@@ -3,98 +3,66 @@
         <v-main class="UserProfile-main">
             <v-row>
                 <!-- 좌측 -->
-                <v-card class="UserProfile-content1">
+                <v-card class="UserProfile-leftcard">
 
-                    <v-card-title class="userNickname">{{ this.$store.getters.getUserNickname }}</v-card-title>
+                    <v-img src="https://ifh.cc/g/TlTs2y.png" max-width="220" max-height="50"
+                        style="margin-top: 3%;"></v-img>
 
-                    <v-card-text class="myPage-Btn-Group">
-                        <v-container class="width-unification" style="display: flex; flex-wrap: nowrap;">
+                    <v-img :src="userUrl" max-width="300" max-height="320"
+                        style="margin-left: 14%; margin-top: 3%;"></v-img>
+                    <v-card-title class="userNickname">{{ userNickname }}</v-card-title>
 
-                            <!-- 등급 -->
-                            <!-- <v-row> -->
-                            <v-col cols="2">
-                                <v-img class="MyPage-waterImg" src="https://ifh.cc/g/WNALrw.png"></v-img>
-                            </v-col>
-                            <v-col cols="2">
-                                <v-chip :class="getChipColor" class="luxcolor">
-                                    나의 색
-                                </v-chip>
-                            </v-col>
-                            <!-- </v-row> -->
+                    <v-row style="margin-left: 10%; margin-bottom: 2%;">
+                        <v-col cols="2" style="margin-top: 9%;">
+                            <v-img src="https://ifh.cc/g/Q3AtJp.png" max-width="45" max-height="45"></v-img>
+                        </v-col>
+                        <v-col cols="8" style="margin-left: 5%;">
+                            <v-progress-linear :value="percent" class="salt-gage-bar" :color="getChipColor" :rounded="true"
+                                height="20"></v-progress-linear>
+                        </v-col>
+                    </v-row>
 
-                            <!-- 게이지바 -->
-                            <!-- <v-row> -->
-                            <v-col cols="2">
-                                <v-img class="MyPage-waterImg" src="https://ifh.cc/g/TY25V8.png"></v-img>
-                            </v-col>
-                            <v-col cols="2">
-                                <v-progress-linear :value="percent" class="salt-gage-bar" :color="getChipColor"
-                                    :rounded="true" height="20"></v-progress-linear>
-                            </v-col>
-                            <!-- </v-row> -->
+                    <v-row style="margin-left: 10%; margin-bottom: 2%;">
+                        <v-img src="https://ifh.cc/g/848nCH.png" max-width="80" max-height="30"
+                            style="margin-top: 3%;"></v-img>
+                        <v-card-title>{{ userCategoryMedium }}</v-card-title>
+                    </v-row>
 
-                            <!-- 포인트  -->
-                            <!-- <v-row> -->
+                    <v-row style="margin-left: 10%; margin-bottom: 2%;">
+                        <v-img src="https://ifh.cc/g/z4jM5K.png" max-width="150" max-height="30"
+                            style="margin-top: 3%;"></v-img>
+                    </v-row>
+                    <v-card-title style="margin-left: 15%;">{{ userInfo }}</v-card-title>
 
-                            <v-col cols="2">
-                                <v-img class="MyPage-waterImg" src="https://ifh.cc/g/0nQRpd.png"></v-img>
-                            </v-col>
-                            <v-col cols="2">
-                                <div class="water-point"> {{ $store.getters.getUserPoint }}mL </div>
-                            </v-col>
 
-                            <!-- </v-row> -->
 
-                        </v-container>
-                    </v-card-text>
+
                 </v-card>
 
                 <!-- 우측 -->
-                <v-card class="Mypage-content2">
+                <v-card class="UserProfile-rightcard">
 
+                    <v-img src="https://ifh.cc/g/CsXB9O.png" max-width="250" max-height="50"
+                        style="margin-top: 3%; margin-bottom: 5%;"></v-img>
 
-                    <v-card-text class="tatal-function">
-                        <v-container class="width-unification" style="display: flex; flex-wrap: nowrap;">
+                    <v-data-table :headers="headers" :items="runningBlue" :item-key="itemKey" :show-select="true"
+                        v-model="selectedItems" class="elevation-0" @click:row="moveToHelp">
+                        <!-- eslint-disable-next-line vue/valid-v-slot -->
+                        <!-- <template v-slot:item.actions="{ item }">
+                          
+                        </template> -->
+                    </v-data-table>
 
-                            <!-- 등급 -->
-                            <!-- <v-row> -->
-                            <v-col cols="2">
-                                <v-img class="MyPage-waterImg" src="https://ifh.cc/g/WNALrw.png"></v-img>
-                            </v-col>
-                            <v-col cols="2">
-                                <v-chip :class="getChipColor" class="luxcolor">
-                                    나의 색
-                                </v-chip>
-                            </v-col>
-                            <!-- </v-row> -->
+                    <v-img src="https://ifh.cc/g/4gO3OC.png" max-width="250" max-height="50"
+                        style="margin-top: 3%; margin-bottom: 5%;"></v-img>
 
-                            <!-- 게이지바 -->
-                            <!-- <v-row> -->
-                            <v-col cols="2">
-                                <v-img class="MyPage-waterImg" src="https://ifh.cc/g/TY25V8.png"></v-img>
-                            </v-col>
-                            <v-col cols="2">
-                                <v-progress-linear :value="percent" class="salt-gage-bar" :color="getChipColor"
-                                    :rounded="true" height="20"></v-progress-linear>
-                            </v-col>
-                            <!-- </v-row> -->
-
-                            <!-- 포인트  -->
-                            <!-- <v-row> -->
-
-                            <v-col cols="2">
-                                <v-img class="MyPage-waterImg" src="https://ifh.cc/g/0nQRpd.png"></v-img>
-                            </v-col>
-                            <v-col cols="2">
-                                <div class="water-point"> {{ $store.getters.getUserPoint }}mL </div>
-                            </v-col>
-
-                            <!-- </v-row> -->
-
-                        </v-container>
-                    </v-card-text>
-
-
+                    <v-data-table :headers="headers" :items="runningOrange" :item-key="itemKey" :show-select="true"
+                        v-model="selectedItems" class="elevation-0" @click:row="moveToHelp">
+                        <!-- eslint-disable-next-line vue/valid-v-slot -->
+                        <!-- <template v-slot:item.actions="{ item }">
+                          
+                        </template> -->
+                    </v-data-table>
                 </v-card>
             </v-row>
         </v-main>
@@ -103,10 +71,36 @@
 
 <script>
 import store from '@/store/store'
+import axios from 'axios'
 export default {
     data() {
         return {
             percent: 0,
+
+            // 타유저 정보
+            OtheruserNum: '',
+            userNickname: '',
+            userUrl: '',
+            userPoint: '',
+            userColor: '',
+            userCategoryMedium: '',
+            userInfo: '',
+            userAbility: '',
+
+            runningBlue: [],
+            runningOrange: [],
+            headers: [
+                {
+                    text: '번호',
+                    align: 'center',
+                    sortable: false,
+                    value: 'runningNum',
+                    divider: true
+                },
+                { text: '제목', align: 'center', value: 'runningTitle' },
+            ],
+            itemKey: "runningNum",
+            selectedItems: [],
         };
     },
     computed: {
@@ -130,10 +124,52 @@ export default {
             const percent = userColor / 10;
             this.$data.percent = percent;
         },
+        UserProfile(OtherUser) {
+            console.log(OtherUser);
+            axios
+                .get(this._baseUrl + 'user/userinfo', {
+                    params: {
+                        userNum: OtherUser,
+                    }
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    this.userNickname = response.data.userNickname;
+                    this.userUrl = response.data.userUrl;
+                    this.userPoint = response.data.userPoint;
+                    this.userColor = response.data.userColor;
+                    this.userCategoryMedium = response.data.userCategoryMedium;
+                    this.userInfo = response.data.userInfo;
+                    this.userAbility = response.data.userAbility;
+                    this.OtheruserNum = response.data.userNum;
+
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        },
+        fetchGiveSchedule() {
+            axios.get(this._baseUrl +'running/allgive', {
+                params: {
+                    userNum: this.$route.params.OtherUser,
+                }
+            })
+                .then((response) => {
+                    this.runningBlue = response.data.runningBlue;
+                    this.runningOrange = response.data.runningOrange;
+                }).catch(error => {
+                    console.log(error)
+                })
+        },
+        moveToHelp() {
+            this.$router.push('/FoundRunning')
+        }
 
     },
     mounted() {
         this.increasePercent() // 1초마다 increasePercent 메소드 호출
+        this.UserProfile(this.$route.params.OtherUser);
+        this.fetchGiveSchedule();
     },
 };
 
@@ -141,4 +177,16 @@ export default {
 
 </script>
 
-<style></style>
+<style>
+.UserProfile-container {
+    margin-top: 3%;
+}
+
+.UserProfile-leftcard {
+    width: 40%;
+}
+
+.UserProfile-rightcard {
+    width: 60%;
+}
+</style>

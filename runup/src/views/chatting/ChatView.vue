@@ -1,7 +1,12 @@
 <template>
 	<v-container class="Chat-container pa-1">
+		<div class="timer">
+			<v-img src="https://ifh.cc/g/G5j3Lw.png" max-width="100" max-height="50"></v-img>
+		</div>
+		<div style="margin-left: 2%;">
+			{{ timeRemaining }}
+		</div>
 		<v-btn class="MovePage" :rounded="true" @click="PageMove()">채팅종료</v-btn>
-		<div class="timer">Remaining time: {{ timeRemaining }}</div>
 		<div class="messages-container">
 			<div v-for="(message, index) in messages" :key="index" class="message" :class="{
 				'my-message': message.sender == getUserNickname,
@@ -25,7 +30,6 @@ import { Client } from '@stomp/stompjs'
 import SockJS from 'sockjs-client'
 import axios from 'axios'
 import store from '@/store/store'
-// import store from '@/store/store'
 
 export default {
 	data() {
