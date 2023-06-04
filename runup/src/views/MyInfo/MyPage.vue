@@ -36,7 +36,7 @@
                             </v-col>
                             <v-col cols="2">
                                 <v-chip :class="getChipColor" class="luxcolor">
-                                    나의 색
+                                    
                                 </v-chip>
                             </v-col>
                             <!-- </v-row> -->

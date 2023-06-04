@@ -27,8 +27,8 @@
                     :options="{ itemsPerPageOptions: [] }" @click:row="showEvent" height="480">
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template v-slot:item.userLuxColor="{ item }">
-                        <v-chip class="Luxcolor-found text-center" :color="getColor(item.userLuxColor)" style="border:2px solid rgba(244, 209, 155, 1);"
-                        text-color="black" dark>
+                        <v-chip class="Luxcolor-found text-center" :color="getColor(item.userLuxColor)"
+                            style="border:2px solid rgba(244, 209, 155, 1);" text-color="black" dark>
                             {{ item.userLuxColor }}
                         </v-chip>
                     </template>
@@ -39,32 +39,48 @@
                         <v-img class="categoryImage" :src="categoryImg"></v-img>
 
                         <v-card-title class="Schedule-Info">
-                            제목: {{ runningTitle }}
+                            <v-img src="https://ifh.cc/g/512Qw6.png" max-width="70" max-height="50"></v-img>
+                             {{ runningTitle }}
                         </v-card-title>
 
-                        <v-divider class="linepart mx-4"></v-divider>
+                        <!-- <v-divider class="linepart mx-4"></v-divider> -->
 
-                        <v-card-text>
+                        <v-card-title>
                             <v-row class="Schedule-Info1">
-                                특기: {{ RunningBcategory }}
+                                <v-img src="https://ifh.cc/g/JFJZ6v.png" max-width="60" max-height="50"></v-img>
+                                 {{ RunningBcategory }}
                             </v-row>
+                        </v-card-title>
+                        <v-card-title>
                             <v-row class="Schedule-Info1">
-                                Runner: {{ userNickname }}
+                                <v-img src="https://ifh.cc/g/Qf5RwW.png" max-width="90" max-height="50"
+                                style="margin-left: 2%;"></v-img>
+                                 {{ userNickname }}
                             </v-row>
+                        </v-card-title>
+                        <v-card-title>
                             <v-row class="Schedule-Info1">
-                                수업시작: {{ runningStartTime }}
+                                <v-img src="https://ifh.cc/g/tf3Aky.png" max-width="85" max-height="50"
+                                style="margin-left: 5%;"></v-img>
+                                 {{ runningStartTime }}
                             </v-row>
+                            <v-card-title>
+                            </v-card-title>
                             <v-row class="Schedule-Info1">
-                                수업종료: {{ runningEndTime }}
+                                <v-img src="https://ifh.cc/g/kP35jL.png" max-width="80" max-height="50"></v-img>
+                                 {{ runningEndTime }}
                             </v-row>
+                        </v-card-title>
+                        <v-card-title>
                             <v-row class="Schedule-Info1">
-                                수업내용: {{ runningContent }}
+                                <v-img src="https://ifh.cc/g/VAF5Lq.png" max-width="100" max-height="50"></v-img>
+                                 {{ runningContent }}
                             </v-row>
-                        </v-card-text>
+                        </v-card-title>
+
 
                         <v-card-actions>
                             <v-btn class="ParticipateBtn" :rounded="true" @click="joinClass">수업신청 </v-btn>
-
                         </v-card-actions>
                     </v-card>
                 </v-menu>
@@ -219,41 +235,41 @@ export default {
                     .get(this._baseUrl + 'running/bycategorybig', {
                         params: {
                             categoryBig: this.choice == '전체' ? '%' : this.choice,
-    
+
                         },
 
                     }).then((response) => {
-                    console.log(response.data);
-                    this.updateRunningList(response.data);
-                    this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
-                    for (let i = 0; i < this.runningList.length; i++) {
-                        const item = this.runningList[i];
-                        item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
+                        console.log(response.data);
+                        this.updateRunningList(response.data);
+                        this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
+                        for (let i = 0; i < this.runningList.length; i++) {
+                            const item = this.runningList[i];
+                            item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
 
-                    }
-                }).catch(error => {
-                    console.log(error)
-                })
+                        }
+                    }).catch(error => {
+                        console.log(error)
+                    })
             } else {
                 axios
-                    .get(this._baseUrl + 'running/bycategorymedium',{
+                    .get(this._baseUrl + 'running/bycategorymedium', {
                         params: {
                             categoryBig: this.choice == '전체' ? '%' : this.choice,
-    
+
                         },
 
                     }).then((response) => {
-                    console.log(response.data);
-                    this.updateRunningList(response.data);
-                    this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
-                    for (let i = 0; i < this.runningList.length; i++) {
-                        const item = this.runningList[i];
-                        item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
+                        console.log(response.data);
+                        this.updateRunningList(response.data);
+                        this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
+                        for (let i = 0; i < this.runningList.length; i++) {
+                            const item = this.runningList[i];
+                            item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
 
-                    }
-                }).catch(error => {
-                    console.log(error)
-                })
+                        }
+                    }).catch(error => {
+                        console.log(error)
+                    })
             }
 
         },
@@ -309,7 +325,7 @@ export default {
                     item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
 
                 }
-            }).catch(error => { 
+            }).catch(error => {
                 console.log(error)
             })
         },
@@ -383,6 +399,7 @@ export default {
     display: flex;
     background-color: white;
     flex-direction: column;
+    margin-top: 3%;
     /* height: 400px; */
 }
 
@@ -463,11 +480,13 @@ table td {
     background-color: rgba(244, 209, 155, 1) !important;
     margin-left: 75%;
 }
-.Luxcolor-found{
+
+.Luxcolor-found {
     width: 90%;
     /* text-align: center; */
 }
-.v-chip__content{
+
+.v-chip__content {
     text-align: center;
     margin-left: 22%;
 }

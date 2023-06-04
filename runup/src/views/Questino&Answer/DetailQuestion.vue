@@ -74,8 +74,8 @@
                                 </v-btn>
                             </template>
                             <v-list>
-                                <v-list-item v-for="(item, i) in items" :key="i" @click="navigateTo(item.title)">
-                                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                                <v-list-item v-for="(subItem, i) in items" :key="i" @click="navigateTo(subItem.title, item.userNum)">
+                                    <v-list-item-title>{{ subItem.title }}</v-list-item-title>
                                 </v-list-item>
                             </v-list>
                         </v-menu>
@@ -95,9 +95,6 @@
                     </v-col>
                 </v-row>
             </v-card>
-            <v-dialog v-model="otherInfoOpen">
-
-            </v-dialog>
         </v-row>
     </v-container>
 </template>
@@ -350,16 +347,16 @@ export default {
                     console.log(error);
                 })
         },
-        navigateTo(title) {
+        navigateTo(title, OtherUser) {
             switch (title) {
                 case '정보 보기':
-                    this.$router.push('/ProfileInfo');
+                    this.$router.push('/ProfileInfo/'+ OtherUser);
                     break;
                 case '쪽지 쓰기':
-                    this.$router.push('/MessageWrite');
+                    this.$router.push('/MessageWrite/' + OtherUser);
                     break;
                 case '신고 하기':
-                    this.$router.push('/DoReport');
+                    this.$router.push('/DoReport/' + OtherUser);
                     break;
                 default:
                     break;

@@ -204,10 +204,15 @@ const routes = [
         beforeEnter: beforeAuth(true)
     },
     {
-        path: "/MessageWrite",
+        path: "/MessageWrite/:OtherUser",
         name: "MessageWrite",
         component: MessageWrite,
-        beforeEnter: beforeAuth(true)
+        beforeEnter: beforeAuth(true),
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                vm.ReceiveUser(to.params.OtherUser);
+            })
+        } 
     },
     {
         path: "/Test",
@@ -232,15 +237,25 @@ const routes = [
         beforeEnter: beforeAuth(true)
     },
     {
-        path: "/ProfileInfo",
+        path: "/ProfileInfo/:OtherUser",
         name: "ProfileInfo",
-        component: ProfileInfo, 
+        component: ProfileInfo,
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                vm.UserProfile(to.params.OtherUser);
+            })
+        } 
     },
     {
-        path: "/DoReport",
+        path: "/DoReport/:OtherUser",
         name: "DoReport",
         component: DoReport, 
-        beforeEnter: beforeAuth(true)
+        beforeEnter: beforeAuth(true),
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                vm.UserProfile(to.params.OtherUser);
+            })
+        } 
     },
 ]
 
