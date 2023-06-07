@@ -1,8 +1,8 @@
 <template>
   <v-container class="MainPage-Screen">
    <v-row>
-     <v-img src="https://ifh.cc/g/2zR9pm.png" max-width="450" max-height="150"
-     style="margin-top: 5%;"></v-img>
+     <v-img src="https://ifh.cc/g/2zR9pm.png" max-width="350" max-height="100"
+     style="margin-top: 10%;"></v-img>
       <v-img src="https://ifh.cc/g/ogTaJ0.jpg" max-width="700" max-height="500"></v-img>
    </v-row>
    <v-row>

@@ -46,10 +46,10 @@
                             <v-skeleton-loader class="mx-auto" max-width="300" type="text" :loading="isLoading">
                                 <v-virtual-scroll :bench="benched" :items="loading ? skeletonData : items" height="300"
                                     item-height="2000">
-                                    <p ref="content">{{ text }}</p>
                                 </v-virtual-scroll>
                             </v-skeleton-loader>
                         </v-sheet>
+                        <p ref="content">아도뱀야 치커리 티와와</p>
 
                         <v-card-title>
                             <!-- <v-row > -->

@@ -229,8 +229,6 @@ export default {
       }
     }
   },
-  created() {
-  },
   mounted() {
     this.$refs.calendar.checkChange(),
       // 캘린더를 계속 업데이트 하는거 
@@ -300,7 +298,7 @@ export default {
 
         const selectedDateStr = `${selectDateYear}-${selectDateMonth}-${selectDateDay}`;
 
-        console.log(selectedDateStr);
+        // console.log(selectedDateStr);
         // 내가 만든 수업
         this.runningBlue.forEach((item) => {
           if (item.runningDate === selectedDateStr) {
