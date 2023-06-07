@@ -90,13 +90,7 @@ export default {
             runningBlue: [],
             runningOrange: [],
             headers: [
-                {
-                    text: '번호',
-                    align: 'center',
-                    sortable: false,
-                    value: 'runningNum',
-                    divider: true
-                },
+             
                 { text: '제목', align: 'center', value: 'runningTitle' },
             ],
             itemKey: "runningNum",
@@ -134,6 +128,7 @@ export default {
                 })
                 .then((response) => {
                     console.log(response.data);
+                    this.runningList = response.data;
                     this.userNickname = response.data.userNickname;
                     this.userUrl = response.data.userUrl;
                     this.userPoint = response.data.userPoint;
@@ -142,14 +137,14 @@ export default {
                     this.userInfo = response.data.userInfo;
                     this.userAbility = response.data.userAbility;
                     this.OtheruserNum = response.data.userNum;
-
+                   
                 })
                 .catch(error => {
                     console.log(error);
                 })
         },
         fetchGiveSchedule() {
-            axios.get(this._baseUrl +'running/allgive', {
+            axios.get(this._baseUrl + 'running/allgive', {
                 params: {
                     userNum: this.$route.params.OtherUser,
                 }

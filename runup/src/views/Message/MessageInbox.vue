@@ -6,7 +6,7 @@
         elevation="0">
         <v-card-text>
           <v-btn text to="/fdsfas" class="Message-sidemenubar" disabled :rounded="true" elevation="0">Menu</v-btn>
-          
+
           <v-btn class="MoveToBtn" :rounded="true" text to="/messageInbox">
             받은 쪽지함
           </v-btn>
@@ -31,7 +31,8 @@
           <v-btn class="DeleteBtn elevation-0" :rounded="true" @click="trashMessage()">
             <v-icon size="26">mdi-delete</v-icon>
           </v-btn>
-          <v-img src="https://ifh.cc/g/37TJy4.png" max-width="200" max-height="40" style="margin-left: 70%; margin-top:4% ;"></v-img>
+          <v-img src="https://ifh.cc/g/37TJy4.png" max-width="200" max-height="40"
+            style="margin-left: 70%; margin-top:4% ;"></v-img>
         </v-row>
         <v-data-table :headers="headers" :items="messageInboxList" :item-key="itemKey" :show-select="true"
           v-model="selectedItems" class="elevation-0" @click:row="showEvent">
@@ -50,8 +51,8 @@
         <v-dialog v-model="dialog" class="Message-dialog">
           <v-card>
             <v-row>
-              <v-img src="https://ifh.cc/g/haC8Zf.png" max-width="200" max-height="45" 
-              style="margin-left: 3%; margin-top: 3%; margin-bottom: 3%;"></v-img>
+              <v-img src="https://ifh.cc/g/haC8Zf.png" max-width="200" max-height="45"
+                style="margin-left: 3%; margin-top: 3%; margin-bottom: 3%;"></v-img>
             </v-row>
 
             <v-card-text>
@@ -59,7 +60,7 @@
                 <v-row class="sendMessage-row">
                   <v-col cols="12" md="3">
                     <v-img src="https://ifh.cc/g/nQPWmh.png" max-width="100" max-height="50"
-                       style="margin-top: 3%; margin-left: 10%;"></v-img>
+                      style="margin-top: 3%; margin-left: 10%;"></v-img>
                   </v-col>
                   <v-col cols="12" md="9">
                     <v-text-field label="제목을 작성해주세요." class="sendMessage-input" outlined
@@ -69,7 +70,7 @@
                 <v-row class="sendMessage-row">
                   <v-col cols="12" md="3">
                     <v-img src="https://ifh.cc/g/DXPckA.png" max-width="120" max-height="50"
-                       style="margin-top: 3%; margin-left: 10%;"></v-img>
+                      style="margin-top: 3%; margin-left: 10%;"></v-img>
                   </v-col>
                   <v-col cols="12" md="9">
                     <v-text-field disabled v-model="receiveMessageSender" outlined></v-text-field>
@@ -78,7 +79,7 @@
                 <v-row class="sendMessage-row">
                   <v-col cols="12" md="3">
                     <v-img src="https://ifh.cc/g/Kx7lFD.png" max-width="100" max-height="50"
-                       style="margin-top: 3%; margin-left: 10%;"></v-img>
+                      style="margin-top: 3%; margin-left: 10%;"></v-img>
                   </v-col>
                   <v-col cols="12" md="9">
                     <v-textarea label="메세지를 입력해주세요." outlined rows="5" v-model="messageContent"></v-textarea>
@@ -98,7 +99,7 @@
         <v-dialog v-model="dialogDelete" width="800">
           <v-card>
             <v-img src="https://ifh.cc/g/ASHrMo.png" width="700" max-height="400"
-                       style="margin-bottom: 2%; margin-left: 5%; margin-right: 5%;"></v-img>
+              style="margin-bottom: 2%; margin-left: 5%; margin-right: 5%;"></v-img>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="deleteItemConfirm">확인</v-btn>
@@ -109,11 +110,10 @@
         </v-dialog>
 
         <!-- 메세지 상세보기 (row 클릭시 이벤트 동작해서 내용 다이얼로그로 뜸) -->
-        <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y >
+        <v-menu v-model="selectedOpen" :close-on-content-click="false" offset-y>
           <v-card width="800">
             <v-card-title>
-              <v-img src="https://ifh.cc/g/XyTLjf.png" max-width="150" max-height="50"
-                       style="margin-top: 3%; "></v-img>
+              <v-img src="https://ifh.cc/g/XyTLjf.png" max-width="150" max-height="50" style="margin-top: 3%; "></v-img>
             </v-card-title>
 
             <v-card-text>
@@ -121,7 +121,7 @@
                 <v-row class="receiveMessage-row">
                   <v-col cols="2">
                     <v-img src="https://ifh.cc/g/nQPWmh.png" max-width="60" max-height="50"
-                       style="margin-top: 5%;"></v-img>
+                      style="margin-top: 5%;"></v-img>
                   </v-col>
                   <v-col cols="6">
                     <v-text-field class="receiveMessageTitle" disabled v-model="receiveMessageTitle"></v-text-field>
@@ -130,7 +130,7 @@
                 <v-row class="receiveMessage-row">
                   <v-col cols="2">
                     <v-img src="https://ifh.cc/g/raDc51.png" max-width="80" max-height="50"
-                       style="margin-top: 5%; "></v-img>
+                      style="margin-top: 5%; "></v-img>
                   </v-col>
                   <v-col cols="6">
                     <v-text-field disabled v-model="receiveMessageSender"></v-text-field>
@@ -139,7 +139,7 @@
                 <v-row class="receiveMessage-row">
                   <v-col cols="2">
                     <v-img src="https://ifh.cc/g/Kx7lFD.png" max-width="60" max-height="50"
-                       style="margin-top: 3%; margin-left: 3%;"></v-img>
+                      style="margin-top: 3%; margin-left: 3%;"></v-img>
                   </v-col>
                   <v-col cols="8">
                     <v-textarea rows="3" disabled v-model="receiveMessageContent" :outlined="true"></v-textarea>
@@ -168,12 +168,6 @@ export default {
   data() {
     return {
       headers: [
-        {
-          text: "번호",
-          align: "center",
-          sortable: false,
-          value: "messageNum",
-        },
         { text: "보낸 사람", align: "center", value: "messageSender" },
         { text: "제목", align: "left", value: "messageTitle" },
         { text: "보낸 날짜", align: "center", value: "messageDate" },
@@ -193,7 +187,8 @@ export default {
       messageContent: "",
       messageTitle: "",
       messageSender: "",
-      messageNum:'',
+      messageNum: '',
+      MessageNum: [],
 
       // 상세페이지용
       receiveMessageTitle: '',
@@ -215,6 +210,13 @@ export default {
       .then((data) => {
         console.log(data.data);
         const messageInboxList = data.data;
+        this.MessageNum = []; // 게시글 번호를 저장할 배열 초기화
+        let num = messageInboxList.length;
+
+        messageInboxList.forEach((item, index) => {
+          item.MessageNum = num - index; // 역순으로 게시글 번호 할당
+          this.MessageNum.push(item.MessageNum); // MessageNum 배열에 번호 추가
+        });
         for (let i = 0; i < messageInboxList.length; i++) {
           this.messageNum = messageInboxList[i].messageNum;
           messageInboxList[i].messageDate = moment(messageInboxList[i].messageDate).format('YYYY-MM-DD');
@@ -298,18 +300,18 @@ export default {
     deleteItemConfirm() {
       console.log(this.messageNum);
       let tmp = this;
-      axios.post(tmp._baseUrl +'message/trash',{
+      axios.post(tmp._baseUrl + 'message/trash', {
         messageNum: this.messageNum,
       })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       this.messageInboxList.splice(this.editedIndex, 1);
       this.closeDelete();
-      
+
     },
 
     resetForm() {
@@ -354,6 +356,7 @@ export default {
 .ReceiveMessage-container {
   margin-top: 1%;
 }
+
 .Message-sidemenubar {
   margin-top: 10%;
   background-color: #d7e9f7 !important;

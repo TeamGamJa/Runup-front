@@ -116,18 +116,14 @@ export default {
   data() {
     return {
       headers: [
-        {
-          text: "번호",
-          align: "center",
-          sortable: false,
-          value: "messageNum",
-        },
+      
         { text: "보낸 사람", align: "center", value: "messageSender" },
         { text: "제목", align: "left", value: "messageTitle" },
         { text: "보낸 날짜", align: "center", value: "messageDate" },
         { text: "", align: "center", value: "checkbox" },
         { text: "휴지통", value: "actions", sortable: false },
       ],
+      MessageNum:[],
       messageSentboxList: [],
       itemKey: "messageNum",
       selectedItems: [],
@@ -161,26 +157,35 @@ export default {
   methods: {
     sendList() {
       axios.get(this._baseUrl + 'message/sentbox', {
-        params: {
-          senderNum: store.getters.getUserNum,
-        },
-      })
-        .then((data) => {
-          const messageSentboxList = data.data;
+  params: {
+    senderNum: store.getters.getUserNum,
+  },
+})
+  .then((data) => {
+    const messageSentboxList = data.data;
+    this.MessageNum = []; // 게시글 번호를 저장할 배열 초기화
+    let num = messageSentboxList.length;
 
-          for (let i = 0; i < messageSentboxList.length; i++) {
-            this.messageNum = messageSentboxList[i].messageNum;
-            messageSentboxList[i].messageDate = moment(messageSentboxList[i].messageDate).format('YYYY-MM-DD');
-          }
-          messageSentboxList.sort(
-            (a, b) => new Date(b.messageDate) - new Date(a.messageDate)
-          );
+    messageSentboxList.forEach((item, index) => {
+      item.MessageNum = num - index; // 역순으로 게시글 번호 할당
+      this.MessageNum.push(item.MessageNum); // MessageNum 배열에 번호 추가
+    });
 
-          this.messageSentboxList = messageSentboxList;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    // 게시글 번호를 역순으로 정렬
+    messageSentboxList.sort(
+      (a, b) => a.MessageNum - b.MessageNum
+    );
+
+    for (let i = 0; i < messageSentboxList.length; i++) {
+      this.messageNum = messageSentboxList[i].messageNum;
+      messageSentboxList[i].messageDate = moment(messageSentboxList[i].messageDate).format('YYYY-MM-DD');
+    }
+
+    this.messageSentboxList = messageSentboxList;
+  })
+  .catch((error) => {
+    console.log(error);
+  });
     },
     showEvent(row) {
       // nativeEvent : DOM 이벤트 객체를 나타내는 java script객체
