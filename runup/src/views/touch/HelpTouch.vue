@@ -21,9 +21,9 @@
       style="margin-top: 10%;"></v-img>
    </v-row>
    <v-row>
-     <v-img src="https://ifh.cc/g/Cm8nMJ.png" max-width="460" max-height="150"
+     <v-img src="https://ifh.cc/g/FwZjhg.png" max-width="460" max-height="160"
      style="margin-top: 10%;"></v-img>
-      <v-img src="https://ifh.cc/g/jwnscq.jpg" max-width="700" max-height="500"></v-img>
+      <v-img src="https://ifh.cc/g/K49a20.jpg" max-width="700" max-height="500"></v-img>
    </v-row>
    
   </v-container>

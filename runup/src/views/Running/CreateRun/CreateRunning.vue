@@ -26,7 +26,7 @@
                 </template>
                 <v-card>
                   <v-card-title>
-                    <span class="text-h5">Runner</span>
+                    <v-img src="https://ifh.cc/g/hmAhPX.png" max-width="150" max-height="50"></v-img>
                   </v-card-title>
                   <v-card-text>
                     <v-container>
