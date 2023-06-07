@@ -11,8 +11,8 @@
       style="margin-top: 10%;"></v-img>
    </v-row>
    <v-row>
-     <v-img src="https://ifh.cc/g/zCoSYF.png" max-width="460" max-height="150"
-     style="margin-top: 10%;"></v-img>
+     <v-img src="https://ifh.cc/g/zCoSYF.png" max-width="460" max-height="250"
+     style="margin-top: 5%;"></v-img>
       <v-img src="https://ifh.cc/g/0F3lSm.jpg" max-width="700" max-height="500"></v-img>
    </v-row>
    <v-row>
