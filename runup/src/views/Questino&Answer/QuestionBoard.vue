@@ -6,7 +6,7 @@
                     <v-select v-model="questionChoice" label="종류" :items="questionCategory" :outlined="true"></v-select>
                 </v-col>
                 <v-col cols="2">
-                    <v-btn class="QnABtn" @click="updateQnAList()">검색</v-btn>
+                    <v-btn class="QnABtn" :rounded="true" @click="updateQnAList()">검색</v-btn>
                 </v-col>
             </v-row>
             <v-dialog v-model="dialog" persistent max-width="600px">
@@ -69,6 +69,7 @@
                         <v-card-title>{{ item.questionTitle }}</v-card-title>
                         <v-card-text>{{ item.questionWriter }}</v-card-text>
                         <v-card-text>{{ item.questionCategoryMedium }}</v-card-text>
+                        <v-card-text>좋아요 {{ item.questionLike }}</v-card-text>
                     </v-card-text>
                 </v-card>
             </v-col>
@@ -277,6 +278,9 @@ export default {
 <style scoped>
 .Q-container {
     margin-top: 2%;
+}
+.QnABtn {
+    margin-top: 5%;
 }
 </style>
   

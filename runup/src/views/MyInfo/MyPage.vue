@@ -9,14 +9,14 @@
                     <router-link to="/MyPageImgEdit"><v-img class-="imgMain" :rounded="true"
                             :src="$store.getters.getProfileImg"></v-img></router-link>
 
-                    <v-card-title>{{ this.$store.getters.getUserNickname }}</v-card-title>
+                    <v-card-title class="userNickname">{{ this.$store.getters.getUserNickname }}</v-card-title>
 
-                    <v-card-text>
+                    <v-card-text class="myPage-Btn-Group">
                         <v-btn text to="/MyPageEdit" class="MyPage-Btn" :rounded="true">내 정보 수정</v-btn>
                         <v-btn text to="/MyClass" class="MyPage-Btn" :rounded="true">나의 수업 통계</v-btn>
-                        <v-btn text to="/MyPoint" class="MyPage-Btn" :rounded="true">무지개, 포인트 내역</v-btn>
+                        <!-- <v-btn text to="/MyPoint" class="MyPage-Btn" :rounded="true">무지개, 포인트 내역</v-btn> -->
                         <v-btn text to="/MyRecord" class="MyPage-Btn" :rounded="true">달리기 기록지</v-btn>
-                        <v-btn text to="/MyQustion" class="MyPage-Btn" :rounded="true">나의 고민</v-btn>
+                        <!-- <v-btn text to="/MyQustion" class="MyPage-Btn" :rounded="true">나의 고민</v-btn> -->
                         <v-btn text to="/MessageInbox" class="MyPage-Btn" :rounded="true">쪽지함</v-btn>
                     </v-card-text>
                 </v-card>
@@ -36,7 +36,7 @@
                             </v-col>
                             <v-col cols="2">
                                 <v-chip :class="getChipColor" class="luxcolor">
-                                    나의 색
+                                    
                                 </v-chip>
                             </v-col>
                             <!-- </v-row> -->
@@ -123,11 +123,14 @@ export default {
     color: black !important;
     background-color: rgba(244, 209, 155, 1) !important;
     margin-right: 5%;
+    
 }
 
 .Mypage-content1 {
-    width: 27%;
-    height: 75%;
+    width: 25%;
+    height: 100%;
+    margin-top: 5%;
+    margin-right: 2%;
 }
 
 .Mypage-content2 {
@@ -240,5 +243,11 @@ export default {
 .water-point {
     font-size: large;
     margin-top: 15%;
+}
+.userNickname {
+    margin-left: 38%;
+}
+.myPage-Btn-Group {
+    margin-left: 3%;
 }
 </style>

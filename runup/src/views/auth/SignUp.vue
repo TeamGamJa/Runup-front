@@ -1,5 +1,6 @@
 <template>
-    <v-container class="d-flex justify-center" style="width:100%; padding-left;: 100px; padding-right;: 100px; padding-bottom;: 100px;" >
+    <v-container class="d-flex justify-center"
+        style="width:100%; padding-left;: 100px; padding-right;: 100px; padding-bottom;: 100px;">
         <v-form @submit.prevent="submitForm">
             <v-card class="mx-auto" style="width:800px; padding: 80px">
                 <v-card-title class="d-flex justify-center" style="padding-bottom: 80px;">
@@ -7,9 +8,9 @@
                 </v-card-title>
                 <v-card-text>
                     <v-row>
-                        <v-col cols="10" >
-                            <v-text-field v-model="userId" :rules="[rules.email]" label="아이디" outlined
-                                required class="text-field" background-color="rgba(249, 243, 223, 100%)"></v-text-field>
+                        <v-col cols="10">
+                            <v-text-field v-model="userId" :rules="[rules.email]" label="아이디" outlined required
+                                class="text-field" background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                             <v-alert v-if="count === 2" type="warning" transition="scale-transition" outlined>
                                 중복확인을 해주세요.
                             </v-alert>
@@ -26,39 +27,49 @@
                     <v-row>
                         <v-col cols="10">
                             <v-text-field v-model="userPw" label="비밀번호" outlined required
-                            :type="show1 ? 'text' : 'password'" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                             @click:append="show1 = !show1" class="text-field" background-color="rgba(249, 243, 223, 100%)"></v-text-field>
+                                :type="show1 ? 'text' : 'password'" :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                                @click:append="show1 = !show1" class="text-field"
+                                background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field v-model="userPwCheck" :rules="[rules.pwcheck]" label="비밀번호 확인" 
-                            :type="show2 ? 'text' : 'password'" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
-                            @click:append="show2 = !show2" outlined required class="text-field" background-color="rgba(249, 243, 223, 100%)"></v-text-field>
+                            <v-text-field v-model="userPwCheck" :rules="[rules.pwcheck]" label="비밀번호 확인"
+                                :type="show2 ? 'text' : 'password'" :append-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
+                                @click:append="show2 = !show2" outlined required class="text-field"
+                                background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                     </v-row>
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field v-model="userName" label="이름" outlined required background-color="rgba(249, 243, 223, 100%)"></v-text-field>
+                            <v-text-field v-model="userName" label="이름" outlined required
+                                background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                     </v-row>
 
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field v-model="userNickname" label="닉네임" outlined required background-color="rgba(249, 243, 223, 100%)"></v-text-field>
+                            <v-text-field v-model="userNickname" label="닉네임" outlined required
+                                background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                         <v-btn @click="confirmNickname" class="confirmBtn" :rounded="true">중복확인</v-btn>
                     </v-row>
 
                     <v-row>
                         <v-col cols="10">
-                            <v-text-field v-model="userPhoneNumber" label="전화번호" outlined required background-color="rgba(249, 243, 223, 100%)"></v-text-field>
+                            <v-text-field v-model="userPhoneNumber" :rules="[rules.telephone]" label="전화번호" outlined
+                                required background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                     </v-row>
 
                     <v-row>
-                        <v-col cols="10">
-                            <v-text-field v-model="userAddress" label="주소" outlined required background-color="rgba(249, 243, 223, 100%)"></v-text-field>
+                        <v-col cols="5">
+                            <v-text-field v-model="userAddress" label="주소(시, 도)" outlined required
+                                background-color="rgba(249, 243, 223, 100%)"></v-text-field>
+                        </v-col>
+                        <v-col cols="5">
+                            <v-text-field v-model="userAddress2" label="주소(군, 구)" outlined required
+                                background-color="rgba(249, 243, 223, 100%)"></v-text-field>
                         </v-col>
                     </v-row>
 
@@ -89,7 +100,8 @@
 </template>
 
 <script>
-import store from '@/store/store'
+// import store from '@/store/store'
+import axios from 'axios'
 
 export default {
     name: 'SignUp',
@@ -98,15 +110,25 @@ export default {
         return {
             rules: {
                 email: v => !!(v || '').match(/@/) || '이메일 형식으로 입력해주세요',
-                pwcheck: v => v === this.userPw || '입력하신 비밀번호와 다릅니다'
+                pwcheck: v => v === this.userPw || '입력하신 비밀번호와 다릅니다',
+                telephone: v => {
+                    if (!v) {
+                        return '전화번호를 입력해주세요';
+                    }
+                    if (!/^\d{11}$/.test(v)) {
+                        return '전화번호 형식과 다릅니다.';
+                    }
+                    return true;
+                }
             },
-            userId: store.getters.getUserId,
+            userId: '',
             userPw: '',
             userPwCheck: '',
             userName: '',
             userNickname: '',
             userPhoneNumber: '',
             userAddress: '',
+            userAddress2:'',
             userAbility: '',
             userSkill: '',
             count: '',
@@ -129,7 +151,7 @@ export default {
                 params: {
                     userId: this.userId,
                 }
-                })
+            })
                 .then((response) => {
                     console.log(response.data);
                     if (response.data === 1) {
@@ -150,7 +172,7 @@ export default {
                 params: {
                     userNickname: this.userNickname,
                 }
-                })
+            })
                 .then((response) => {
                     console.log(response.data);
                     if (response.data === 1) {
@@ -195,7 +217,7 @@ export default {
                 console.log(error)
             })
         },
-        SignUp(){
+        SignUp() {
             if (this.checkId != 1) {
                 alert("ID 중복확인을 해주세요")
                 return
@@ -212,32 +234,29 @@ export default {
                 this.choice == '' ||
                 this.userAbility == '' ||
                 this.RunningMcategory == '') {
-                    alert("모든값을 입력 후 회원가입을 해주세요")
-                    return
-                }
-            var serverIP = '127.0.0.1',
-                serverPort = 8080,
-                pageUrl ='runup/user/regist';
-            this.$axios({
-                url: `http://${serverIP}:${serverPort}/${pageUrl}`,
-                method: 'POST',
-                data: {
+                alert("모든값을 입력 후 회원가입을 해주세요")
+                return
+            }
+                axios
+                .post(this._baseUrl+'user/regist', {
                     userId: this.userId,
                     userPw: this.userPw,
                     userName: this.userName,
                     userNickname: this.userNickname,
                     userAbility: this.userAbility,
-                    userAddr: this.userAddress,
+                    userAddr: this.userAddress +' '+this.userAddress2,
                     userPhone: this.userPhoneNumber,
                     userCategoryBig: this.choice,
                     userCategoryMedium: this.RunningMcategory
-                }
-            }).then((response)=> {
+                })
+                
+            .then((response) => {
                 console.log(response)
-                if(response.data == 1) {
+                this.userId = '';
+                if (response.data == 1) {
                     alert('회원가입을 완료했습니다')
                     this.$router.push('/')
-                }else {
+                } else {
                     alert('이미 가입된 정보가 있습니다.')
                 }
             })
@@ -253,8 +272,9 @@ export default {
     justify-content: flex-end;
     border-radius: 200px;
     margin-top: 20px;
-    
+
 }
+
 .SignupBtn {
     color: black !important;
     background-color: rgba(244, 209, 155, 1) !important;
@@ -263,6 +283,5 @@ export default {
     margin-top: 20px;
     width: 300px;
     margin-left: 140px;
-}
-</style>
+}</style>
 

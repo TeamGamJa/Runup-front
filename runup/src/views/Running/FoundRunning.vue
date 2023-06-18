@@ -27,8 +27,9 @@
                     :options="{ itemsPerPageOptions: [] }" @click:row="showEvent" height="480">
                     <!-- eslint-disable-next-line vue/valid-v-slot -->
                     <template v-slot:item.userLuxColor="{ item }">
-                        <v-chip class="Luxcolor-found text-center" :color="getColor(item.userLuxColor)" dark>
-                            {{ item.userLuxColor }}
+                        <v-chip class="Luxcolor-found text-center" :color="getColor(item.userLuxColor)"
+                            style="border:2px solid rgba(244, 209, 155, 1); width: 100%;">
+                            <!-- {{ item.userLuxColor }} -->
                         </v-chip>
                     </template>
                 </v-data-table>
@@ -38,32 +39,48 @@
                         <v-img class="categoryImage" :src="categoryImg"></v-img>
 
                         <v-card-title class="Schedule-Info">
-                            제목: {{ runningTitle }}
+                            <v-img src="https://ifh.cc/g/512Qw6.png" max-width="70" max-height="50"></v-img>
+                            {{ runningTitle }}
                         </v-card-title>
 
-                        <v-divider class="linepart mx-4"></v-divider>
+                        <!-- <v-divider class="linepart mx-4"></v-divider> -->
 
-                        <v-card-text>
+                        <v-card-title>
                             <v-row class="Schedule-Info1">
-                                특기: {{ RunningBcategory }}
+                                <v-img src="https://ifh.cc/g/JFJZ6v.png" max-width="60" max-height="50"></v-img>
+                                {{ RunningBcategory }}
                             </v-row>
+                        </v-card-title>
+                        <v-card-title>
                             <v-row class="Schedule-Info1">
-                                Runner: {{ userNickname }}
+                                <v-img src="https://ifh.cc/g/Qf5RwW.png" max-width="90" max-height="50"
+                                    style="margin-left: 2%;"></v-img>
+                                {{ userNickname }}
                             </v-row>
+                        </v-card-title>
+                        <v-card-title>
                             <v-row class="Schedule-Info1">
-                                수업시작: {{ runningStartTime }}
+                                <v-img src="https://ifh.cc/g/tf3Aky.png" max-width="85" max-height="50"
+                                    style="margin-left: 5%;"></v-img>
+                                {{ runningStartTime }}
                             </v-row>
+                            <v-card-title>
+                            </v-card-title>
                             <v-row class="Schedule-Info1">
-                                수업종료: {{ runningEndTime }}
+                                <v-img src="https://ifh.cc/g/kP35jL.png" max-width="80" max-height="50"></v-img>
+                                {{ runningEndTime }}
                             </v-row>
+                        </v-card-title>
+                        <v-card-title>
                             <v-row class="Schedule-Info1">
-                                수업내용: {{ runningContent }}
+                                <v-img src="https://ifh.cc/g/VAF5Lq.png" max-width="100" max-height="50"></v-img>
+                                {{ runningContent }}
                             </v-row>
-                        </v-card-text>
+                        </v-card-title>
+
 
                         <v-card-actions>
                             <v-btn class="ParticipateBtn" :rounded="true" @click="joinClass">수업신청 </v-btn>
-
                         </v-card-actions>
                     </v-card>
                 </v-menu>
@@ -77,6 +94,7 @@
 
 <script>
 import store from '@/store/store'
+import axios from 'axios'
 
 export default {
     name: 'FoundRunning',
@@ -94,7 +112,7 @@ export default {
                     text: '번호',
                     align: 'center',
                     sortable: false,
-                    value: 'runningNum',
+                    value: 'RunningNum',
                     divider: true
                 },
                 { text: '제목', align: 'center', value: 'runningTitle' },
@@ -109,6 +127,8 @@ export default {
                     align: 'center',
                 },
             ],
+
+            RunningNum: [],
 
             // 다이얼 로그 작업
             dialog: false,
@@ -208,53 +228,64 @@ export default {
             }
         },
         updateRunningList(list) {
-            // console.log(list);
+            console.log('ㅅㅂ' + list);
             this.runningList = list;
         },
         categorySearch() {
-            var serverIP = '127.0.0.1',
-                serverPort = 8080;
-            // pageUrl ='runup/running/categorymedium';
             if (this.RunningMcategory == '전체') {
-                this.$axios({
-                    url: `http://${serverIP}:${serverPort}/runup/running/bycategorybig`,
-                    method: "GET",
-                    params: {
-                        categoryBig: this.choice == '전체' ? '%' : this.choice,
+                axios
+                    .get(this._baseUrl + 'running/bycategorybig', {
+                        params: {
+                            categoryBig: this.choice == '전체' ? '%' : this.choice,
 
-                    },
-                }).then((response) => {
-                    console.log(response.data);
-                    this.updateRunningList(response.data);
-                    this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
-                    for (let i = 0; i < this.runningList.length; i++) {
-                        const item = this.runningList[i];
-                        item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
+                        },
 
-                    }
-                }).catch(error => {
-                    console.log(error)
-                })
+                    }).then((response) => {
+                        console.log(response.data);
+                        this.updateRunningList(response.data);
+                        this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
+                        this.RunningNum = []; // 게시글 번호를 저장할 배열 초기화
+                        let num = this.runningList.length;
+
+                        this.runningList.forEach((item, index) => {
+                            item.RunningNum = num - index; // 역순으로 게시글 번호 할당
+                            this.RunningNum.push(item.RunningNum); // runningNum 배열에 번호 추가
+                        });
+                        for (let i = 0; i < this.runningList.length; i++) {
+                            const item = this.runningList[i];
+                            item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
+
+                        }
+                    }).catch(error => {
+                        console.log(error)
+                    })
             } else {
-                this.$axios({
-                    url: `http://${serverIP}:${serverPort}/runup/running/bycategorymedium`,
-                    method: "GET",
-                    params: {
-                        // categoryBig : this.choice == '전체' ? '%' : this.choice,
-                        categoryMedium: this.RunningMcategory == '전체' ? '%' : this.RunningMcategory,
-                    },
-                }).then((response) => {
-                    console.log(response.data);
-                    this.updateRunningList(response.data);
-                    this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
-                    for (let i = 0; i < this.runningList.length; i++) {
-                        const item = this.runningList[i];
-                        item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
+                axios
+                    .get(this._baseUrl + 'running/bycategorymedium', {
+                        params: {
+                            categoryBig: this.choice == '전체' ? '%' : this.choice,
+                            categoryMedium: this.RunningMcategory == '전체' ? '%' : this.RunningMcategory,
+                        },
 
-                    }
-                }).catch(error => {
-                    console.log(error)
-                })
+                    }).then((response) => {
+                        console.log(response.data);
+                        this.updateRunningList(response.data);
+                        this.RunningNum = []; // 게시글 번호를 저장할 배열 초기화
+                        this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
+                        let num = this.runningList.length;
+
+                        this.runningList.forEach((item, index) => {
+                            item.RunningNum = num - index; // 역순으로 게시글 번호 할당
+                            this.RunningNum.push(item.RunningNum); // runningNum 배열에 번호 추가
+                        });
+                        for (let i = 0; i < this.runningList.length; i++) {
+                            const item = this.runningList[i];
+                            item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
+
+                        }
+                    }).catch(error => {
+                        console.log(error)
+                    })
             }
 
         },
@@ -305,6 +336,14 @@ export default {
             }).then(response => {
                 console.log(response.data)
                 this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
+                this.RunningNum = []; // 게시글 번호를 저장할 배열 초기화
+                let num = this.runningList.length;
+
+                this.runningList.forEach((item, index) => {
+                    item.RunningNum = num - index; // 역순으로 게시글 번호 할당
+                    this.RunningNum.push(item.RunningNum); // runningNum 배열에 번호 추가
+                });
+
                 for (let i = 0; i < this.runningList.length; i++) {
                     const item = this.runningList[i];
                     item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
@@ -356,6 +395,13 @@ export default {
             }).then(response => {
                 console.log(response.data);
                 this.runningList = response.data // axios를 통해 받은 데이터를 run에 담기
+                this.RunningNum = []; // 게시글 번호를 저장할 배열 초기화
+                let num = this.runningList.length;
+
+                this.runningList.forEach((item, index) => {
+                    item.RunningNum = num - index; // 역순으로 게시글 번호 할당
+                    this.RunningNum.push(item.RunningNum); // runningNum 배열에 번호 추가
+                });
                 for (let i = 0; i < this.runningList.length; i++) {
                     const item = this.runningList[i];
                     item.runningAble = item.runningAble === 0 ? '신청마감' : '신청가능';
@@ -384,6 +430,7 @@ export default {
     display: flex;
     background-color: white;
     flex-direction: column;
+    margin-top: 3%;
     /* height: 400px; */
 }
 
@@ -464,11 +511,13 @@ table td {
     background-color: rgba(244, 209, 155, 1) !important;
     margin-left: 75%;
 }
-.Luxcolor-found{
+
+.Luxcolor-found {
     width: 90%;
     /* text-align: center; */
 }
-.v-chip__content{
+
+.v-chip__content {
     text-align: center;
     margin-left: 22%;
 }

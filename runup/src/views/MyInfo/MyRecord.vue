@@ -6,9 +6,9 @@
                     <v-btn text to="/MyPageEdit" class="MyPoint-menubar" disabled :rounded="true">Menu-bar</v-btn>
                     <v-btn text to="/MyPageEdit" class="MyPoint-Btn" :rounded="true">내 정보 수정</v-btn>
                     <v-btn text to="/MyClass" class="MyPoint-Btn" :rounded="true">나의 수업 통계</v-btn>
-                    <v-btn text to="/MyPoint" class="MyPoint-Btn" :rounded="true">무지개, 포인트 내역</v-btn>
+                    <!-- <v-btn text to="/MyPoint" class="MyPoint-Btn" :rounded="true">무지개, 포인트 내역</v-btn> -->
                     <v-btn text to="/MyRecord" class="MyPoint-Btn" :rounded="true">달리기 기록지</v-btn>
-                    <v-btn text to="/MyQustion" class="MyPoint-Btn" :rounded="true">나의 고민</v-btn>
+                    <!-- <v-btn text to="/MyQustion" class="MyPoint-Btn" :rounded="true">나의 고민</v-btn> -->
                     <v-btn text to="/MessageInbox" class="MyPoint-Btn" :rounded="true">쪽지함</v-btn>
                 </v-card-text>
             </v-card>
@@ -21,35 +21,38 @@
                 <v-menu v-model="selectedOpen" :close-on-content-click="false" class="screen-record" offset-y>
                     <v-card class="dialog-Record">
 
-                        <!-- 여기에 요약본이라고 나타낼 이미지가 필요 -->
-                        <!-- <v-img class="categoryImage" :src="categoryImg"></v-img> -->
 
-                        <v-card-title class="Schedule-Info">
-                            제목: {{ runningTitle }}
-                        </v-card-title>
+                        <v-img src="https://ifh.cc/g/OVllzF.png" max-width="200" max-height="50"
+                            style="margin-left: 25%;"></v-img>
 
-                        <!-- <v-divider class="linepart mx-4"></v-divider> -->
-
-                        <v-card-text>
-                            <!-- <v-row class="Schedule-Info1">
-                        특기: {{ RunningMcategory }}
-                    </v-row> -->
-                            <v-row class="Schedule-Info1">
-                                Runner: {{ userNickname }}
-                            </v-row>
+                        <v-img src="https://ifh.cc/g/aAnHj3.png" max-width="70" max-height="50"
+                            style="margin-top: 4%; margin-left: 2%;"></v-img>
+                        <v-card-text style="font-size: 18px !important; margin-left: 4%;">
+                            {{ runningTitle }}
                         </v-card-text>
+
+                        <v-img src="https://ifh.cc/g/p4SSnJ.png" max-width="100" max-height="50"
+                            style="margin-top: 4%; margin-left: 2%;"></v-img>
+                        <v-card-text style="font-size: 18px !important; margin-left: 5%;">
+                            {{ userNickname }}
+                        </v-card-text>
+
                         <v-divider class="mx-4"></v-divider>
-                        <v-card-title class="test1">
-                            수업요약
-                        </v-card-title>
+                        <v-img src="https://ifh.cc/g/yLdj7y.png" max-width="100" max-height="50"
+                            style="margin-top: 4%; margin-left: 38%; margin-bottom: 3%;"></v-img>
                         <v-divider class="mx-4"></v-divider>
+
+                        <v-sheet :color="`grey ${theme.isDark ? 'darken-2' : 'lighten-4'}`" class="pa-3">
+                            <v-skeleton-loader class="mx-auto" max-width="300" type="text" :loading="isLoading">
+                                <v-virtual-scroll :bench="benched" :items="loading ? skeletonData : items" height="300"
+                                    item-height="2000">
+                                </v-virtual-scroll>
+                            </v-skeleton-loader>
+                        </v-sheet>
+                        <p ref="content">아도뱀야 치커리 티와와</p>
+
                         <v-card-title>
                             <!-- <v-row > -->
-                            <v-virtual-scroll :bench="benched" :items="items" height="300" item-height="2000">
-
-                                <p ref="content">{{ text }}
-                                </p>
-                            </v-virtual-scroll>
                             <!-- </v-row> -->
                         </v-card-title>
                     </v-card>
@@ -66,6 +69,11 @@ import axios from 'axios'
 // import axios from 'axios';
 
 export default {
+    inject: {
+        theme: {
+            default: { isDark: false },
+        },
+    },
     data() {
         return {
             benched: 1,
@@ -100,6 +108,8 @@ export default {
             USE_MODEL: true, // true: use 'model', false: use 'engine'
             url: 'https://api.openai.com/v1/completions',
             answerLine: '',
+
+            isLoading: true,
         }
     },
     computed: {

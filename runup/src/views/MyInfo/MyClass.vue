@@ -12,9 +12,9 @@
                         <v-btn text to="/MyPageEdit" class="MyPoint-menubar" disabled :rounded="true">Menu-bar</v-btn>
                         <v-btn text to="/MyPageEdit" class="MyPoint-Btn" :rounded="true">내 정보 수정</v-btn>
                         <v-btn text to="/MyClass" class="MyPoint-Btn" :rounded="true">나의 수업 통계</v-btn>
-                        <v-btn text to="/MyPoint" class="MyPoint-Btn" :rounded="true">무지개, 포인트 내역</v-btn>
+                        <!-- <v-btn text to="/MyPoint" class="MyPoint-Btn" :rounded="true">무지개, 포인트 내역</v-btn> -->
                         <v-btn text to="/MyRecord" class="MyPoint-Btn" :rounded="true">달리기 기록지</v-btn>
-                        <v-btn text to="/MyQustion" class="MyPoint-Btn" :rounded="true">나의 고민</v-btn>
+                        <!-- <v-btn text to="/MyQustion" class="MyPoint-Btn" :rounded="true">나의 고민</v-btn> -->
                         <v-btn text to="/MessageInbox" class="MyPoint-Btn" :rounded="true">쪽지함</v-btn>
                     </v-card-text>
                 </v-card>
@@ -23,12 +23,14 @@
                     <!-- <template slot="progress">
                         <v-progress-linear color="deep-purple" height="10" indeterminate></v-progress-linear>
                     </template> -->
-                    <v-card-title>전체 런닝 </v-card-title>
+                    <v-img src="https://ifh.cc/g/qzboYW.png" max-width="150" max-height="50"
+                       style="margin-top: 3%;"></v-img>
                     <div class="my-class">
                         <div ref="chart" class="chart-container"></div>
                     </div>
 
-                    <v-card-title>주간 런닝 </v-card-title>
+                    <v-img src="https://ifh.cc/g/lWXv0o.png" max-width="150" max-height="50"
+                       style="margin-top: 3%;"></v-img>
                     <div ref="chart2" class="chart-container2"></div>
 
                     
@@ -38,9 +40,11 @@
                 <v-card class="Grape-shape">
 
                     
-                    <v-card-title>내가 신청한 수업</v-card-title>
+                    <v-img src="https://ifh.cc/g/3PV7n1.png" max-width="250" max-height="50"
+                       style="margin-top: 3%;"></v-img>
                     <ve-pie :data="chartData" :settings="chartSettings" />
-                    <v-card-title>전체 수분</v-card-title>
+                    <v-img src="https://ifh.cc/g/7PC7sl.png" max-width="150" max-height="50"
+                       style="margin-top: 3%;"></v-img>
                     <div ref="chart3" class="chart-container3"></div>
                     
                 </v-card>

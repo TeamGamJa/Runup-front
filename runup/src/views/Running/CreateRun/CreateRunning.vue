@@ -26,7 +26,7 @@
                 </template>
                 <v-card>
                   <v-card-title>
-                    <span class="text-h5">Runner</span>
+                    <v-img src="https://ifh.cc/g/hmAhPX.png" max-width="150" max-height="50"></v-img>
                   </v-card-title>
                   <v-card-text>
                     <v-container>
@@ -94,35 +94,48 @@
 
           <!-- 달력안의 일정을 클릭 시 일정 상세-->
           <v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-x>
-            <v-card  class=" my-12 pa-0" max-width="374">
+            <v-card class=" pa-0" max-width="374">
 
               <v-img height="250" :src="categoryImg"></v-img>
 
               <v-card-title class="Schedule-Info mb-0">
-                제목: {{ runningTitle }}
+                <v-img src="https://ifh.cc/g/512Qw6.png" max-width="70" max-height="50"></v-img>
+                {{ runningTitle }}
               </v-card-title>
 
-              <v-divider class="mx-4"></v-divider>
-
-              <v-card-text class="detail-content">
-
+              <v-divider class="mx-5"></v-divider>
+              <v-card-title>
                 <v-row class="Schedule-Info mb-0">
-                  특기: {{ RunningBcategory }}
+                  <v-img src="https://ifh.cc/g/JFJZ6v.png" max-width="60" max-height="50"></v-img>
+                  {{ RunningBcategory }}
                 </v-row>
-
+              </v-card-title>
+              <v-card-title>
                 <v-row class="Schedule-Info mb-0">
-                  Runner: {{ userNickname }}
+                  <v-img src="https://ifh.cc/g/Qf5RwW.png" max-width="90" max-height="50"
+                    style="margin-left: 2%;"></v-img>
+                  {{ userNickname }}
                 </v-row>
+              </v-card-title>
+              <v-card-title>
                 <v-row class="Schedule-Info mb-0">
-                  수업시작: {{ runningStartTime }}
+                  <v-img src="https://ifh.cc/g/tf3Aky.png" max-width="85" max-height="50"
+                    style="margin-left: 5%;"></v-img>
+                  {{ runningStartTime }}
                 </v-row>
+                <v-card-title>
+                </v-card-title>
                 <v-row class="Schedule-Info mb-0">
-                  수업종료: {{ runningEndTime }}
+                  <v-img src="https://ifh.cc/g/kP35jL.png" max-width="80" max-height="50"></v-img>
+                  {{ runningEndTime }}
                 </v-row>
+              </v-card-title>
+              <v-card-title>
                 <v-row class="Schedule-Info mb-0">
-                  수업내용: {{ runningContent }}
+                  <v-img src="https://ifh.cc/g/VAF5Lq.png" max-width="100" max-height="50"></v-img>
+                  {{ runningContent }}
                 </v-row>
-              </v-card-text>
+              </v-card-title>
 
               <v-card-actions>
                 <v-btn class="ChatBtn" :rounded="true" text to="/Chat" @click="contactChat()">수업시작 </v-btn>
@@ -159,9 +172,9 @@ export default {
     dialog: false,
 
     // 새글 작성 후 초기값
-    WriteTitle:'',
-    WriteContent:'',
-    WriteStartTime:'08:00',
+    WriteTitle: '',
+    WriteContent: '',
+    WriteStartTime: '08:00',
     WriteEndTime: '09:00',
 
     categories: ['IT', '라이프스타일', '문제풀이', '기타'],
@@ -216,14 +229,12 @@ export default {
       }
     }
   },
-  created() {
-  },
   mounted() {
     this.$refs.calendar.checkChange(),
-    // 캘린더를 계속 업데이트 하는거 
-    this.$nextTick(() => {
-      this.$refs.calendar.update;
-    });
+      // 캘린더를 계속 업데이트 하는거 
+      this.$nextTick(() => {
+        this.$refs.calendar.update;
+      });
     this.fetchGiveSchedule()
     this.fetchTakeSchedule()
     this.fetchPassDataSchedule()
@@ -287,7 +298,7 @@ export default {
 
         const selectedDateStr = `${selectDateYear}-${selectDateMonth}-${selectDateDay}`;
 
-        console.log(selectedDateStr);
+        // console.log(selectedDateStr);
         // 내가 만든 수업
         this.runningBlue.forEach((item) => {
           if (item.runningDate === selectedDateStr) {
@@ -422,7 +433,7 @@ export default {
         }
       }).then(response => {
         console.log(response);
-    
+
         const newEvent = {
           name: this.WriteTitle,
           details: this.WriteContent,
@@ -684,7 +695,7 @@ export default {
 <style>
 .CreateRunning-container {
   height: 85%;
-  width: 500px;
+  width: 70%;
 }
 
 .calender-css {
@@ -692,12 +703,11 @@ export default {
 }
 
 .ChatBtn {
-  margin-left: 100px;
+  margin-left: 50%;
   color: black !important;
   background-color: rgba(244, 209, 155, 1) !important;
   justify-content: flex-end;
-  border-radius: 200px;
-  margin-top: 20px;
+  margin-top: 5%;
 
 }
 
